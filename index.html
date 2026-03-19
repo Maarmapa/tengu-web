@@ -371,35 +371,31 @@ footer{padding:60px 48px 40px;border-top:1px solid rgba(200,146,26,.1);display:g
 <script>
 // ── Cursor ────────────────────────────────────────────────────────────────
 const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursorRing');
+const ring = document.getElementById('cursorRing');
 let mx = 0, my = 0;
 document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-  ring.style.left   = mx + 'px'; ring.style.top  = my + 'px';
+ mx = e.clientX; my = e.clientY;
+ cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+ ring.style.left = mx + 'px'; ring.style.top = my + 'px';
 });
 document.querySelectorAll('a,button,.menu-item,.sake-card,.sugg').forEach(el => {
-  el.addEventListener('mouseenter', () => { cursor.style.width='16px'; cursor.style.height='16px'; });
-  el.addEventListener('mouseleave', () => { cursor.style.width='8px';  cursor.style.height='8px';  });
+ el.addEventListener('mouseenter', () => { cursor.style.width='16px'; cursor.style.height='16px'; });
+ el.addEventListener('mouseleave', () => { cursor.style.width='8px'; cursor.style.height='8px'; });
 });
-
 // ── Auto-grow textarea ────────────────────────────────────────────────────
 const input = document.getElementById('chatInput');
 input.addEventListener('input', () => {
-  input.style.height = 'auto';
-  input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+ input.style.height = 'auto';
+ input.style.height = Math.min(input.scrollHeight, 120) + 'px';
 });
 input.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
 });
-
 // ── Chat state ────────────────────────────────────────────────────────────
 const win = document.getElementById('chatWindow');
 let history = [];
 let isStreaming = false;
-
 const SYSTEM_PROMPT = `Eres el Oráculo del Tengu — el asistente AI del restaurante Tengu, ubicado en el W Santiago (Isidora Goyenechea 3000, local 104, Las Condes, Santiago de Chile). Tu nombre es "El Oráculo" y tu carácter está inspirado en el Tengu, la criatura legendaria del folclore japonés: guardián de las montañas, símbolo de sabiduría, fuerza y equilibrio espiritual.
-
 SOBRE EL RESTAURANTE:
 - Chef: Enzo Catalán, chef chileno con trayectoria reconocida en la escena gastronómica local
 - Propuesta: Cocina japonesa auténtica (sin fusión). Sushi, nigiris, teppanyaki, robatayaki, sopas dashi, postres de ceremonia
@@ -408,7 +404,6 @@ SOBRE EL RESTAURANTE:
 - Horarios: Martes a domingo, 19:00 a 23:30 hrs
 - Reservas: Por teléfono +56 2 2770 0000 o por WhatsApp
 - Instagram: @tengu_restaurant
-
 CARTA (representativa):
 - Nigiris: atún, salmón, hamachi, erizo, wagyu
 - Teppanyaki: wagyu A5, langosta, cordero, vegetales de temporada
@@ -416,13 +411,11 @@ CARTA (representativa):
 - Sopas: ramen de dashi profundo, miso con tofu sedoso
 - Sake destacado: Junmai Daiginjo "Hakkaisan", Ginjo "Dassai 39", Nigori "Kikusui"
 - Postres: mochi de temporada, parfait matcha, tarta de yuzu
-
 YOKAI DE LOS PLATOS (historia mitológica):
 - El nigiri de atún está inspirado en el Kappa (espíritu del agua)
 - El teppanyaki wagyu rinde homenaje al Raijin (dios del trueno y el fuego)
 - El robatayaki de pulpo evoca al Kitsune (zorro de nueve colas, astucia e inteligencia)
 - El ramen profundo representa al Tengu mismo — sabiduría concentrada
-
 ESTILO DE RESPUESTA:
 - Habla en español elegante, cálido pero con autoridad
 - Usa metáforas relacionadas con el fuego, las montañas, la ceremonia y la sabiduría japonesa
@@ -432,126 +425,110 @@ ESTILO DE RESPUESTA:
 - Si alguien pregunta sobre el sake, explica con pasión y detalle
 - Nunca inventes precios exactos — di "consulta con nuestro equipo"
 - Máximo 3-4 párrafos por respuesta. Sé memorable, no exhaustivo.`;
-
 // ── Render helpers ────────────────────────────────────────────────────────
 function addMsg(text, type) {
-  const div = document.createElement('div');
-  div.className = `chat-msg ${type === 'user' ? 'user' : ''}`;
-  const av = type === 'user'
-    ? `<div class="chat-avatar user-av">Tú</div>`
-    : `<div class="chat-avatar tengu">天</div>`;
-  div.innerHTML = type === 'user'
-    ? `<div class="chat-bubble user">${text}</div>${av}`
-    : `${av}<div class="chat-bubble tengu">${text}</div>`;
-  win.appendChild(div);
-  win.scrollTop = win.scrollHeight;
-  return div;
+ const div = document.createElement('div');
+ div.className = `chat-msg ${type === 'user' ? 'user' : ''}`;
+ const av = type === 'user'
+ ? `<div class="chat-avatar user-av">Tú</div>`
+ : `<div class="chat-avatar tengu">天</div>`;
+ div.innerHTML = type === 'user'
+ ? `<div class="chat-bubble user">${text}</div>${av}`
+ : `${av}<div class="chat-bubble tengu">${text}</div>`;
+ win.appendChild(div);
+ win.scrollTop = win.scrollHeight;
+ return div;
 }
-
 function addTyping() {
-  const div = document.createElement('div');
-  div.className = 'chat-msg'; div.id = 'typingMsg';
-  div.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" style="padding:13px 17px"><div class="typing-bubble"><span></span><span></span><span></span></div></div>`;
-  win.appendChild(div); win.scrollTop = win.scrollHeight;
+ const div = document.createElement('div');
+ div.className = 'chat-msg'; div.id = 'typingMsg';
+ div.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" style="padding:13px 17px"><div class="typing-bubble"><span></span><span></span><span></span></div></div>`;
+ win.appendChild(div); win.scrollTop = win.scrollHeight;
 }
-
 function setStatus(text, active=true) {
-  document.getElementById('statusText').textContent = text;
-  document.getElementById('statusDot').style.background = active ? '#1D9E75' : '#C8922A';
+ document.getElementById('statusText').textContent = text;
+ document.getElementById('statusDot').style.background = active ? '#1D9E75' : '#C8922A';
 }
-
 // ── API call with streaming ───────────────────────────────────────────────
 async function sendMessage() {
-  if (isStreaming) return;
-  const text = input.value.trim();
-  if (!text) return;
-
-  isStreaming = true;
-  input.value = '';
-  input.style.height = 'auto';
-  document.getElementById('sendBtn').disabled = true;
-
-  // Add user message
-  addMsg(text, 'user');
-  history.push({ role: 'user', content: text });
-
-  // Show typing
-  addTyping();
-  setStatus('El Oráculo está meditando...', false);
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 600,
-        system: SYSTEM_PROMPT,
-        stream: true,
-        messages: history
-      })
-    });
-
-    // Remove typing indicator
-    document.getElementById('typingMsg')?.remove();
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    // Create streaming bubble
-    const aiDiv = document.createElement('div');
-    aiDiv.className = 'chat-msg';
-    aiDiv.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" id="streamBubble"></div>`;
-    win.appendChild(aiDiv);
-    const bubble = document.getElementById('streamBubble');
-
-    let fullText = '';
-    const reader = response.body.getReader();
-    const decoder = new TextDecoder();
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
-      for (const line of lines) {
-        if (line.startsWith('data: ')) {
-          const data = line.slice(6);
-          if (data === '[DONE]') continue;
-          try {
-            const parsed = JSON.parse(data);
-            if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
-              fullText += parsed.delta.text;
-              bubble.innerHTML = fullText.replace(/\n/g, '<br>') + '<span class="stream-cursor"></span>';
-              win.scrollTop = win.scrollHeight;
-            }
-          } catch(e) {}
-        }
-      }
-    }
-
-    // Remove cursor, finalize
-    bubble.innerHTML = fullText.replace(/\n/g, '<br>');
-    history.push({ role: 'assistant', content: fullText });
-    setStatus('El Oráculo está despierto');
-
-  } catch (err) {
-    document.getElementById('typingMsg')?.remove();
-    addMsg('El Oráculo descansa por un momento. Por favor, intenta de nuevo.', 'tengu');
-    setStatus('El Oráculo está despierto');
-    console.error(err);
-  }
-
-  isStreaming = false;
-  document.getElementById('sendBtn').disabled = false;
-  input.focus();
+ if (isStreaming) return;
+ const text = input.value.trim();
+ if (!text) return;
+ isStreaming = true;
+ input.value = '';
+ input.style.height = 'auto';
+ document.getElementById('sendBtn').disabled = true;
+ // Add user message
+ addMsg(text, 'user');
+ history.push({ role: 'user', content: text });
+ // Show typing
+ addTyping();
+ setStatus('El Oráculo está meditando...', false);
+ try {
+ const response = await fetch('https://api.anthropic.com/v1/messages', {
+ method: 'POST',
+ headers: { 'Content-Type': 'application/json', 'anthropic-dangerous-direct-browser-access': 'true' },
+ body: JSON.stringify({
+ model: 'claude-sonnet-4-20250514',
+ max_tokens: 600,
+ system: SYSTEM_PROMPT,
+ stream: true,
+ messages: history
+ })
+ });
+ // Remove typing indicator
+ document.getElementById('typingMsg')?.remove();
+ if (!response.ok) {
+ throw new Error(`API error: ${response.status}`);
+ }
+ // Create streaming bubble
+ const aiDiv = document.createElement('div');
+ aiDiv.className = 'chat-msg';
+ aiDiv.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" id="streamBubble"></div>`;
+ win.appendChild(aiDiv);
+ const bubble = document.getElementById('streamBubble');
+ let fullText = '';
+ const reader = response.body.getReader();
+ const decoder = new TextDecoder();
+ while (true) {
+ const { done, value } = await reader.read();
+ if (done) break;
+ const chunk = decoder.decode(value);
+ const lines = chunk.split('\n');
+ for (const line of lines) {
+ if (line.startsWith('data: ')) {
+ const data = line.slice(6);
+ if (data === '[DONE]') continue;
+ try {
+ const parsed = JSON.parse(data);
+ if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
+ fullText += parsed.delta.text;
+ bubble.innerHTML = fullText.replace(/\n/g, '<br>') + '<span class="stream-cursor"></span>';
+ win.scrollTop = win.scrollHeight;
+ }
+ } catch(e) {}
+ }
+ }
+ }
+ // Remove cursor, finalize
+ bubble.innerHTML = fullText.replace(/\n/g, '<br>');
+ history.push({ role: 'assistant', content: fullText });
+ setStatus('El Oráculo está despierto');
+ } catch (err) {
+ document.getElementById('typingMsg')?.remove();
+ addMsg('El Oráculo descansa por un momento. Por favor, intenta de nuevo.', 'tengu');
+ setStatus('El Oráculo está despierto');
+ console.error(err);
+ }
+ isStreaming = false;
+ document.getElementById('sendBtn').disabled = false;
+ input.focus();
 }
-
 function askSugg(text) {
-  if (isStreaming) return;
-  input.value = text;
-  sendMessage();
+ if (isStreaming) return;
+ input.value = text;
+ sendMessage();
+}
 }
 </script>
 </body>
