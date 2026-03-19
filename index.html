@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tengu — W Santiago</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#060503;--dark:#0f0d0a;--dark2:#1a1510;--dark3:#241e17;
+  --gold:#c8921a;--gold2:#e4a82a;--cream:#e8e0d0;--cream2:#b8ae9e;
+  --font-d:'Cormorant Garamond',serif;
+  --font-jp:'Noto Serif JP',serif;
+  --font-m:'DM Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--cream);font-family:var(--font-d);overflow-x:hidden;cursor:none}
+.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(200,146,26,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease-out,top .12s ease-out}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:24px 48px;background:linear-gradient(to bottom,rgba(6,5,3,.96) 0%,transparent 100%)}
+.nav-logo{font-family:var(--font-jp);font-size:21px;font-weight:300;color:var(--gold);letter-spacing:.15em;text-decoration:none}
+.nav-logo span{font-family:var(--font-d);font-size:10px;color:var(--cream2);display:block;letter-spacing:.3em;margin-top:2px}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;color:var(--cream2);text-decoration:none;text-transform:uppercase;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-reserve{font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;color:var(--black);background:var(--gold);padding:10px 20px;text-decoration:none;text-transform:uppercase;transition:background .3s}
+.nav-reserve:hover{background:var(--gold2)}
+
+/* HERO */
+.hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 80% at 50% 60%,rgba(139,26,26,.14) 0%,transparent 60%),linear-gradient(180deg,var(--black) 0%,var(--dark) 50%,var(--dark2) 100%)}
+.hero-kanji{position:absolute;font-family:var(--font-jp);font-size:340px;font-weight:300;color:rgba(200,146,26,.04);line-height:1;z-index:1;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-18px)}}
+.hero-content{position:relative;z-index:2;text-align:center}
+.hero-tag{font-family:var(--font-m);font-size:9.5px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;opacity:0;animation:fadeUp 1s ease .3s forwards}
+.hero-title{font-family:var(--font-d);font-size:clamp(70px,10vw,128px);font-weight:300;line-height:.9;color:var(--cream);margin-bottom:8px;opacity:0;animation:fadeUp 1s ease .5s forwards}
+.hero-title em{font-style:italic;color:var(--gold)}
+.hero-sub{font-family:var(--font-jp);font-size:13px;font-weight:300;color:var(--cream2);letter-spacing:.3em;margin-top:16px;margin-bottom:38px;opacity:0;animation:fadeUp 1s ease .7s forwards}
+.hero-ctas{display:flex;gap:18px;justify-content:center;opacity:0;animation:fadeUp 1s ease .9s forwards}
+.btn-primary{font-family:var(--font-m);font-size:9.5px;letter-spacing:.25em;text-transform:uppercase;padding:13px 34px;background:var(--gold);color:var(--black);text-decoration:none;transition:all .3s}
+.btn-primary:hover{background:var(--gold2);transform:translateY(-2px)}
+.btn-ghost{font-family:var(--font-m);font-size:9.5px;letter-spacing:.25em;text-transform:uppercase;padding:13px 34px;border:1px solid rgba(200,146,26,.4);color:var(--gold);text-decoration:none;transition:all .3s;background:none;cursor:pointer}
+.btn-ghost:hover{border-color:var(--gold);background:rgba(200,146,26,.06)}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s ease 1.2s forwards}
+.hero-scroll span{font-family:var(--font-m);font-size:9px;letter-spacing:.3em;color:var(--cream2);text-transform:uppercase}
+.scroll-line{width:1px;height:38px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollLine 2s ease infinite}
+@keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.gold-line{width:56px;height:1px;background:var(--gold);margin:0 auto 22px}
+section{position:relative;z-index:2}
+.sec-tag{font-family:var(--font-m);font-size:9px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.sec-title{font-family:var(--font-d);font-size:clamp(34px,5vw,58px);font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:18px}
+.sec-title em{font-style:italic;color:var(--gold)}
+.sec-body{font-size:16px;font-weight:300;line-height:1.85;color:var(--cream2);max-width:500px}
+
+/* ABOUT */
+.about{padding:110px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-visual{position:relative;height:480px;background:linear-gradient(135deg,var(--dark2) 0%,var(--dark3) 100%);overflow:hidden}
+.about-visual::before{content:'天狗';font-family:var(--font-jp);font-size:190px;font-weight:300;color:rgba(200,146,26,.07);position:absolute;bottom:-16px;right:-16px;line-height:1}
+.about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,26,26,.14) 0%,transparent 60%)}
+.flame-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:72px;z-index:2;animation:flicker 3s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.82;transform:translate(-50%,-52%) scale(1.04)}}
+.about-accent{position:absolute;top:28px;left:28px;font-family:var(--font-m);font-size:8.5px;letter-spacing:.2em;color:var(--gold);z-index:3}
+
+/* MENU */
+.menu-section{padding:90px 48px;background:var(--dark)}
+.menu-header{text-align:center;margin-bottom:50px}
+.menu-tabs{display:flex;gap:0;justify-content:center;margin-bottom:40px;border-bottom:1px solid rgba(200,146,26,.15)}
+.menu-tab{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:12px 22px;cursor:pointer;color:var(--cream2);background:none;border:none;border-bottom:2px solid transparent;transition:all .3s;margin-bottom:-1px}
+.menu-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.menu-tab:hover:not(.active){color:var(--cream)}
+.menu-cat{display:none}.menu-cat.active{display:block}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.menu-item{position:relative;padding:28px 26px;background:var(--dark2);border:1px solid rgba(200,146,26,.07);transition:all .4s}
+.menu-item::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s}
+.menu-item:hover{background:var(--dark3)}.menu-item:hover::after{transform:scaleX(1)}
+.menu-item-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.menu-item-name{font-family:var(--font-d);font-size:19px;font-weight:400;color:var(--cream)}
+.menu-item-jp{font-family:var(--font-jp);font-size:12px;color:rgba(200,146,26,.45);margin-top:2px}
+.menu-item-price{font-family:var(--font-m);font-size:9.5px;color:var(--gold);letter-spacing:.08em;white-space:nowrap;margin-left:14px;margin-top:3px}
+.menu-item-desc{font-size:12.5px;color:var(--cream2);line-height:1.65;margin-bottom:8px}
+.menu-item-yokai{font-family:var(--font-m);font-size:7.5px;letter-spacing:.15em;color:rgba(200,146,26,.35);text-transform:uppercase;margin-top:8px;display:flex;align-items:center;gap:6px}
+.menu-item-yokai::before{content:'';width:18px;height:1px;background:rgba(200,146,26,.25);display:inline-block}
+.menu-note{font-family:var(--font-m);font-size:8.5px;letter-spacing:.14em;color:rgba(184,174,158,.28);text-align:center;margin-top:24px;text-transform:uppercase}
+
+/* SAKE */
+.sake-section{padding:90px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.sake-visual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sake-card{padding:24px 20px;background:var(--dark2);border:1px solid rgba(200,146,26,.12);transition:border-color .3s}
+.sake-card:hover{border-color:rgba(200,146,26,.4)}
+.sake-card-jp{font-family:var(--font-jp);font-size:22px;color:var(--gold);margin-bottom:6px}
+.sake-card-name{font-family:var(--font-d);font-size:15px;font-weight:600;color:var(--cream);margin-bottom:4px}
+.sake-card-desc{font-size:11.5px;color:var(--cream2);line-height:1.6}
+
+/* RESERVAS */
+.reserve-section{padding:90px 48px;background:var(--dark);position:relative;overflow:hidden}
+.reserve-section::before{content:'予約';font-family:var(--font-jp);font-size:260px;font-weight:300;color:rgba(200,146,26,.03);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.reserve-content{position:relative;z-index:2;max-width:860px;margin:0 auto}
+.reserve-header{text-align:center;margin-bottom:44px}
+.reserve-options{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+.reserve-card{background:var(--dark2);border:1px solid rgba(200,146,26,.15);padding:28px;position:relative;overflow:hidden}
+.reserve-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.reserve-card h3{font-family:var(--font-d);font-size:21px;font-weight:400;color:var(--cream);margin-bottom:5px}
+.card-sub{font-family:var(--font-m);font-size:8.5px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.reserve-card p{font-size:13px;color:var(--cream2);line-height:1.7;margin-bottom:16px}
+.sr-form{display:flex;flex-direction:column;gap:9px}
+.sr-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sr-input{background:var(--dark3);border:1px solid rgba(200,146,26,.18);color:var(--cream);padding:11px 13px;font-family:var(--font-m);font-size:10px;outline:none;transition:border-color .3s;width:100%}
+.sr-input::placeholder{color:rgba(184,174,158,.32)}
+.sr-input:focus{border-color:rgba(200,146,26,.45)}
+.sr-select{background:var(--dark3);border:1px solid rgba(200,146,26,.18);color:var(--cream);padding:11px 13px;font-family:var(--font-m);font-size:10px;outline:none;width:100%;cursor:pointer}
+.sr-select option{background:var(--dark3)}
+.sr-btn{background:var(--gold);color:var(--black);padding:12px;font-family:var(--font-m);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s;width:100%}
+.sr-btn:hover{background:var(--gold2)}
+.sr-note{font-family:var(--font-m);font-size:7.5px;letter-spacing:.1em;color:rgba(184,174,158,.25);text-align:center;margin-top:4px;text-transform:uppercase}
+.wa-card{background:var(--dark2);border:1px solid rgba(200,146,26,.15);padding:28px;position:relative;overflow:hidden}
+.wa-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,#25D366,transparent)}
+.wa-card h3{font-family:var(--font-d);font-size:21px;font-weight:400;color:var(--cream);margin-bottom:5px}
+.wa-card .card-sub{color:#25D366}
+.wa-card p{font-size:13px;color:var(--cream2);line-height:1.7;margin-bottom:16px}
+.wa-templates{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.wa-tmpl{background:var(--dark3);border:1px solid rgba(37,211,102,.13);padding:11px 13px;font-size:12.5px;color:var(--cream2);cursor:pointer;transition:all .3s;text-align:left;font-family:var(--font-d);width:100%}
+.wa-tmpl:hover{border-color:rgba(37,211,102,.38);color:var(--cream)}
+.wa-tmpl span{font-family:var(--font-m);font-size:7.5px;letter-spacing:.1em;color:#25D366;display:block;margin-bottom:3px;text-transform:uppercase}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:9px;background:#25D366;color:#fff;padding:13px;font-family:var(--font-m);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;border:none;width:100%;cursor:pointer;transition:background .3s}
+.wa-btn:hover{background:#20bd5a}
+.wa-btn svg{width:17px;height:17px;fill:currentColor;flex-shrink:0}
+.reserve-hours{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rh-item{text-align:center;padding:18px;background:rgba(200,146,26,.04);border:1px solid rgba(200,146,26,.07)}
+.rh-item span{font-family:var(--font-m);font-size:8px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:5px}
+.rh-item p{font-size:13.5px;color:var(--cream2);font-weight:300}
+
+/* ORÁCULO */
+.ai-section{padding:90px 48px;background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%)}
+.ai-inner{max-width:700px;margin:0 auto}
+.ai-header{text-align:center;margin-bottom:32px}
+.ai-status{display:flex;align-items:center;gap:6px;justify-content:center;margin-bottom:12px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;animation:pulse 2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.2)}}
+.status-text{font-family:var(--font-m);font-size:8.5px;letter-spacing:.2em;color:rgba(184,174,158,.38);text-transform:uppercase}
+.chat-window{background:var(--dark2);border:1px solid rgba(200,146,26,.15);padding:20px;min-height:290px;max-height:440px;overflow-y:auto;scroll-behavior:smooth}
+.chat-window::-webkit-scrollbar{width:3px}
+.chat-window::-webkit-scrollbar-thumb{background:rgba(200,146,26,.22)}
+.chat-msg{display:flex;gap:10px;margin-bottom:15px;animation:msgIn .3s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-avatar{width:31px;height:31px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.chat-avatar.tengu{background:rgba(200,146,26,.16);color:var(--gold);font-family:var(--font-jp);font-size:13px}
+.chat-avatar.user-av{background:var(--dark3);color:var(--cream2);font-family:var(--font-m);font-size:8px}
+.chat-bubble{max-width:78%;padding:11px 15px;font-size:14px;line-height:1.75;font-weight:300}
+.chat-bubble.tengu{background:var(--dark3);color:var(--cream);border-left:2px solid var(--gold)}
+.chat-bubble.user{background:rgba(200,146,26,.08);color:var(--cream2);border-right:2px solid rgba(200,146,26,.28)}
+.typing-wrap{display:flex;gap:10px;margin-bottom:15px}
+.typing-dots{background:var(--dark3);border-left:2px solid var(--gold);padding:13px 16px;display:flex;gap:4px;align-items:center}
+.typing-dots span{width:6px;height:6px;background:var(--gold);border-radius:50%;opacity:.5;animation:typ 1.2s ease infinite}
+.typing-dots span:nth-child(2){animation-delay:.2s}
+.typing-dots span:nth-child(3){animation-delay:.4s}
+@keyframes typ{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+.chat-controls{border:1px solid rgba(200,146,26,.14);border-top:none;background:var(--dark3);padding:13px}
+.chat-input-row{display:flex;gap:0}
+.chat-input{flex:1;background:transparent;border:1px solid rgba(200,146,26,.16);border-right:none;color:var(--cream);padding:12px 15px;font-family:var(--font-d);font-size:14.5px;outline:none;transition:border-color .3s;resize:none;min-height:48px;max-height:100px;overflow-y:auto}
+.chat-input::placeholder{color:rgba(184,174,158,.3);font-style:italic}
+.chat-input:focus{border-color:rgba(200,146,26,.42)}
+.chat-send{background:var(--gold);color:var(--black);padding:12px 20px;border:none;font-family:var(--font-m);font-size:9.5px;cursor:pointer;transition:background .3s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.chat-send:hover{background:var(--gold2)}
+.chat-send svg{width:13px;height:13px}
+.chat-footer{display:flex;justify-content:space-between;align-items:center;margin-top:9px;flex-wrap:wrap;gap:7px}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:5px}
+.sugg{font-family:var(--font-m);font-size:8px;letter-spacing:.07em;padding:5px 11px;border:1px solid rgba(200,146,26,.18);color:var(--cream2);background:none;cursor:pointer;transition:all .2s;text-transform:uppercase}
+.sugg:hover{border-color:var(--gold);color:var(--gold)}
+
+/* FOOTER */
+footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+.footer-logo{font-family:var(--font-jp);font-size:25px;font-weight:300;color:var(--gold);margin-bottom:9px}
+.footer-tagline{font-size:13px;font-weight:300;color:var(--cream2);line-height:1.75}
+.footer-col h4{font-family:var(--font-m);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:13px}
+.footer-col p,.footer-col a{font-size:13px;color:var(--cream2);display:block;margin-bottom:6px;text-decoration:none;transition:color .2s;font-weight:300}
+.footer-col a:hover{color:var(--cream)}
+.footer-bottom{grid-column:1/-1;border-top:1px solid rgba(200,146,26,.07);padding-top:18px;display:flex;justify-content:space-between}
+.footer-bottom p{font-family:var(--font-m);font-size:8px;letter-spacing:.13em;color:rgba(184,174,158,.32)}
+
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:26px;right:26px;z-index:200;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.28);cursor:pointer;transition:transform .3s;text-decoration:none}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:25px;height:25px;fill:#fff}
+.wa-float-tip{position:absolute;right:60px;background:var(--dark2);color:var(--cream);font-family:var(--font-m);font-size:8.5px;letter-spacing:.1em;padding:5px 11px;white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;text-transform:uppercase;border:1px solid rgba(200,146,26,.18)}
+.wa-float:hover .wa-float-tip{opacity:1}
+
+@media(max-width:768px){
+  nav{padding:18px 22px}.nav-links{display:none}
+  .about,.sake-section{grid-template-columns:1fr;gap:36px;padding:56px 22px}
+  .menu-section,.reserve-section,.ai-section{padding:56px 22px}
+  .reserve-options{grid-template-columns:1fr}
+  .menu-grid{grid-template-columns:1fr}
+  .reserve-hours{grid-template-columns:1fr}
+  footer{grid-template-columns:1fr;padding:36px 22px}
+  .chat-footer{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<a class="wa-float" href="#" id="waFloat">
+  <span class="wa-float-tip">Reservar por WhatsApp</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<nav>
+  <a href="#" class="nav-logo">天狗<span>Tengu · W Santiago</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Historia</a></li>
+    <li><a href="#menu">Carta</a></li>
+    <li><a href="#sake">Sake</a></li>
+    <li><a href="#ai">Oráculo</a></li>
+    <li><a href="#reserve">Reservas</a></li>
+  </ul>
+  <a href="#reserve" class="nav-reserve">Reservar mesa</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-kanji">天</div>
+  <div class="hero-content">
+    <p class="hero-tag">W Santiago · Las Condes · Chef Enzo Catalán</p>
+    <h1 class="hero-title"><em>Tengu</em></h1>
+    <p class="hero-sub">天狗 · El Guardián de las Montañas</p>
+    <div class="hero-ctas">
+      <a href="#reserve" class="btn-primary">Reservar mesa</a>
+      <a href="#menu" class="btn-ghost">Ver carta</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Descubrir</span></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div>
+    <p class="sec-tag">La leyenda</p>
+    <h2 class="sec-title">Guardianes del bosque,<br><em>maestros del fuego</em></h2>
+    <p class="sec-body">El Tengu es una criatura legendaria del folclore japonés — guardián de las montañas, protector del bosque, símbolo de fuerza, sabiduría y equilibrio espiritual.</p><br>
+    <p class="sec-body">Cada plato nace de esta filosofía: la precisión del maestro y la fuerza de la naturaleza, unidos en una ceremonia que honra la tradición japonesa pura.</p><br>
+    <a href="#menu" class="btn-ghost" style="display:inline-block;margin-top:10px">Explorar la carta</a>
+  </div>
+  <div class="about-visual">
+    <div class="about-accent">ROBATAYAKI · TEPPANYAKI · SUSHI · SAKE</div>
+    <div class="flame-icon">🔥</div>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section class="menu-section" id="menu">
+  <div class="menu-header">
+    <p class="sec-tag">La carta</p>
+    <h2 class="sec-title" style="text-align:center">Cada plato, un <em>espíritu</em></h2>
+    <div class="gold-line"></div>
+  </div>
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showCat('frios',this)">Fríos</button>
+    <button class="menu-tab" onclick="showCat('teppanyaki',this)">Teppanyaki</button>
+    <button class="menu-tab" onclick="showCat('robata',this)">Robatayaki</button>
+    <button class="menu-tab" onclick="showCat('sopas',this)">Sopas</button>
+    <button class="menu-tab" onclick="showCat('postres',this)">Postres</button>
+  </div>
+  <div class="menu-cat active" id="cat-frios"><div class="menu-grid">
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri de Atún Bluefin</div><div class="menu-item-jp">鮪の握り寿司</div></div><div class="menu-item-price">$4.800 x2</div></div><div class="menu-item-desc">Atún bluefin de primera selección, arroz de grano corto con vinagre de arroz, ralladura de yuzu y wasabi fresco.</div><div class="menu-item-yokai">Espíritu del Kappa — guardián de las aguas</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri de Hamachi</div><div class="menu-item-jp">ハマチの握り</div></div><div class="menu-item-price">$4.200 x2</div></div><div class="menu-item-desc">Pez limón japonés con jalapeño encurtido, ponzu de citrus chileno y aceite de sésamo tostado.</div><div class="menu-item-yokai">Espíritu del Ryu — el dragón del mar</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Tiradito Tengu</div><div class="menu-item-jp">天狗のティラディート</div></div><div class="menu-item-price">$14.900</div></div><div class="menu-item-desc">Salmón sobre leche de tigre de miso blanco, aceite de ají amarillo y crocante de wonton.</div><div class="menu-item-yokai">Espíritu del Kitsune — la astucia del zorro</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Tartar de Wagyu A5</div><div class="menu-item-jp">和牛タルタル</div></div><div class="menu-item-price">$22.900</div></div><div class="menu-item-desc">Wagyu A5 picado a cuchillo, yema curada en soya, trufa de temporada y tostada de arroz inflado.</div><div class="menu-item-yokai">Espíritu del Oni — fuerza y poder</div></div>
+  </div></div>
+  <div class="menu-cat" id="cat-teppanyaki"><div class="menu-grid">
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Wagyu A5 en Teppan</div><div class="menu-item-jp">和牛鉄板焼き</div></div><div class="menu-item-price">$48.900</div></div><div class="menu-item-desc">200g de wagyu A5 cocinado ante tus ojos. Sal de Maldon, mantequilla de shio koji y reducción de sake daiginjo.</div><div class="menu-item-yokai">Espíritu del Raijin — dios del trueno y el fuego</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Langosta en Teppan</div><div class="menu-item-jp">ロブスター鉄板焼き</div></div><div class="menu-item-price">$38.900</div></div><div class="menu-item-desc">Media langosta del Pacífico en mantequilla de miso rojo, ajo confitado y beurre blanc de yuzu.</div><div class="menu-item-yokai">Espíritu del Ryujin — rey del océano</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Foie Gras & Matsutake</div><div class="menu-item-jp">フォアグラと茸</div></div><div class="menu-item-price">$26.900</div></div><div class="menu-item-desc">Foie gras sellado en teppan, hongos matsutake, gel de dashi y polvo de nori.</div><div class="menu-item-yokai">Espíritu del Tengu — sabiduría ancestral</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Cordero Patagónico</div><div class="menu-item-jp">パタゴニア羊肉</div></div><div class="menu-item-price">$29.900</div></div><div class="menu-item-desc">Carré de cordero con costra de shichimi, verduras de temporada y salsa de ciruela umeboshi.</div><div class="menu-item-yokai">Espíritu del Yamabiko — el eco de las montañas</div></div>
+  </div></div>
+  <div class="menu-cat" id="cat-robata"><div class="menu-grid">
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Pulpo a la Brasa</div><div class="menu-item-jp">炉端焼きタコ</div></div><div class="menu-item-price">$18.900</div></div><div class="menu-item-desc">Pulpo del norte braseado en robata con ponzu ahumado, mantequilla de wasabi y limón de pica.</div><div class="menu-item-yokai">Espíritu del Kappa — el engaño del agua</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Costilla Wagyu Robata</div><div class="menu-item-jp">和牛カルビ炉端</div></div><div class="menu-item-price">$34.900</div></div><div class="menu-item-desc">Short rib wagyu 48h terminado en robata con glaseado de tare dulce y kimchi de la casa.</div><div class="menu-item-yokai">Espíritu del Oni — fuerza primitiva</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Verduras de Temporada</div><div class="menu-item-jp">旬の野菜炉端</div></div><div class="menu-item-price">$12.900</div></div><div class="menu-item-desc">Espárragos con miso, hongos con tare y maíz de Chiloé con mantequilla de soya.</div><div class="menu-item-yokai">Espíritu del Kodama — el árbol sagrado</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Vieiras Braseadas</div><div class="menu-item-jp">帆立貝の炉端焼き</div></div><div class="menu-item-price">$22.900</div></div><div class="menu-item-desc">Vieiras del sur en robata, mantequilla de shio koji, caviar chileno y puré de coliflor ahumado.</div><div class="menu-item-yokai">Espíritu del Suijin — dios del agua</div></div>
+  </div></div>
+  <div class="menu-cat" id="cat-sopas"><div class="menu-grid">
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Ramen Dashi Profundo</div><div class="menu-item-jp">濃厚だしラーメン</div></div><div class="menu-item-price">$16.900</div></div><div class="menu-item-desc">Caldo dashi triple con fideos artesanales, chasu wagyu, huevo curado 6h y nori tostado.</div><div class="menu-item-yokai">Espíritu del Tengu — profundidad y sabiduría</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Miso Clásico</div><div class="menu-item-jp">味噌汁</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Miso blanco y rojo combinados, tofu sedoso de la casa, wakame fresco y aceite de sésamo negro.</div><div class="menu-item-yokai">Espíritu del Zashiki-warashi — hogar y tradición</div></div>
+  </div></div>
+  <div class="menu-cat" id="cat-postres"><div class="menu-grid">
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Parfait de Matcha</div><div class="menu-item-jp">抹茶パフェ</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Matcha de ceremonia con azuki, mochi de temporada, helado de hojicha y crumble de sésamo.</div><div class="menu-item-yokai">Espíritu del Inari — prosperidad y dulzura</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Tarta de Yuzu</div><div class="menu-item-jp">柚子タルト</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Cremoso de yuzu, merengue tostado en mesa, granizado de sake y flores de temporada.</div><div class="menu-item-yokai">Espíritu del Teru-teru Bozu — serenidad</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Mochi de Temporada</div><div class="menu-item-jp">季節の餅</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Tres mochis artesanales: fruta de estación, crema de sésamo y anko.</div><div class="menu-item-yokai">Espíritu del Tanuki — transformación y alegría</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Selección de Quesos</div><div class="menu-item-jp">チーズセレクション</div></div><div class="menu-item-price">$14.900</div></div><div class="menu-item-desc">Tres quesos con mermelada de miso, galletas de nori y miel de trigo sarraceno.</div><div class="menu-item-yokai">Espíritu del Baku — el devorador de sueños</div></div>
+  </div></div>
+  <p class="menu-note">Todos los precios incluyen IVA · Carta sujeta a disponibilidad · Consulta por alérgenos</p>
+</section>
+
+<!-- SAKE -->
+<section class="sake-section" id="sake">
+  <div>
+    <p class="sec-tag">El ritual del sake</p>
+    <h2 class="sec-title">El universo del <em>sake</em><br>en Santiago</h2>
+    <p class="sec-body">La selección de sake más completa de Chile. Cada variedad cuenta una historia: el terroir del arroz, el agua de montaña, la habilidad del Toji — el maestro cervecero.</p><br>
+    <p class="sec-body">Nuestro sommelier guiará tu experiencia hacia el maridaje perfecto con cada plato.</p><br>
+    <a href="#ai" class="btn-ghost" style="display:inline-block;margin-top:10px">Pregunta al Oráculo</a>
+  </div>
+  <div class="sake-visual">
+    <div class="sake-card"><div class="sake-card-jp">純米</div><div class="sake-card-name">Junmai</div><div class="sake-card-desc">Puro arroz. Intenso, terroso, umami profundo. Para teppanyaki y carnes.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">吟醸</div><div class="sake-card-name">Ginjo</div><div class="sake-card-desc">Floral y afrutado. Elegancia en cada sorbo. Para nigiris y pescados.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">大吟醸</div><div class="sake-card-name">Daiginjo</div><div class="sake-card-desc">El más premium. Refinado, complejo. Para momentos especiales.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">にごり</div><div class="sake-card-name">Nigori</div><div class="sake-card-desc">Sin filtrar. Cremoso y dulce. Para postres y quesos.</div></div>
+  </div>
+</section>
+
+<!-- RESERVAS -->
+<section class="reserve-section" id="reserve">
+  <div class="reserve-content">
+    <div class="reserve-header">
+      <p class="sec-tag">Reservas</p>
+      <h2 class="sec-title" style="text-align:center">Reserva tu <em>ceremonia</em></h2>
+      <p style="font-size:14px;color:var(--cream2);margin-top:10px;text-align:center">Isidora Goyenechea 3000, local 104 · W Santiago · Las Condes</p>
+    </div>
+    <div class="reserve-options">
+      <div class="reserve-card">
+        <h3>Reserva online</h3>
+        <div class="card-sub">Confirmación vía WhatsApp</div>
+        <p>Completa el formulario y te confirmaremos disponibilidad en menos de 30 minutos.</p>
+        <div class="sr-form">
+          <div class="sr-row">
+            <input class="sr-input" type="text" placeholder="Nombre completo" id="srName">
+            <input class="sr-input" type="tel" placeholder="WhatsApp / Teléfono" id="srPhone">
+          </div>
+          <div class="sr-row">
+            <input class="sr-input" type="date" id="srDate" style="color-scheme:dark">
+            <select class="sr-select" id="srTime">
+              <option value="">Hora</option>
+              <option>19:00</option><option>19:30</option><option>20:00</option>
+              <option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option>
+            </select>
+          </div>
+          <div class="sr-row">
+            <select class="sr-select" id="srGuests">
+              <option value="">Comensales</option>
+              <option>2 personas</option><option>3 personas</option><option>4 personas</option>
+              <option>5–6 personas</option><option>7–8 personas</option><option>Evento privado (+9)</option>
+            </select>
+            <select class="sr-select" id="srOcc">
+              <option value="">Ocasión</option>
+              <option>Cena de negocios</option><option>Aniversario</option>
+              <option>Cumpleaños</option><option>Cena especial</option><option>Sin ocasión específica</option>
+            </select>
+          </div>
+          <input class="sr-input" type="text" placeholder="Alergias o solicitudes especiales" id="srNotes">
+          <button class="sr-btn" onclick="submitReserva()">Enviar solicitud de reserva</button>
+          <p class="sr-note">Confirmación por WhatsApp en menos de 30 minutos</p>
+        </div>
+      </div>
+      <div class="wa-card">
+        <h3>Reserva por WhatsApp</h3>
+        <div class="card-sub" style="color:#25D366">Respuesta inmediata</div>
+        <p>Habla con nuestro equipo directamente. Ideal para grupos, eventos corporativos o solicitudes especiales.</p>
+        <div class="wa-templates">
+          <button class="wa-tmpl" onclick="openWA('Hola! Me gustaría hacer una reserva en Tengu para cenar.')"><span>Reserva estándar</span>Quiero hacer una reserva para cenar...</button>
+          <button class="wa-tmpl" onclick="openWA('Hola! Me interesa organizar una cena corporativa en Tengu. ¿Pueden enviarme información sobre sus paquetes?')"><span>Cena corporativa</span>Organizar una cena de negocios...</button>
+          <button class="wa-tmpl" onclick="openWA('Hola! Quiero celebrar un evento especial en Tengu. ¿Tienen espacios privados disponibles?')"><span>Evento privado</span>Celebrar un evento especial...</button>
+        </div>
+        <button class="wa-btn" onclick="openWA('Hola Tengu! Me gustaría obtener más información y hacer una reserva.')">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Abrir WhatsApp
+        </button>
+      </div>
+    </div>
+    <div class="reserve-hours">
+      <div class="rh-item"><span>Horarios</span><p>Mar–Dom · 19:00 – 23:30</p></div>
+      <div class="rh-item"><span>Teléfono</span><p>+56 X XXXX XXXX</p></div>
+      <div class="rh-item"><span>Ubicación</span><p>W Santiago · Local 104</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ORÁCULO -->
+<section class="ai-section" id="ai">
+  <div class="ai-inner">
+    <div class="ai-header">
+      <p class="sec-tag">El Oráculo del Tengu</p>
+      <h2 class="sec-title" style="text-align:center">Tu guía <em>espiritual</em><br>de la experiencia</h2>
+      <p style="font-size:14.5px;color:var(--cream2);text-align:center;margin-top:10px">Pregúntame sobre la carta, el sake, los yokai o haz tu reserva.</p>
+    </div>
+    <div class="ai-status">
+      <span class="status-dot"></span>
+      <span class="status-text">El Oráculo está despierto</span>
+    </div>
+    <div class="chat-window" id="chatWindow">
+      <div class="chat-msg">
+        <div class="chat-avatar tengu">天</div>
+        <div class="chat-bubble tengu">Bienvenido a Tengu. Soy el Oráculo — guardián de los sabores y las historias de este restaurante.<br><br>Puedo guiarte por nuestra carta, explicarte el universo del sake, contarte la historia de nuestros yokai o ayudarte a reservar tu mesa. ¿En qué puedo servirte esta noche?</div>
+      </div>
+    </div>
+    <div class="chat-controls">
+      <div class="chat-input-row">
+        <textarea class="chat-input" id="chatInput" placeholder="Escribe tu pregunta al Oráculo..." rows="1"></textarea>
+        <button class="chat-send" id="sendBtn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Enviar
+        </button>
+      </div>
+      <div class="chat-footer">
+        <div class="chat-suggestions">
+          <button class="sugg" onclick="askSugg('sake teppanyaki')">Sake para wagyu</button>
+          <button class="sugg" onclick="askSugg('historia tengu')">Historia del Tengu</button>
+          <button class="sugg" onclick="askSugg('reserva')">Hacer reserva</button>
+          <button class="sugg" onclick="askSugg('yokai pulpo')">Yokai del pulpo</button>
+          <button class="sugg" onclick="askSugg('diferencia')">¿Por qué Tengu?</button>
+          <button class="sugg" onclick="askSugg('horario')">Horarios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">天狗</div>
+    <p class="footer-tagline">El guardián de las montañas.<br>Una experiencia ritual en el corazón de Santiago.</p>
+    <p style="font-size:11.5px;color:rgba(184,174,158,.28);margin-top:13px;font-family:var(--font-m);letter-spacing:.1em">@tengu_restaurant</p>
+  </div>
+  <div class="footer-col">
+    <h4>El restaurante</h4>
+    <a href="#about">La historia</a>
+    <a href="#menu">La carta</a>
+    <a href="#sake">El sake</a>
+    <a href="#ai">El Oráculo</a>
+    <a href="#reserve">Reservas</a>
+  </div>
+  <div class="footer-col">
+    <h4>Visítanos</h4>
+    <p>Isidora Goyenechea 3000</p>
+    <p>Local 104 · W Santiago</p>
+    <p>Las Condes · Santiago</p>
+    <p style="margin-top:9px">Mar–Dom · 19:00–23:30</p>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Tengu · W Santiago · Chef Enzo Catalán · Todos los derechos reservados</p>
+    <p>El Guardián de las Montañas · Las Condes · Santiago de Chile</p>
+  </div>
+</footer>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────
+const WA_NUMBER = '56999999999'; // ← reemplazar con número real de Tengu
+
+// ── Cursor ────────────────────────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+  ring.style.left   = e.clientX+'px'; ring.style.top   = e.clientY+'px';
+});
+document.querySelectorAll('a,button,.menu-item,.sake-card,.sugg,.wa-tmpl').forEach(el => {
+  el.addEventListener('mouseenter',()=>{ cursor.style.width='14px'; cursor.style.height='14px'; });
+  el.addEventListener('mouseleave',()=>{ cursor.style.width='8px';  cursor.style.height='8px';  });
+});
+
+// ── Menu tabs ─────────────────────────────────────────────────────
+function showCat(id, btn) {
+  document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('cat-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── WhatsApp ─────────────────────────────────────────────────────
+function openWA(msg) {
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+document.getElementById('waFloat').onclick = e => {
+  e.preventDefault();
+  openWA('Hola! Me gustaría hacer una reserva en Tengu.');
+};
+
+// ── Reserva form → WhatsApp ───────────────────────────────────────
+function submitReserva() {
+  const name   = document.getElementById('srName').value.trim();
+  const phone  = document.getElementById('srPhone').value.trim();
+  const date   = document.getElementById('srDate').value;
+  const time   = document.getElementById('srTime').value;
+  const guests = document.getElementById('srGuests').value;
+  const occ    = document.getElementById('srOcc').value;
+  const notes  = document.getElementById('srNotes').value.trim();
+  if (!name || !date || !time || !guests) {
+    alert('Por favor completa nombre, fecha, hora y número de comensales.');
+    return;
+  }
+  const msg = `*Solicitud de reserva — Tengu*\n👤 ${name}${phone?' · '+phone:''}\n📅 ${date} a las ${time}\n👥 ${guests}${occ?'\n🎉 '+occ:''}${notes?'\n📝 '+notes:''}`;
+  openWA(msg);
+}
+
+// ── Auto-grow textarea ────────────────────────────────────────────
+const input = document.getElementById('chatInput');
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+});
+input.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+
+// ── ORÁCULO — Respuestas inteligentes predefinidas ────────────────
+// Sin API key — cubre todas las preguntas frecuentes con respuestas
+// poéticas y en el tono del restaurante. Cuando tengan API key,
+// reemplazar la función getResponse() por la llamada a /api/chat.
+
+const RESPONSES = [
+  {
+    keys: ['sake','marid','bebida','tomar','vino'],
+    subkeys: {
+      'wagyu|teppan|carne|fuego|potente|intens': `El Junmai Daiginjo Hakkaisan es tu aliado para el wagyu en teppanyaki. Su pureza de arroz y umami profundo se alinean con la intensidad del fuego y la grasa marmoleada del wagyu A5 — un maridaje que el Raijin, dios del trueno, aprobaría.\n\nPara las carnes de la robata, el mismo Junmai o un Honjozo seco funcionan a la perfección. El sake frío limpia el paladar entre cada bocado y prepara el camino para el siguiente.`,
+      'nigiri|pescado|frio|hamachi|atun|salmon': `Para los nigiris y pescados finos, el Ginjo Dassai 39 es nuestra recomendación. Sus notas florales de pera blanca y flores de cerezo realzan la frescura del atún bluefin y el hamachi sin abrumarlos.\n\nSe sirve ligeramente frío, entre 10 y 12 grados. Un ritual tan preciso como el corte del nigiri mismo.`,
+      'postre|dulce|mochi|matcha|yuzu|queso': `Para el cierre ritual, el Nigori Kikusui — sin filtrar, cremoso y sutilmente dulce — es el compañero perfecto del parfait de matcha o la tarta de yuzu.\n\nSu textura sedosa y su dulzura natural crean un contraste elegante con la acidez del yuzu y la intensidad terrosa del matcha de ceremonia.`,
+    },
+    default: `Nuestra carta de sake es la más completa de Santiago — cuatro estilos que cubren el espectro completo de la gastronomía japonesa.\n\nEl Junmai Daiginjo Hakkaisan para carnes y teppanyaki. El Ginjo Dassai 39 para nigiris y pescados. El Nigori Kikusui para postres. El Honjozo Ozeki como aperitivo ligero.\n\nNuestro sommelier estará encantado de guiar tu elección en mesa — cada sake tiene una historia que merece ser contada.`
+  },
+  {
+    keys: ['tengu','historia','leyenda','criatura','folclor','mito','yokai','spirit'],
+    subkeys: {
+      'kappa': `El Kappa es un espíritu acuático del folclore japonés — una criatura que habita ríos y lagos, guardián ambivalente de las aguas. Astuto y travieso, pero también honorable cuando se le respeta.\n\nEn nuestra carta, el Kappa inspira el Nigiri de Atún Bluefin y el Pulpo a la Brasa — platos que vienen del mar, transformados por el fuego y la técnica en algo que va más allá de lo natural.`,
+      'raijin': `Raijin es el dios del trueno y el fuego en el panteón japonés — una fuerza cósmica que transforma. Es el espíritu que invocamos al encender el teppanyaki.\n\nCuando el wagyu A5 toca la plancha de hierro al rojo vivo, el chisporroteo que escuchas es el eco de Raijin. Cada llama es un homenaje a esa energía ancestral.`,
+      'kitsune': `El Kitsune — el zorro de nueve colas — es símbolo de astucia, inteligencia y transformación. Puede adoptar cualquier forma, engañar cualquier sentido.\n\nPor eso inspira nuestro Tiradito Tengu: un plato que transforma el salmón chileno con técnica japonesa, ponzu de miso y leche de tigre — una fusión que desafía las categorías y engaña al paladar de la manera más placentera posible.`,
+      'oni': `El Oni es la fuerza primitiva del folclore japonés — poder, intensidad, lo que no se puede domesticar del todo. Por eso inspira nuestros cortes más potentes: el Tartar de Wagyu A5 y la Costilla en Robata.\n\nHay algo en la intensidad del wagyu marmoleado, en la grasa que se funde lentamente, que evoca esa energía irreductible del Oni.`,
+    },
+    default: `El Tengu es una criatura legendaria del folclore japonés cuyo origen se remonta al budismo y el sintoísmo. Durante siglos fue temido como un demonio; con el tiempo evolucionó a guardián de las montañas y protector del bosque — símbolo de fuerza, sabiduría y equilibrio espiritual.\n\nEvoca misterio, poder y la tradición japonesa más profunda. Es el guardián de los maestros de artes marciales, el que pone a prueba a los dignos y protege a los puros de corazón.\n\nCada plato de nuestra carta rinde homenaje a un espíritu del panteón japonés. El Kappa en los platos de mar, el Raijin en el teppanyaki, el Kitsune en los platos más sorprendentes. ¿Sobre cuál quieres saber más?`
+  },
+  {
+    keys: ['reserva','mesa','book','reservar','disponib','fecha','hora','noche'],
+    subkeys: {
+      'corporat|empresa|negocio|directorio|trabajo': `Para cenas corporativas tenemos tres paquetes diseñados para el mundo empresarial del Sanhattan.\n\nEl Menú Ejecutivo (desde $45.000/persona): 4 tiempos con selección de sake, ideal para equipos de 6–12 personas. La Cena de Directorio (desde $85.000/persona): omakase de 6 tiempos con sommelier dedicado, teppanyaki en mesa y presencia del chef. Y la Sala Exclusiva para eventos privados de hasta 60 personas.\n\nEscríbenos directamente por WhatsApp usando el botón de abajo o en la sección Reservas — nuestro equipo de eventos te contactará hoy mismo.`,
+      'privad|event|celebrac|cumpleaños|aniversar|grupo': `Para eventos privados y celebraciones especiales, Tengu ofrece el uso exclusivo del restaurante para grupos de hasta 60 personas.\n\nCoordinamos menú y decoración a medida, show cooking de teppanyaki o robatayaki como entretenimiento, y trabajamos junto al equipo de eventos del W Santiago para cuidar cada detalle.\n\nEscríbenos por WhatsApp con la fecha tentativa y el número de personas — te enviaremos una propuesta personalizada.`,
+    },
+    default: `Puedes reservar tu mesa de tres maneras:\n\n1. A través del formulario en la sección Reservas de esta página — completa los datos y te confirmamos por WhatsApp en menos de 30 minutos.\n\n2. Directamente por WhatsApp usando el botón verde en la esquina inferior derecha.\n\n3. Por teléfono al +56 X XXXX XXXX.\n\nAtendemos martes a domingo de 19:00 a 23:30. Estamos en Isidora Goyenechea 3000, local 104, dentro del W Santiago en Las Condes.`
+  },
+  {
+    keys: ['carta','plato','comer','menu','comida','recomiend','pedir','estrella','mejor','especial'],
+    subkeys: {
+      'frio|nigiri|sushi|crudo': `En los fríos, el Tartar de Wagyu A5 es nuestro plato de presentación — wagyu japonés A5 picado a cuchillo, yema curada en soya y trufa de temporada. Una declaración de intenciones sobre lo que encontrarás en Tengu.\n\nPara quienes prefieren empezar con el mar, el Nigiri de Atún Bluefin con ralladura de yuzu es la pureza absoluta de la cocina japonesa.`,
+      'teppan|hierro|plancha|wagyu': `El Wagyu A5 en Teppanyaki es el plato que define a Tengu — 200 gramos de wagyu japonés A5, la calidad más alta, cocinados ante tus ojos en la plancha de hierro. Sal de Maldon, mantequilla de shio koji y una reducción de sake daiginjo.\n\nEs el plato del Raijin, el dios del fuego. Simple en su concepción, absoluto en su resultado.`,
+      'robata|brasa|fuego|pulpo': `En la robata, el Pulpo a la Brasa es nuestra pieza más icónica — pulpo del norte de Chile braseado sobre carbón vivo, con ponzu ahumado y mantequilla de wasabi. El fuego transforma, el ponzu ilumina.\n\nLa Costilla de Wagyu cocinada 48 horas y terminada en robata es la apuesta más intensa de la carta — para quienes quieren entender qué significa la paciencia japonesa aplicada a la carne.`,
+    },
+    default: `Nuestra carta viaja por cinco universos: fríos y sushi, teppanyaki, robatayaki, sopas y postres — cada uno inspirado en un espíritu diferente del folclore japonés.\n\nPara una primera visita, recomendamos comenzar con el Tartar de Wagyu A5 y el Nigiri de Atún Bluefin, continuar con el Wagyu en Teppan — el plato más emblemático de Tengu — y cerrar con el Parfait de Matcha.\n\nEn la sección Carta de esta página puedes explorar cada categoría con los platos completos y los espíritus que los inspiran. ¿Hay alguna categoría sobre la que quieras saber más?`
+  },
+  {
+    keys: ['horario','abre','cierra','cuando','dias','martes','viernes','domingo','lunes'],
+    default: `Tengu abre sus puertas de martes a domingo, de 19:00 a 23:30 horas.\n\nLos lunes el guardián descansa.\n\nEstamos en Isidora Goyenechea 3000, local 104, dentro del W Santiago hotel 5 estrellas en Las Condes. A metros del metro Tobalaba y con estacionamiento en el edificio W.`
+  },
+  {
+    keys: ['karai','competenc','diferencia','otro','mejor','unico','vs','versus','compare'],
+    default: `Tengu y Karai son propuestas distintas que coexisten en el mismo edificio — algo que, en realidad, convierte al W Santiago en el destino japonés más completo de Santiago.\n\nKarai es cocina nikkei: la fusión de Perú y Japón, interpretada por el chef Mitsuharu Tsumura. Tengu es cocina japonesa pura: sin fusión, sin compromisos. El teppanyaki y el robatayaki — el fuego vivo — son formatos que Karai no tiene.\n\nSon dos filosofías distintas del mismo universo. Venir a Tengu es elegir la tradición japonesa en su forma más directa y honesta, con la narrativa mitológica como hilo conductor de cada plato.`
+  },
+  {
+    keys: ['donde','ubicacion','como llegar','direccion','estacion','metro','taxi','parking'],
+    default: `Nos encontramos en Isidora Goyenechea 3000, local 104, dentro del W Santiago — el hotel boutique 5 estrellas de Las Condes.\n\nLa manera más cómoda de llegar es en taxi o Uber hasta la entrada del W. También puedes usar el metro hasta la estación Tobalaba (Línea 1) y caminar 8 minutos, o hasta El Golf y tomar un taxi corto.\n\nEl edificio W tiene estacionamiento disponible. Al llegar, pide por el restaurante Tengu — el equipo del hotel te guiará.`
+  },
+  {
+    keys: ['precio','costo','cuanto','valor','ticket','gasto','presupuesto','caro','economico'],
+    default: `La experiencia Tengu está diseñada para ocasiones que merecen ser celebradas. La carta parte desde $7.900 en postres hasta los $48.900 del Wagyu A5 en Teppanyaki.\n\nUna cena completa de dos personas — entrada, plato principal, sake y postre — oscila entre $80.000 y $160.000 dependiendo de la selección.\n\nPara cenas corporativas o eventos, tenemos paquetes cerrados desde $45.000 por persona con menú ejecutivo de 4 tiempos. Escríbenos por WhatsApp para una cotización personalizada.`
+  },
+  {
+    keys: ['alerg','celiac','vegetar','vegan','sin gluten','lactosa','restriccion','alergia'],
+    default: `En Tengu estamos preparados para acoger a comensales con restricciones alimentarias. Contamos con opciones vegetarianas en todas las secciones de la carta — las Verduras de Temporada en robata y el Miso Clásico son platos sin proteína animal.\n\nPara alergias específicas — mariscos, frutos secos, gluten, lácteos — te recomendamos informarnos al momento de hacer la reserva para que la cocina pueda preparar alternativas y evitar contaminación cruzada.\n\nPuedes indicarlo en el formulario de reserva o escribirnos directamente por WhatsApp.`
+  }
+];
+
+const FALLBACK_RESPONSES = [
+  `Una pregunta digna del Oráculo. En Tengu, cada detalle — desde el corte del pescado hasta la temperatura del sake — es una decisión ritual.\n\nLo mejor es que vengas a vivirlo en persona, o escríbenos por WhatsApp para que nuestro equipo pueda responderte con toda la precisión que mereces.`,
+  `El Oráculo medita sobre tu pregunta. Hay algunas cosas que solo pueden responderse frente a la robata encendida y con una copa de Daiginjo en mano.\n\nPara información específica, nuestro equipo está disponible por WhatsApp de 12:00 a 22:00.`,
+  `Cada pregunta sobre Tengu merece una respuesta a la altura del restaurante. Para esto, te invito a contactar directamente a nuestro equipo por WhatsApp — están disponibles para orientarte con la misma dedicación con que el chef prepara cada plato.`
+];
+
+let fallbackIdx = 0;
+
+function getResponse(msg) {
+  const m = msg.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  for (const r of RESPONSES) {
+    if (r.keys.some(k => m.includes(k))) {
+      if (r.subkeys) {
+        for (const [subkey, reply] of Object.entries(r.subkeys)) {
+          if (new RegExp(subkey).test(m)) return reply;
+        }
+      }
+      return r.default;
+    }
+  }
+  const fb = FALLBACK_RESPONSES[fallbackIdx % FALLBACK_RESPONSES.length];
+  fallbackIdx++;
+  return fb;
+}
+
+// ── Chat UI ───────────────────────────────────────────────────────
+const chatWin = document.getElementById('chatWindow');
+
+function addMsg(text, type) {
+  const d = document.createElement('div');
+  d.className = `chat-msg ${type === 'user' ? 'user' : ''}`;
+  const av = type === 'user'
+    ? `<div class="chat-avatar user-av">Tú</div>`
+    : `<div class="chat-avatar tengu">天</div>`;
+  d.innerHTML = type === 'user'
+    ? `<div class="chat-bubble user">${text.replace(/\n/g,'<br>')}</div>${av}`
+    : `${av}<div class="chat-bubble tengu">${text.replace(/\n/g,'<br>')}</div>`;
+  chatWin.appendChild(d);
+  chatWin.scrollTop = chatWin.scrollHeight;
+}
+
+function showTyping() {
+  const d = document.createElement('div');
+  d.className = 'typing-wrap'; d.id = 'typingMsg';
+  d.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" style="padding:0"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+  chatWin.appendChild(d);
+  chatWin.scrollTop = chatWin.scrollHeight;
+}
+
+function typeText(el, text, speed = 18) {
+  return new Promise(resolve => {
+    let i = 0;
+    const lines = text.split('\n');
+    let charFlat = text.replace(/\n/g,'|');
+    let display = '';
+    const interval = setInterval(() => {
+      if (i < charFlat.length) {
+        const ch = charFlat[i];
+        display += ch === '|' ? '<br>' : ch;
+        el.innerHTML = display + '<span style="display:inline-block;width:2px;height:.9em;background:var(--gold);margin-left:2px;vertical-align:text-bottom;animation:blink .7s infinite"></span>';
+        chatWin.scrollTop = chatWin.scrollHeight;
+        i++;
+      } else {
+        clearInterval(interval);
+        el.innerHTML = text.replace(/\n/g,'<br>');
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+let isStreaming = false;
+
+async function sendMessage() {
+  if (isStreaming) return;
+  const text = input.value.trim();
+  if (!text) return;
+  isStreaming = true;
+  input.value = ''; input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+
+  addMsg(text, 'user');
+  showTyping();
+
+  // Delay realista (500–900ms) para dar sensación de "pensando"
+  await new Promise(r => setTimeout(r, 500 + Math.random() * 400));
+  document.getElementById('typingMsg')?.remove();
+
+  const response = getResponse(text);
+
+  const d = document.createElement('div');
+  d.className = 'chat-msg';
+  d.innerHTML = `<div class="chat-avatar tengu">天</div><div class="chat-bubble tengu" id="typingBubble"></div>`;
+  chatWin.appendChild(d);
+  chatWin.scrollTop = chatWin.scrollHeight;
+
+  await typeText(document.getElementById('typingBubble'), response, 14);
+
+  isStreaming = false;
+  document.getElementById('sendBtn').disabled = false;
+  input.focus();
+}
+
+function askSugg(key) {
+  if (isStreaming) return;
+  // Map suggestion keys to full questions
+  const map = {
+    'sake teppanyaki': '¿Qué sake recomiendas para el teppanyaki wagyu?',
+    'historia tengu':  '¿Cuál es la historia del Tengu en la mitología japonesa?',
+    'reserva':         '¿Cómo puedo hacer una reserva?',
+    'yokai pulpo':     '¿Qué yokai inspira el pulpo a la brasa?',
+    'diferencia':      '¿En qué se diferencia Tengu de otros restaurantes japoneses de Santiago?',
+    'horario':         '¿Cuáles son los horarios de Tengu?',
+  };
+  input.value = map[key] || key;
+  sendMessage();
+}
+</script>
+</body>
+</html>
