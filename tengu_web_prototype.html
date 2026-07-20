@@ -349,7 +349,7 @@ footer {
   <div class="hero-bg"></div>
   <div class="hero-kanji">天</div>
   <div class="hero-content">
-    <p class="hero-tag">W Santiago · Las Condes · Chef Enzo Catalán</p>
+    <p class="hero-tag">W Santiago · Las Condes</p>
     <h1 class="hero-title"><em>Tengu</em></h1>
     <p class="hero-sub">天狗 · El Guardián de las Montañas</p>
     <div class="hero-ctas">
@@ -543,7 +543,7 @@ footer {
   </div>
   <div class="footer-bottom">
     <p>© 2025 Tengu · W Santiago · Todos los derechos reservados</p>
-    <p>Diseñado para el guardián · Chef Enzo Catalán</p>
+    <p>Diseñado para el guardián</p>
   </div>
 </footer>
 
@@ -569,7 +569,7 @@ const responses = {
   'sake': 'Para el teppanyaki, recomiendo un Junmai Daiginjo — su pureza y notas de frutas tropicales complementan perfectamente la intensidad del fuego. El calor de la plancha libera los aromas del sake, creando una experiencia sensorial completa. También podemos explorar un Junmai Ginjo si prefieres algo más sutil.',
   'tengu': 'El Tengu es una criatura legendaria del folclore japonés, cuyo origen se remonta al budismo y al sintoísmo. Es el guardián de las montañas y protector del bosque — símbolo de fuerza, sabiduría y equilibrio espiritual. Evoca misterio y poder. En nuestra carta, cada plato honra a un espíritu diferente del panteón japonés.',
   'reserva': 'Puedes reservar directamente desde esta página, llamando al +56 2 2770 0000 o escribiéndonos por WhatsApp. Atendemos de martes a domingo de 19:00 a 23:30. Para grupos de más de 8 personas o eventos privados, escríbenos a eventos@tengu.cl para una propuesta personalizada.',
-  'chef': 'El chef Enzo Catalán ha construido su visión culinaria sobre dos pilares: la técnica japonesa y el producto chileno. Su carta en Tengu es un tributo a las ceremonias y los espíritus del Japón ancestral — cada plato tiene una historia mitológica detrás. El teppanyaki y el robatayaki son sus formatos estrella: el fuego como herramienta de transformación.',
+  'chef': 'El chef ha construido su visión culinaria sobre dos pilares: la técnica japonesa y el producto chileno. Su carta en Tengu es un tributo a las ceremonias y los espíritus del Japón ancestral — cada plato tiene una historia mitológica detrás. El teppanyaki y el robatayaki son sus formatos estrella: el fuego como herramienta de transformación.',
   'default': 'Una pregunta digna del Oráculo. En Tengu, cada elemento — desde el corte del pescado hasta la temperatura del sake — es una decisión ritual. Te invito a explorar nuestra carta o reservar tu mesa para vivirlo en persona. ¿Te puedo ayudar con algo más específico?'
 };
 
@@ -578,7 +578,7 @@ function getResponse(msg) {
   if (m.includes('sake') || m.includes('bebida') || m.includes('vino')) return responses.sake;
   if (m.includes('tengu') || m.includes('historia') || m.includes('yokai') || m.includes('mitolog')) return responses.tengu;
   if (m.includes('reserva') || m.includes('mesa') || m.includes('horario') || m.includes('lugar')) return responses.reserva;
-  if (m.includes('chef') || m.includes('enzo') || m.includes('plato') || m.includes('estrella')) return responses.chef;
+  if (m.includes('chef') || m.includes('plato') || m.includes('estrella')) return responses.chef;
   return responses.default;
 }
 
