@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tengu — W Santiago</title>
+<meta name="description" content="Tengu — cocina japonesa kappo en el W Santiago, Las Condes. Honmaguro (atún bluefin), nigiris, makis, cava de sake y vinos. Carta oficial y reservas.">
+<link rel="canonical" href="https://tengu-deploy.vercel.app/">
+<meta name="theme-color" content="#060503">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tengu">
+<meta property="og:title" content="Tengu — W Santiago">
+<meta property="og:description" content="Tengu — cocina japonesa kappo en el W Santiago, Las Condes. Honmaguro (atún bluefin), nigiris, makis, cava de sake y vinos. Carta oficial y reservas.">
+<meta property="og:url" content="https://tengu-deploy.vercel.app/">
+<meta property="og:image" content="https://tengu-deploy.vercel.app/tengu_sushi2.jpeg">
+<meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tengu — W Santiago">
+<meta name="twitter:description" content="Tengu — cocina japonesa kappo en el W Santiago, Las Condes. Honmaguro (atún bluefin), nigiris, makis, cava de sake y vinos. Carta oficial y reservas.">
+<meta name="twitter:image" content="https://tengu-deploy.vercel.app/tengu_sushi2.jpeg">
 <link rel="icon" type="image/svg+xml" href="favicon.svg"><link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -446,6 +460,32 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
   .cthumb{flex:0 0 64px!important;height:42px!important}
 }
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Tengu",
+  "url": "https://tengu-deploy.vercel.app/",
+  "image": "https://tengu-deploy.vercel.app/tengu_sushi2.jpeg",
+  "servesCuisine": "Japonesa",
+  "priceRange": "$$$",
+  "acceptsReservations": "True",
+  "hasMenu": "https://tengu-deploy.vercel.app/#menu",
+  "sameAs": ["https://www.instagram.com/tengu_restaurant/"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Isidora Goyenechea 3000, Local 104",
+    "addressLocality": "Las Condes",
+    "addressRegion": "Región Metropolitana",
+    "addressCountry": "CL"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "13:00", "closes": "15:30"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "19:00", "closes": "23:00"},
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "13:00", "closes": "16:00"}
+  ]
+}
+</script>
 </head>
 <body>
 <div class="cursor" id="cursor"></div>
@@ -480,7 +520,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 </div>
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-photo"><img src="tengu_fire.jpeg" alt="Tengu fuego"></div>
+  <div class="hero-photo"><img loading="lazy" src="tengu_fire.jpeg" alt="Tengu fuego"></div>
   <div class="hero-kanji">天</div>
   <div class="hero-content">
     <p class="hero-tag">W Santiago · Las Condes</p>
@@ -505,11 +545,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <!-- Mini carrusel en About -->
     <div class="about-carousel" style="position:relative;height:520px;overflow:hidden">
       <div class="ac-track" id="acTrack" style="display:flex;height:100%;transition:transform .7s cubic-bezier(.25,.46,.45,.94)">
-        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img src="tengu_sushi2.jpeg" alt="Tengu sushi" style="width:100%;height:100%;object-fit:cover;object-position:center center;filter:brightness(.82)"></div>
-        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img src="tengu_kitchen.jpeg" alt="Tengu cocina" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:brightness(.82)"></div>
-        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img src="tengu_scallop.jpeg" alt="Tengu vieiras" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.85)"></div>
-        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img src="tengu_tuna_roll.jpeg" alt="Tengu roll atún" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;filter:brightness(.85)"></div>
-        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img src="tengu_cocktail.jpeg" alt="Tengu cócteles" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.82)"></div>
+        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img loading="lazy" src="tengu_sushi2.jpeg" alt="Tengu sushi" style="width:100%;height:100%;object-fit:cover;object-position:center center;filter:brightness(.82)"></div>
+        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img loading="lazy" src="tengu_kitchen.jpeg" alt="Tengu cocina" style="width:100%;height:100%;object-fit:cover;object-position:center 25%;filter:brightness(.82)"></div>
+        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img loading="lazy" src="tengu_scallop.jpeg" alt="Tengu vieiras" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;filter:brightness(.85)"></div>
+        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img loading="lazy" src="tengu_tuna_roll.jpeg" alt="Tengu roll atún" style="width:100%;height:100%;object-fit:cover;object-position:center 55%;filter:brightness(.85)"></div>
+        <div style="flex:0 0 100%;height:100%;overflow:hidden"><img loading="lazy" src="tengu_cocktail.jpeg" alt="Tengu cócteles" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.82)"></div>
       </div>
       <!-- Flechas -->
       <button onclick="acMove(-1)" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:38px;height:38px;background:rgba(6,5,3,.55);border:1px solid rgba(200,146,26,.35);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5">
@@ -995,7 +1035,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
     <div class="reserve-hours" style="margin-top:20px">
       <div class="rh-item"><span>Horarios</span><p>Mar–Sáb 13:00–15:30 · 19:00–23:00 | Dom 13:00–16:00 | Lun cerrado</p></div>
-      <div class="rh-item"><span>Teléfono</span><p>+56 X XXXX XXXX</p></div>
+      <div class="rh-item"><span>Instagram</span><p>@tengu_restaurant</p></div>
       <div class="rh-item"><span>Ubicación</span><p>W Santiago · Local 104</p></div>
     </div>
   </div>
@@ -1064,7 +1104,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
         <!-- Foto principal -->
         <a href="https://www.instagram.com/tengu_restaurant/" target="_blank"
           style="overflow:hidden;position:relative;background:var(--dark3);display:block">
-          <img src="tengu_kitchen.jpeg" alt="Tengu W Santiago"
+          <img loading="lazy" src="tengu_kitchen.jpeg" alt="Tengu W Santiago"
             style="width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(.72);transition:all .6s;display:block"
             onmouseover="this.style.filter='brightness(.95)';this.style.transform='scale(1.03)'"
             onmouseout="this.style.filter='brightness(.72)';this.style.transform='scale(1)'">
@@ -1076,19 +1116,19 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
         <!-- Thumbnails -->
         <div style="display:grid;grid-template-rows:1fr 1fr 1fr;gap:3px">
           <a href="https://www.instagram.com/tengu_restaurant/" target="_blank" style="overflow:hidden;background:var(--dark3);display:block;position:relative">
-            <img src="tengu_fire.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
+            <img loading="lazy" src="tengu_fire.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
               onmouseover="this.style.filter='brightness(1)';this.style.transform='scale(1.05)'"
               onmouseout="this.style.filter='brightness(.75)';this.style.transform='scale(1)'">
             <span style="position:absolute;bottom:8px;left:10px;font-family:var(--font-m);font-size:7px;letter-spacing:.14em;color:rgba(200,146,26,.7);text-transform:uppercase">El fuego</span>
           </a>
           <a href="https://www.instagram.com/tengu_restaurant/" target="_blank" style="overflow:hidden;background:var(--dark3);display:block;position:relative">
-            <img src="tengu_tuna_roll.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
+            <img loading="lazy" src="tengu_tuna_roll.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
               onmouseover="this.style.filter='brightness(1)';this.style.transform='scale(1.05)'"
               onmouseout="this.style.filter='brightness(.75)';this.style.transform='scale(1)'">
             <span style="position:absolute;bottom:8px;left:10px;font-family:var(--font-m);font-size:7px;letter-spacing:.14em;color:rgba(200,146,26,.7);text-transform:uppercase">La carta</span>
           </a>
           <a href="https://www.instagram.com/tengu_restaurant/" target="_blank" style="overflow:hidden;background:var(--dark3);display:block;position:relative">
-            <img src="tengu_cocktail.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
+            <img loading="lazy" src="tengu_cocktail.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:all .4s;display:block"
               onmouseover="this.style.filter='brightness(1)';this.style.transform='scale(1.05)'"
               onmouseout="this.style.filter='brightness(.75)';this.style.transform='scale(1)'">
             <span style="position:absolute;bottom:8px;left:10px;font-family:var(--font-m);font-size:7px;letter-spacing:.14em;color:rgba(200,146,26,.7);text-transform:uppercase">Los cócteles</span>
@@ -1199,7 +1239,7 @@ function submitReserva(){const name=document.getElementById('srName').value.trim
 const input=document.getElementById('chatInput');
 input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
-const RESPONSES=[{keys:['sake','marid','bebida','tomar','vino'],subkeys:{'wagyu|teppan|carne|fuego|potente|intens':'Para el fuego — el Maguro Teppanyaki o el Gyutan de Wagyu — un Junmai Daiginjo con cuerpo: el Nanbu Bijin Shinpaku (720 ml, $79.900) o el Especial Nanbu Bijin ($59.900).\n\nEl sake frío limpia el paladar entre cada bocado.','nigiri|pescado|frio|hamachi|atun|salmon':'Para los nigiris y el bluefin: Kubota Senjyu (330 ml, $24.900) — ligero, melón, cítricos — o su hermano mayor, el Manju de Kubota ($49.900), floral y profundo.\n\nSe sirve frío. Un ritual tan preciso como el corte del nigiri mismo.','postre|dulce|mochi|matcha|yuzu|queso':'Para el cierre ritual, el Sanuki Cloudy (720 ml, $34.900) — estilo nigori, sin filtrar, cremoso — acompaña el Tiramisú de Matcha o el Sorbete de Limón de Pica.\n\nSu textura sedosa contrasta con la intensidad terrosa del matcha.'},default:'Nuestra cava de sake cubre el espectro completo: botellas de 720 ml — Sanuki Cloudy, Nanbu Bijin Shinpaku Junmai Daiginjo, Especial Nanbu Bijin — y de 330 ml, como el Kubota Senjyu y el Manju de Kubota.\n\nLa lista completa está en la sección Sake.\n\nNuestro sommelier estará encantado de guiar tu elección en mesa.'},{keys:['tengu','historia','leyenda','criatura','folclor','mito','yokai','spirit'],subkeys:{'kappa':'El Kappa es un espíritu acuático del folclore japonés — guardián ambivalente de las aguas, astuto y travieso pero honorable.\n\nEn nuestra carta le rinde homenaje el hosomaki Kappa — pepino fresco, pura sencillez — y todos los platos que vienen del mar.','raijin':'Raijin es el dios del trueno y el fuego — una fuerza cósmica que transforma. Es el espíritu que invocamos al encender la plancha.\n\nEl Raijin Maki lleva su nombre; el Maguro Teppanyaki, su fuego.','kitsune':'El Kitsune — el zorro de nueve colas — es símbolo de astucia y transformación.\n\nPor eso inspira las piezas omakase: el Gunkan Omakase, el Mini Donburi Omakase y el nigiri de wagyu flameado con foie — platos que se transforman ante tus ojos.','oni':'El Oni es la fuerza primitiva — poder, intensidad, lo que no se puede domesticar. Por eso inspira el Gyutan de Wagyu y el Ise Ebi Miso — la langosta al fuego del miso.\n\nHay algo en la intensidad del wagyu que evoca esa energía irreductible del Oni.'},default:'El Tengu es una criatura legendaria del folclore japonés — guardián de las montañas y protector del bosque, símbolo de fuerza, sabiduría y equilibrio espiritual.\n\nCada plato de nuestra carta rinde homenaje a un espíritu del panteón japonés. El Kappa en los platos de mar, el Raijin en el teppanyaki, el Kitsune en los platos más sorprendentes.\n\n¿Sobre cuál yokai quieres saber más?'},{keys:['reserva','mesa','book','reservar','disponib','fecha','hora','noche'],subkeys:{'corporat|empresa|negocio|directorio':'Para cenas corporativas tenemos tres paquetes.\n\nEl Menú Ejecutivo (desde $45.000/persona): 4 tiempos con sake, ideal para equipos. La Cena de Directorio (desde $85.000/persona): omakase con sommelier, teppanyaki en mesa y presencia del chef. Y la Sala Exclusiva para eventos hasta 60 personas.\n\nEscríbenos por WhatsApp — nuestro equipo te contactará hoy mismo.','privad|event|celebrac|cumpleaños|aniversar':'Para eventos privados, Tengu ofrece uso exclusivo del restaurante hasta 60 personas. Menú y decoración a medida, show cooking disponible.\n\nEscríbenos por WhatsApp con la fecha tentativa y el número de personas.'},default:'Puedes reservar de tres maneras:\n\n1. Formulario en la sección Reservas de esta página — confirmamos por WhatsApp en 30 minutos.\n\n2. WhatsApp directo — botón verde en la esquina inferior derecha.\n\n3. Teléfono al +56 X XXXX XXXX.\n\nAtendemos Mar–Sáb 13:00–15:30 · 19:00–23:00 | Dom 13:00–16:00 | Lun cerrado. Isidora Goyenechea 3000, local 104, W Santiago.'},{keys:['carta','plato','comer','menu','comida','recomiend','pedir','estrella','mejor'],subkeys:{'frio|nigiri|sushi|crudo':'El corazón de Tengu es el Honmaguro — atún bluefin. Nigiri de akami a $9.900, chutoro a $9.900 y otoro a $10.590; sashimi de maguro de 6 a 25 cortes, y el Tartar de Bluefin a $19.900.\n\nPara explorar el crudo: el Usuzukuri Toro Aburi o un Sashimi Moriawase del día.','teppan|hierro|plancha|wagyu':'Del fuego: el Maguro Teppanyaki ($29.900) — atún bluefin a la plancha.\n\nDel wagyu: el Gyu Kuro Sando ($14.900), el Gyutan de Wagyu ($17.900) y, en nigiris omakase, wagyu con trufa o flameado con foie ($7.900 la unidad).','robata|brasa|fuego|pulpo':'De la robata: el Tako Robatayaki — pulpo por unidad ($12.900), en la sección Otsumami.\n\nY de la cocina caliente: el Ise Ebi Miso — langosta al miso ($44.900) — y los Okonomiyaki de abulón o de panceta.'},default:'La carta se ordena así: para comenzar, Honmaguro (atún bluefin), sashimi y usuzukuri, nigiris, makis y temakis, cocina caliente y postres — más la barra, los sakes y la cava de vinos.\n\nPara una primera visita: gyozas o edamame para partir, nigiris de bluefin al centro, y cerrar con el Tiramisú de Matcha.\n\n¿Hay alguna categoría sobre la que quieras saber más?'},{keys:['horario','abre','cierra','cuando','dias','martes','domingo','lunes'],default:'Tengu abre sus puertas en dos turnos:\n\nMartes a sábado: 13:00–15:30 (almuerzo) y 19:00–23:00 (cena).\nDomingos: 13:00–16:00.\nLunes: el guardián descansa.\n\nEstamos en Isidora Goyenechea 3000, local 104, W Santiago hotel 5 estrellas en Las Condes.'},{keys:['karai','diferencia','otro','mejor','unico','vs','versus'],default:'Tengu y Karai coexisten en el mismo edificio — convirtiendo al W Santiago en el destino japonés más completo de Santiago.\n\nKarai es cocina nikkei: la fusión de Perú y Japón. Tengu es cocina japonesa pura: sin fusión, sin compromisos. El teppanyaki y el robatayaki — el fuego vivo — son formatos que Karai no tiene.\n\nSon dos filosofías distintas del mismo universo.'},{keys:['donde','ubicacion','llegar','direccion','metro','taxi'],default:'Estamos en Isidora Goyenechea 3000, local 104, dentro del W Santiago — hotel 5 estrellas de Las Condes.\n\nLo más cómodo: taxi o Uber hasta la entrada del W. También metro a Tobalaba (Línea 1) y 8 minutos a pie.\n\nEl edificio W tiene estacionamiento. Al llegar, pide por el restaurante Tengu.'},{keys:['precio','costo','cuanto','valor','ticket','caro'],default:'La carta parte desde $3.900 en postres; los nigiris van de $4.200 a $10.590 la unidad, y el tope es el Sashimi de Maguro de 25 cortes a $84.800.\n\nUna cena completa para dos — entrada, nigiris o makis, sake y postre — oscila entre $80.000 y $150.000.\n\nPara cenas corporativas, escríbenos por WhatsApp para cotización.'},{keys:['alerg','celiac','vegetar','vegan','gluten','restriccion'],default:'Estamos preparados para restricciones alimentarias. Opciones vegetarianas de la carta: Gyozas Veggie, Tempura Veggie, Edamame, Berenjena Dengaku y los hosomaki Kappa y Oshinko.\n\nPara alergias específicas, infórmanos al reservar para que cocina prepare alternativas y evite contaminación cruzada.\n\nPuedes indicarlo en el formulario de reserva o por WhatsApp.'}];
+const RESPONSES=[{keys:['sake','marid','bebida','tomar','vino'],subkeys:{'wagyu|teppan|carne|fuego|potente|intens':'Para el fuego — el Maguro Teppanyaki o el Gyutan de Wagyu — un Junmai Daiginjo con cuerpo: el Nanbu Bijin Shinpaku (720 ml, $79.900) o el Especial Nanbu Bijin ($59.900).\n\nEl sake frío limpia el paladar entre cada bocado.','nigiri|pescado|frio|hamachi|atun|salmon':'Para los nigiris y el bluefin: Kubota Senjyu (330 ml, $24.900) — ligero, melón, cítricos — o su hermano mayor, el Manju de Kubota ($49.900), floral y profundo.\n\nSe sirve frío. Un ritual tan preciso como el corte del nigiri mismo.','postre|dulce|mochi|matcha|yuzu|queso':'Para el cierre ritual, el Sanuki Cloudy (720 ml, $34.900) — estilo nigori, sin filtrar, cremoso — acompaña el Tiramisú de Matcha o el Sorbete de Limón de Pica.\n\nSu textura sedosa contrasta con la intensidad terrosa del matcha.'},default:'Nuestra cava de sake cubre el espectro completo: botellas de 720 ml — Sanuki Cloudy, Nanbu Bijin Shinpaku Junmai Daiginjo, Especial Nanbu Bijin — y de 330 ml, como el Kubota Senjyu y el Manju de Kubota.\n\nLa lista completa está en la sección Sake.\n\nNuestro sommelier estará encantado de guiar tu elección en mesa.'},{keys:['tengu','historia','leyenda','criatura','folclor','mito','yokai','spirit'],subkeys:{'kappa':'El Kappa es un espíritu acuático del folclore japonés — guardián ambivalente de las aguas, astuto y travieso pero honorable.\n\nEn nuestra carta le rinde homenaje el hosomaki Kappa — pepino fresco, pura sencillez — y todos los platos que vienen del mar.','raijin':'Raijin es el dios del trueno y el fuego — una fuerza cósmica que transforma. Es el espíritu que invocamos al encender la plancha.\n\nEl Raijin Maki lleva su nombre; el Maguro Teppanyaki, su fuego.','kitsune':'El Kitsune — el zorro de nueve colas — es símbolo de astucia y transformación.\n\nPor eso inspira las piezas omakase: el Gunkan Omakase, el Mini Donburi Omakase y el nigiri de wagyu flameado con foie — platos que se transforman ante tus ojos.','oni':'El Oni es la fuerza primitiva — poder, intensidad, lo que no se puede domesticar. Por eso inspira el Gyutan de Wagyu y el Ise Ebi Miso — la langosta al fuego del miso.\n\nHay algo en la intensidad del wagyu que evoca esa energía irreductible del Oni.'},default:'El Tengu es una criatura legendaria del folclore japonés — guardián de las montañas y protector del bosque, símbolo de fuerza, sabiduría y equilibrio espiritual.\n\nCada plato de nuestra carta rinde homenaje a un espíritu del panteón japonés. El Kappa en los platos de mar, el Raijin en el teppanyaki, el Kitsune en los platos más sorprendentes.\n\n¿Sobre cuál yokai quieres saber más?'},{keys:['reserva','mesa','book','reservar','disponib','fecha','hora','noche'],subkeys:{'corporat|empresa|negocio|directorio':'Para cenas corporativas tenemos tres paquetes.\n\nEl Menú Ejecutivo (desde $45.000/persona): 4 tiempos con sake, ideal para equipos. La Cena de Directorio (desde $85.000/persona): omakase con sommelier, teppanyaki en mesa y presencia del chef. Y la Sala Exclusiva para eventos hasta 60 personas.\n\nEscríbenos por WhatsApp — nuestro equipo te contactará hoy mismo.','privad|event|celebrac|cumpleaños|aniversar':'Para eventos privados, Tengu ofrece uso exclusivo del restaurante hasta 60 personas. Menú y decoración a medida, show cooking disponible.\n\nEscríbenos por WhatsApp con la fecha tentativa y el número de personas.'},default:'Puedes reservar de tres maneras:\n\n1. Formulario en la sección Reservas de esta página — confirmamos por WhatsApp en 30 minutos.\n\n2. WhatsApp directo — botón verde en la esquina inferior derecha.\n\nAtendemos Mar–Sáb 13:00–15:30 · 19:00–23:00 | Dom 13:00–16:00 | Lun cerrado. Isidora Goyenechea 3000, local 104, W Santiago.'},{keys:['carta','plato','comer','menu','comida','recomiend','pedir','estrella','mejor','pulpo','tako','robata','wagyu'],subkeys:{'frio|nigiri|sushi|crudo':'El corazón de Tengu es el Honmaguro — atún bluefin. Nigiri de akami a $9.900, chutoro a $9.900 y otoro a $10.590; sashimi de maguro de 6 a 25 cortes, y el Tartar de Bluefin a $19.900.\n\nPara explorar el crudo: el Usuzukuri Toro Aburi o un Sashimi Moriawase del día.','teppan|hierro|plancha|wagyu':'Del fuego: el Maguro Teppanyaki ($29.900) — atún bluefin a la plancha.\n\nDel wagyu: el Gyu Kuro Sando ($14.900), el Gyutan de Wagyu ($17.900) y, en nigiris omakase, wagyu con trufa o flameado con foie ($7.900 la unidad).','robata|brasa|fuego|pulpo':'De la robata: el Tako Robatayaki — pulpo por unidad ($12.900), en la sección Otsumami.\n\nY de la cocina caliente: el Ise Ebi Miso — langosta al miso ($44.900) — y los Okonomiyaki de abulón o de panceta.'},default:'La carta se ordena así: para comenzar, Honmaguro (atún bluefin), sashimi y usuzukuri, nigiris, makis y temakis, cocina caliente y postres — más la barra, los sakes y la cava de vinos.\n\nPara una primera visita: gyozas o edamame para partir, nigiris de bluefin al centro, y cerrar con el Tiramisú de Matcha.\n\n¿Hay alguna categoría sobre la que quieras saber más?'},{keys:['horario','abre','cierra','cuando','dias','martes','domingo','lunes'],default:'Tengu abre sus puertas en dos turnos:\n\nMartes a sábado: 13:00–15:30 (almuerzo) y 19:00–23:00 (cena).\nDomingos: 13:00–16:00.\nLunes: el guardián descansa.\n\nEstamos en Isidora Goyenechea 3000, local 104, W Santiago hotel 5 estrellas en Las Condes.'},{keys:['karai','diferencia','otro','mejor','unico','vs','versus'],default:'Tengu y Karai coexisten en el mismo edificio — convirtiendo al W Santiago en el destino japonés más completo de Santiago.\n\nKarai es cocina nikkei: la fusión de Perú y Japón. Tengu es cocina japonesa pura: sin fusión, sin compromisos. El teppanyaki y el robatayaki — el fuego vivo — son formatos que Karai no tiene.\n\nSon dos filosofías distintas del mismo universo.'},{keys:['donde','ubicacion','llegar','direccion','metro','taxi'],default:'Estamos en Isidora Goyenechea 3000, local 104, dentro del W Santiago — hotel 5 estrellas de Las Condes.\n\nLo más cómodo: taxi o Uber hasta la entrada del W. También metro a Tobalaba (Línea 1) y 8 minutos a pie.\n\nEl edificio W tiene estacionamiento. Al llegar, pide por el restaurante Tengu.'},{keys:['precio','costo','cuanto','valor','ticket','caro'],default:'La carta parte desde $3.900 en postres; los nigiris van de $4.200 a $10.590 la unidad, y el tope es el Sashimi de Maguro de 25 cortes a $84.800.\n\nUna cena completa para dos — entrada, nigiris o makis, sake y postre — oscila entre $80.000 y $150.000.\n\nPara cenas corporativas, escríbenos por WhatsApp para cotización.'},{keys:['alerg','celiac','vegetar','vegan','gluten','restriccion'],default:'Estamos preparados para restricciones alimentarias. Opciones vegetarianas de la carta: Gyozas Veggie, Tempura Veggie, Edamame, Berenjena Dengaku y los hosomaki Kappa y Oshinko.\n\nPara alergias específicas, infórmanos al reservar para que cocina prepare alternativas y evite contaminación cruzada.\n\nPuedes indicarlo en el formulario de reserva o por WhatsApp.'}];
 const FALLBACKS=['Una pregunta digna del Oráculo. Lo mejor es que vengas a vivirlo en persona, o escríbenos por WhatsApp para que nuestro equipo te responda.','El Oráculo medita. Algunas cosas solo pueden responderse frente a la robata encendida. Para información específica, nuestro equipo está en WhatsApp.','Cada pregunta merece una respuesta a la altura del restaurante. Escríbenos por WhatsApp — disponibles 12:00 a 22:00.'];
 let fallbackIdx=0;
 function getResponse(msg){const m=msg.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');for(const r of RESPONSES){if(r.keys.some(k=>m.includes(k))){if(r.subkeys){for(const[sk,reply]of Object.entries(r.subkeys)){if(new RegExp(sk).test(m))return reply;}}return r.default;}}return FALLBACKS[fallbackIdx++%FALLBACKS.length];}
@@ -1278,7 +1318,7 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
     const t = document.createElement('div');
     t.className = 'cthumb' + (i===0?' active':'');
     const img = s.querySelector('img');
-    t.innerHTML = '<img src="'+img.src+'" alt="">';
+    t.innerHTML = '<img loading="lazy" src="'+img.src+'" alt="">';
     t.onclick = () => cGo(i);
     thumbsEl.appendChild(t);
   });
