@@ -483,7 +483,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
   <div class="hero-photo"><img src="tengu_fire.jpeg" alt="Tengu fuego"></div>
   <div class="hero-kanji">天</div>
   <div class="hero-content">
-    <p class="hero-tag">W Santiago · Las Condes · Chef Enzo Catalán</p>
+    <p class="hero-tag">W Santiago · Las Condes</p>
     <h1 class="hero-title"><em>Tengu</em></h1>
     <p class="hero-sub">天狗 · El Guardián de las Montañas</p>
     <div class="hero-ctas">
@@ -1055,19 +1055,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
       </a>
     </div>
 
-    <!-- LightWidget embed (feed real) -->
-    <div style="margin-bottom:4px">
-      <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
-      <iframe src="//lightwidget.com/widgets/tengu_restaurant.html"
-        scrolling="no" allowtransparency="true"
-        class="lightwidget-widget"
-        style="width:100%;border:0;overflow:hidden;display:block;min-height:320px"
-        title="Instagram @tengu_restaurant">
-      </iframe>
-    </div>
+    <!-- Feed real (Instagram API vía /api/ig) — se muestra cuando hay token -->
+    <div id="ig-live-grid" style="display:none;grid-template-columns:repeat(4,1fr);gap:3px;margin-bottom:4px"></div>
 
-    <!-- Editorial fallback — se muestra si LightWidget no carga (no tiene cuenta aún) -->
-    <div id="ig-editorial-fallback" style="display:none">
+    <!-- Grid editorial — visible por defecto; se oculta cuando el feed real carga -->
+    <div id="ig-editorial-fallback">
       <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:3px;height:440px">
         <!-- Foto principal -->
         <a href="https://www.instagram.com/tengu_restaurant/" target="_blank"
@@ -1109,6 +1101,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <style>
     @media(max-width:768px){
       #instagram .sec-title{font-size:clamp(24px,7vw,34px)}
+      #ig-live-grid{grid-template-columns:repeat(2,1fr)!important}
       #instagram > div > div:nth-child(2){margin-bottom:0}
     }
     </style>
@@ -1117,14 +1110,26 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 </section>
 
 <script>
-// Show editorial fallback if LightWidget doesn't load after 3s
-setTimeout(function(){
-  var lw = document.querySelector('.lightwidget-widget');
-  if(lw && (lw.offsetHeight < 50)){
-    document.getElementById('ig-editorial-fallback').style.display = 'block';
-    lw.style.display = 'none';
-  }
-}, 3000);
+// Feed real de Instagram: si /api/ig tiene datos (token del restaurante
+// configurado), arma el grid y oculta el editorial. Si no, no pasa nada.
+(function(){
+  fetch('/api/ig').then(function(r){return r.json()}).then(function(j){
+    if(!j || !j.ready || !j.media || j.media.length < 4) return;
+    var g = document.getElementById('ig-live-grid');
+    g.innerHTML = j.media.map(function(m){
+      return '<a href="'+m.permalink+'" target="_blank" rel="noopener" '+
+        'style="position:relative;overflow:hidden;background:var(--dark3);display:block;aspect-ratio:1/1">'+
+        '<img src="'+m.src+'" alt="'+(m.caption||'@tengu_restaurant').replace(/"/g,'&quot;')+'" loading="lazy" '+
+        'style="width:100%;height:100%;object-fit:cover;filter:brightness(.78);transition:all .5s;display:block" '+
+        'onmouseover="this.style.filter=\'brightness(1)\';this.style.transform=\'scale(1.04)\'" '+
+        'onmouseout="this.style.filter=\'brightness(.78)\';this.style.transform=\'scale(1)\'">'+
+        (m.video ? '<span style="position:absolute;top:10px;right:10px;color:rgba(232,224,208,.9)">&#9654;</span>' : '')+
+        '</a>';
+    }).join('');
+    g.style.display = 'grid';
+    document.getElementById('ig-editorial-fallback').style.display = 'none';
+  }).catch(function(){});
+})();
 </script>
 
 <footer>
@@ -1142,7 +1147,7 @@ setTimeout(function(){
     <p>Isidora Goyenechea 3000</p><p>Local 104 · W Santiago</p><p>Las Condes · Santiago</p><p style="margin-top:9px">Mar–Sáb 13:00–15:30 · 19:00–23:00 | Dom 13:00–16:00 | Lun cerrado</p>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Tengu · W Santiago · Chef Enzo Catalán · Todos los derechos reservados</p>
+    <p>© 2025 Tengu · W Santiago · Todos los derechos reservados</p>
     <p>El Guardián de las Montañas · Las Condes · Santiago de Chile</p>
   </div>
 </footer>
