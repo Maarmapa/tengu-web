@@ -1327,18 +1327,27 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
 
 </script>
 <script>
-// WebMCP (W3C navigator.modelContext): expone las herramientas del restaurante
-// a agentes que corren EN el navegador (Edge 147+ nativo, Chrome 149 origin
-// trial, o polyfill @mcp-b/global). No-op silencioso si no hay agente.
+// WebMCP: expone las herramientas del restaurante a agentes que corren EN el
+// navegador. La superficie canónica del draft W3C (26-ago-2026) es
+// document.modelContext — navigator.modelContext quedó como alias deprecado y
+// se acepta de fallback para implementaciones viejas. No-op silencioso si no
+// hay agente.
+//
+// Demo sin WebMCP nativo: con ?webmcp en la URL la página carga SU copia del
+// polyfill @mcp-b/global (webmcp-global.iife.js, vendored — sin CDN en vivo) y
+// registra recién cuando cargó. Sin el flag, el visitante normal no baja ni un
+// byte extra.
+//
+// Cada execute devuelve { content: [{type:'text', text}] }, la forma de
+// ModelContextToolResult del draft — un string pelado quedó fuera del spec.
 (function(){
-  var mc = navigator.modelContext;
-  if(!mc) return;
   function viaMcp(name, args){
     return fetch('/api/mcp',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({jsonrpc:'2.0',id:Date.now(),method:'tools/call',params:{name:name,arguments:args||{}}})})
       .then(function(r){return r.json()})
-      .then(function(j){return (j.result&&j.result.content&&j.result.content[0]&&j.result.content[0].text)||'Sin datos.'});
+      .then(function(j){return texto((j.result&&j.result.content&&j.result.content[0]&&j.result.content[0].text)||'Sin datos.')});
   }
+  function texto(t){ return {content:[{type:'text',text:t}]}; }
   var TOOLS = [
     {name:'get_carta', description:'Carta oficial de Tengu con precios reales en CLP. Sin argumentos: índice de secciones. Con seccion (Comida, Barra, Vinos, Vinos por copa, Sake) o categoria: el detalle.',
      inputSchema:{type:'object',properties:{seccion:{type:'string'},categoria:{type:'string'}}},
@@ -1357,14 +1366,25 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
          set('srName',a.nombre); set('srPhone',a.telefono); set('srDate',a.fecha);
          set('srTime',a.hora); set('srGuests',a.personas); set('srOcc',a.ocasion); set('srNotes',a.notas);
          var r=document.getElementById('reserve'); if(r) r.scrollIntoView({behavior:'smooth'});
-         return Promise.resolve('Formulario de reserva completado y visible en pantalla. Pedile a la persona que lo revise y presione "Reservar por WhatsApp" para confirmar — el envío es humano, no del agente.');
-       }catch(e){ return Promise.resolve('No pude completar el formulario: '+e.message); }
+         return Promise.resolve(texto('Formulario de reserva completado y visible en pantalla. Pedile a la persona que lo revise y presione "Reservar por WhatsApp" para confirmar — el envío es humano, no del agente.'));
+       }catch(e){ return Promise.resolve(texto('No pude completar el formulario: '+e.message)); }
      }}
   ];
-  try{
-    if(typeof mc.registerTool==='function'){ TOOLS.forEach(function(t){ mc.registerTool(t); }); }
-    else if(typeof mc.provideContext==='function'){ mc.provideContext({tools:TOOLS}); }
-  }catch(e){}
+  function registrar(){
+    var mc = document.modelContext || navigator.modelContext;
+    if(!mc || typeof mc.registerTool!=='function') return;
+    // registerTool devuelve una promesa en el draft actual; un rechazo
+    // (nombre duplicado, permiso) no puede tumbar la página.
+    TOOLS.forEach(function(t){
+      try{ var p = mc.registerTool(t); if(p&&p.catch) p.catch(function(){}); }catch(e){}
+    });
+  }
+  if(document.modelContext || navigator.modelContext){ registrar(); return; }
+  if(!/[?&#]webmcp/.test(location.search+location.hash)) return;
+  var s=document.createElement('script');
+  s.src='webmcp-global.iife.js';
+  s.onload=registrar;
+  document.head.appendChild(s);
 })();
 </script>
 </body>
