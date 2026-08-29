@@ -7,7 +7,7 @@ const INFO = {
   nombre: 'Tengu',
   tipo: 'Restaurante japonés kappo',
   direccion: 'Isidora Goyenechea 3000, Local 104, Las Condes, Santiago de Chile (edificio del hotel W Santiago)',
-  horarios: 'Martes a sábado 13:00–15:30 y 19:00–23:00 · Domingo 13:00–16:00 · Lunes cerrado',
+  horarios: 'Martes a sábado: almuerzo 13:00 a 15:00 y cena 19:00 a 22:00 (últimas horas de entrada). Domingo: solo almuerzo, 13:00 a 15:00. Lunes cerrado.',
   web: 'https://tengu-deploy.vercel.app',
   instagram: 'https://www.instagram.com/tengu_restaurant/',
   como_reservar: 'Formulario en la sección Reservas de la web (confirmación por WhatsApp) o WhatsApp directo desde el sitio.',
