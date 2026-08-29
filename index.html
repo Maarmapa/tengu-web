@@ -68,15 +68,15 @@ section{position:relative;z-index:2}
 .sec-title{font-family:var(--font-d);font-size:clamp(34px,5vw,58px);font-weight:300;line-height:1.1;color:var(--cream);margin-bottom:18px}
 .sec-title em{font-style:italic;color:var(--gold)}
 .sec-body{font-size:16px;font-weight:300;line-height:1.85;color:var(--cream2);max-width:500px}
-.about{padding:110px 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.about{padding:72px 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 .about-visual{position:relative;height:480px;background:linear-gradient(135deg,var(--dark2) 0%,var(--dark3) 100%);overflow:hidden}
 .about-visual::before{content:'天狗';font-family:var(--font-jp);font-size:190px;font-weight:300;color:rgba(200,146,26,.07);position:absolute;bottom:-16px;right:-16px;line-height:1}
 .about-visual::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(139,26,26,.14) 0%,transparent 60%)}
 .flame-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:72px;z-index:2;animation:flicker 3s ease-in-out infinite}
 @keyframes flicker{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.82;transform:translate(-50%,-52%) scale(1.04)}}
 .about-accent{position:absolute;top:28px;left:28px;font-family:var(--font-m);font-size:8.5px;letter-spacing:.2em;color:var(--gold);z-index:3}
-.menu-section{padding:90px 48px;background:var(--dark)}
-.menu-header{text-align:center;margin-bottom:50px}
+.menu-section{padding:56px 48px 72px;background:var(--dark)}
+.menu-header{text-align:center;margin-bottom:34px}
 .menu-tabs{display:flex;gap:0;justify-content:center;margin-bottom:40px;border-bottom:1px solid rgba(200,146,26,.15)}
 .menu-tab{font-family:var(--font-m);font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:12px 22px;cursor:pointer;color:var(--cream2);background:none;border:none;border-bottom:2px solid transparent;transition:all .3s;margin-bottom:-1px}
 .menu-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
@@ -91,22 +91,33 @@ section{position:relative;z-index:2}
 .menu-item-jp{font-family:var(--font-jp);font-size:12px;color:rgba(200,146,26,.45);margin-top:2px}
 .menu-item-price{font-family:var(--font-m);font-size:9.5px;color:var(--gold);letter-spacing:.08em;white-space:nowrap;margin-left:14px;margin-top:3px}
 .menu-item-desc{font-size:12.5px;color:var(--cream2);line-height:1.65;margin-bottom:8px}
-.menu-subcat{font-family:var(--font-m);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin:30px 0 10px;padding-bottom:7px;border-bottom:1px solid rgba(200,146,26,.18)}
+#instagram{overflow:hidden}
+#ig-editorial-fallback>div{max-height:440px;overflow:hidden}
+#ig-editorial-fallback img{max-height:100%}
+#ig-live-grid img{max-height:100%}
+footer{position:relative;z-index:5;background:var(--dark2)}
+.menu-subcat{font-family:var(--font-m);font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin:18px 0 0;padding:13px 2px;border-bottom:1px solid rgba(200,146,26,.18);cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center;transition:color .3s}
+.menu-subcat:hover{color:var(--gold2)}
+.menu-subcat::after{content:"+ " attr(data-count);font-size:8.5px;color:rgba(200,146,26,.55);letter-spacing:.12em}
+.menu-subcat.open::after{content:"−"}
+.subcat-body{display:none}
+.menu-subcat.open+.subcat-body{display:block}
+
 .menu-grid .menu-subcat:first-child{margin-top:0}
 .menu-item-yokai{font-family:var(--font-m);font-size:7.5px;letter-spacing:.15em;color:rgba(200,146,26,.35);text-transform:uppercase;margin-top:8px;display:flex;align-items:center;gap:6px}
 .menu-item-yokai::before{content:'';width:18px;height:1px;background:rgba(200,146,26,.25);display:inline-block}
 .menu-note{font-family:var(--font-m);font-size:8.5px;letter-spacing:.14em;color:rgba(184,174,158,.28);text-align:center;margin-top:24px;text-transform:uppercase}
-.sake-section{padding:90px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.sake-section{padding:64px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 .sake-visual{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sake-card{padding:24px 20px;background:var(--dark2);border:1px solid rgba(200,146,26,.12);transition:border-color .3s}
 .sake-card:hover{border-color:rgba(200,146,26,.4)}
 .sake-card-jp{font-family:var(--font-jp);font-size:22px;color:var(--gold);margin-bottom:6px}
 .sake-card-name{font-family:var(--font-d);font-size:15px;font-weight:600;color:var(--cream);margin-bottom:4px}
 .sake-card-desc{font-size:11.5px;color:var(--cream2);line-height:1.6}
-.reserve-section{padding:90px 48px;background:var(--dark);position:relative;overflow:hidden}
+.reserve-section{padding:64px 48px;background:var(--dark);position:relative;overflow:hidden}
 .reserve-section::before{content:'予約';font-family:var(--font-jp);font-size:260px;font-weight:300;color:rgba(200,146,26,.03);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
 .reserve-content{position:relative;z-index:2;max-width:860px;margin:0 auto}
-.reserve-header{text-align:center;margin-bottom:44px}
+.reserve-header{text-align:center;margin-bottom:30px}
 .reserve-options{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
 .reserve-card{background:var(--dark2);border:1px solid rgba(200,146,26,.15);padding:28px;position:relative;overflow:hidden}
 .reserve-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
@@ -139,7 +150,7 @@ section{position:relative;z-index:2}
 .rh-item{text-align:center;padding:18px;background:rgba(200,146,26,.04);border:1px solid rgba(200,146,26,.07)}
 .rh-item span{font-family:var(--font-m);font-size:8px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;display:block;margin-bottom:5px}
 .rh-item p{font-size:13.5px;color:var(--cream2);font-weight:300}
-.ai-section{padding:90px 48px;background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%)}
+.ai-section{padding:64px 48px;background:linear-gradient(180deg,var(--dark) 0%,var(--black) 100%)}
 .ai-inner{max-width:700px;margin:0 auto}
 .ai-header{text-align:center;margin-bottom:32px}
 .ai-status{display:flex;align-items:center;gap:6px;justify-content:center;margin-bottom:12px}
@@ -564,11 +575,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
   <div class="menu-cat active" id="cat-comenzar"><div class="menu-grid">
     <div class="menu-subcat">Para Comenzar</div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOZAS VEGGIE (5 unidades)</div><div class="menu-item-jp">ベジギョーザ（５個）</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Gyozas de setas mixtas de temporada con crema agria</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOZA EBI (1 unidad)</div><div class="menu-item-jp">ギョーザエビ（1個）</div></div><div class="menu-item-price">$2.000</div></div><div class="menu-item-desc">Dumplings de Camarón</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOZA VEGGIE (1 unidad)</div><div class="menu-item-jp">餃子ベジ (1個)</div></div><div class="menu-item-price">$3.500</div></div><div class="menu-item-desc">Gyōza de Setas</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyozas Veggie (5 unidades)</div><div class="menu-item-jp">ベジギョーザ（５個）</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Gyozas de setas mixtas de temporada con crema agria</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyoza Ebi (1 unidad)</div><div class="menu-item-jp">ギョーザエビ（1個）</div></div><div class="menu-item-price">$2.000</div></div><div class="menu-item-desc">Dumplings de Camarón</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyoza Veggie (1 unidad)</div><div class="menu-item-jp">餃子ベジ (1個)</div></div><div class="menu-item-price">$3.500</div></div><div class="menu-item-desc">Gyōza de Setas</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Edamame Bata Nori</div><div class="menu-item-jp">海苔バター枝豆</div></div><div class="menu-item-price">$6.000</div></div><div class="menu-item-desc">Edamame con mantequilla de nori y shichimi togarashi.</div><div class="menu-item-yokai">Espíritu del Kodama — fuerza de la tierra</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOSAS LENGUA (5 unidades)</div><div class="menu-item-jp">ギョーザの舌</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Lengua de wagyu y curry japonés (5 unidades)</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyosas Lengua (5 unidades)</div><div class="menu-item-jp">ギョーザの舌</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Lengua de wagyu y curry japonés (5 unidades)</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nasu Dengaku</div><div class="menu-item-jp">茄子田楽</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Berenjena confitada en miso con toques de aceite de yuzu.</div><div class="menu-item-yokai">Espíritu del Inari — tierra y prosperidad</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Edamame al Vapor</div><div class="menu-item-jp">枝豆</div></div><div class="menu-item-price">$5.500</div></div><div class="menu-item-desc">Edamame con sal marina.</div><div class="menu-item-yokai">Espíritu del Kodama — pureza de la naturaleza</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Tori Karaage</div><div class="menu-item-jp">唐揚げ鶏</div></div><div class="menu-item-price">$9.990</div></div><div class="menu-item-desc">Muslo de pollo crujiente sin hueso.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
@@ -576,14 +587,14 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Katsusando</div><div class="menu-item-jp">カツサンド</div></div><div class="menu-item-price">$12.900</div></div><div class="menu-item-desc">Sandwich de cerdo japonés con salsa TENGU.</div><div class="menu-item-yokai">Espíritu del Yamabiko — tradición de las montañas</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyu Kuro Sando</div><div class="menu-item-jp">牛黒サンド</div></div><div class="menu-item-price">$14.900</div></div><div class="menu-item-desc">Sandwich de filete de ternera empanizado en panko y pan de masa madre con tinta de calamar.</div><div class="menu-item-yokai">Espíritu del Oni — intensidad y carácter</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Risotto Omakase</div><div class="menu-item-jp">おまかせリゾット</div></div><div class="menu-item-price">$19.900</div></div><div class="menu-item-desc">Risotto con ingredientes de alta calidad. Consultar disponibilidad.</div><div class="menu-item-yokai">Espíritu del Tengu — selección del maestro</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOSAS UME FOIE (1 unidad)</div><div class="menu-item-jp">餃子 UME FOIE</div></div><div class="menu-item-price">$3.990</div></div><div class="menu-item-desc">Gyozas de Foie Gras y Umeboshi</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOSAS DE LENGUA DE WAGYU (1 unidad)</div><div class="menu-item-jp">ギョーザ 和牛タン</div></div><div class="menu-item-price">$3.500</div></div><div class="menu-item-desc">Gyozas de lengua de wagyu con salsa curry</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOSAS EBI (5 unidades)</div><div class="menu-item-jp">餃子エビ</div></div><div class="menu-item-price">$9.990</div></div><div class="menu-item-desc">Gyozas de Camarón con Aceite de Chile Dulce</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GYOSAS VEGGIE SETAS (5 unidades)</div><div class="menu-item-jp">ベジギョーザ</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Rellenas de setas de temporada (5 unidades).</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyosas Ume Foie (1 unidad)</div><div class="menu-item-jp">餃子 UME FOIE</div></div><div class="menu-item-price">$3.990</div></div><div class="menu-item-desc">Gyozas de Foie Gras y Umeboshi</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyosas De Lengua De Wagyu (1 unidad)</div><div class="menu-item-jp">ギョーザ 和牛タン</div></div><div class="menu-item-price">$3.500</div></div><div class="menu-item-desc">Gyozas de lengua de wagyu con salsa curry</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyosas Ebi (5 unidades)</div><div class="menu-item-jp">餃子エビ</div></div><div class="menu-item-price">$9.990</div></div><div class="menu-item-desc">Gyozas de Camarón con Aceite de Chile Dulce</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gyosas Veggie Setas (5 unidades)</div><div class="menu-item-jp">ベジギョーザ</div></div><div class="menu-item-price">$14.990</div></div><div class="menu-item-desc">Rellenas de setas de temporada (5 unidades).</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Miso Soup</div><div class="menu-item-jp">みそ汁</div></div><div class="menu-item-price">$4.500</div></div><div class="menu-item-desc">Sopa Miso reconfortante y clásica</div></div>
     <div class="menu-subcat">Otsumami · por unidad</div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Unagi Tamago (1 unidad)</div><div class="menu-item-jp">ウナギ卵</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Anguila a la parrilla sobre tortilla de huevo dulce</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">TAKO ROBATAYAKI (1 unidad)</div><div class="menu-item-jp">タコ炉端焼き（１個）</div></div><div class="menu-item-price">$12.900</div></div><div class="menu-item-desc">Pulpo crujiente semi-spicy con salsa agridulce y arroz.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Tako Robatayaki (1 unidad)</div><div class="menu-item-jp">タコ炉端焼き（１個）</div></div><div class="menu-item-price">$12.900</div></div><div class="menu-item-desc">Pulpo crujiente semi-spicy con salsa agridulce y arroz.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-subcat">Tempuras</div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Langostinos</div><div class="menu-item-jp">エビ</div></div><div class="menu-item-price">$18.900</div></div><div class="menu-item-desc">Langostinos rebozados con tempura (5 unidades)</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Veggie</div><div class="menu-item-jp">ベジー</div></div><div class="menu-item-price">$9.990</div></div><div class="menu-item-desc">Mezcla de verduras de temporada con salsa tempura tradicional.</div></div>
@@ -592,9 +603,9 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
   </div></div>
 
   <div class="menu-cat" id="cat-bluefin"><div class="menu-grid">
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI AKAMI (1 unidad)</div><div class="menu-item-jp">握り赤身（1貫）</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Parte del Atún 100% magro</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI CHUTORO (1 unidad)</div><div class="menu-item-jp">握り中トロ（1貫）</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Atún semigraso</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI OTORO (1 unidad)</div><div class="menu-item-jp">NIGIRI OTORO（1貫）</div></div><div class="menu-item-price">$10.590</div></div><div class="menu-item-desc">Atún con mayor contenido de grasa</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Akami (1 unidad)</div><div class="menu-item-jp">握り赤身（1貫）</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Parte del Atún 100% magro</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Chutoro (1 unidad)</div><div class="menu-item-jp">握り中トロ（1貫）</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Atún semigraso</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Otoro (1 unidad)</div><div class="menu-item-jp">NIGIRI OTORO（1貫）</div></div><div class="menu-item-price">$10.590</div></div><div class="menu-item-desc">Atún con mayor contenido de grasa</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Hosomaki Tekka</div><div class="menu-item-jp">鉄火巻き</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Hosomaki con centro de Atún Bluefin</div><div class="menu-item-yokai">Espíritu del Kappa — guardián de las aguas</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Akami</div><div class="menu-item-jp">薄造り赤身</div></div><div class="menu-item-price">$32.900</div></div><div class="menu-item-desc">Bluefin magro con salsa ponzu</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Toro Aburi</div><div class="menu-item-jp">大トロ炙り薄造り</div></div><div class="menu-item-price">$42.900</div></div><div class="menu-item-desc">Otoro Aburi con aceite de sésamo, soya y wasabi</div><div class="menu-item-yokai">Espíritu del Raijin — el fuego que transforma</div></div>
@@ -611,15 +622,15 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
   <div class="menu-cat" id="cat-sashimi"><div class="menu-grid">
     <div class="menu-subcat">Sashimi</div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">5 CORTES (Cortes de pescado mixto)</div><div class="menu-item-jp">5つのステーキ</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Variedad de pescados disponibles.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">9 CORTES (Mix de pescado del día)</div><div class="menu-item-jp">9カット</div></div><div class="menu-item-price">$19.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Pescados y mariscos / Solo pescados</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">5 Cortes (Cortes de pescado mixto)</div><div class="menu-item-jp">5つのステーキ</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Variedad de pescados disponibles.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">9 Cortes (Mix de pescado del día)</div><div class="menu-item-jp">9カット</div></div><div class="menu-item-price">$19.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Pescados y mariscos / Solo pescados</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">15 Cortes (incluye Atun Bluefin)</div><div class="menu-item-jp">刺身15切れ+ブルーフィン</div></div><div class="menu-item-price">$40.900</div></div><div class="menu-item-desc">Sashimi mixto con atún bluefin.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Sashimis 15 cortes (Bluefin incluído)</div><div class="menu-item-jp">刺身15切れ（ブルーフィン含む）</div></div><div class="menu-item-price">$40.900</div></div><div class="menu-item-desc">15 cortes de pescado mixto incluye Atún Bluefin de Baja California</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">15 CORTES MORIAWASE (Mix de pescado fresco y mariscos)</div><div class="menu-item-jp">15カット</div></div><div class="menu-item-price">$32.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Consultar variedad*</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">25 CORTES MORIAWASE (Mix de pesca del día y mariscos)</div><div class="menu-item-jp">25カット</div></div><div class="menu-item-price">$53.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Consultar variedad. Pescado y mariscos / Solo pescado</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">15 Cortes Moriawase (Mix de pescado fresco y mariscos)</div><div class="menu-item-jp">15カット</div></div><div class="menu-item-price">$32.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Consultar variedad*</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">25 Cortes Moriawase (Mix de pesca del día y mariscos)</div><div class="menu-item-jp">25カット</div></div><div class="menu-item-price">$53.900</div></div><div class="menu-item-desc">Pescados y mariscos de temporada. Consultar variedad. Pescado y mariscos / Solo pescado</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-subcat">Usuzukuri</div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Sake</div><div class="menu-item-jp">鮭薄造り</div></div><div class="menu-item-price">$17.900</div></div><div class="menu-item-desc">Tiras de Salmón con Salsa Ponzu</div><div class="menu-item-yokai">Espíritu del Kitsune — picante y elegante</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">USUZUKURI SHIROMI (pescado blanco)</div><div class="menu-item-jp">白身</div></div><div class="menu-item-price">$16.900</div></div><div class="menu-item-desc">Filete de pescado blanco con salsa ponzu.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Shiromi (pescado blanco)</div><div class="menu-item-jp">白身</div></div><div class="menu-item-price">$16.900</div></div><div class="menu-item-desc">Filete de pescado blanco con salsa ponzu.</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Pescado De Isla</div><div class="menu-item-jp">薄造り魚ウニ</div></div><div class="menu-item-price">$24.900</div></div><div class="menu-item-desc">Cortes de pescado endémico de Isla de Pascua y Ponzu</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Hotate Miso</div><div class="menu-item-jp">ホタテ味噌</div></div><div class="menu-item-price">Desde $21.000</div></div><div class="menu-item-desc">Ostiones patagónicos con salsa de miso cítrica y yuzukosho. Opción individual $22.900 · Opción para dos $21.000</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Usuzukuri Awabi Uni</div><div class="menu-item-jp">鮑薄造り雲丹</div></div><div class="menu-item-price">$19.900</div></div><div class="menu-item-desc">Láminas de lenguado, cortadas al estilo tradicional japonés, acompañadas de una espuma cítrica y erizos de mar.</div><div class="menu-item-yokai">Espíritu del Kappa — profundidades del mar</div></div>
@@ -631,22 +642,22 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
   <div class="menu-cat" id="cat-nigiris"><div class="menu-grid">
     <div class="menu-subcat">Nigiri Tradicional · 1 unidad</div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI SAKE (1 unidad)</div><div class="menu-item-jp">酒</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Nigiri de salmón</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI SHIROMI (1 unidad)</div><div class="menu-item-jp">白身</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Nigiri de pescado blanco fresco.</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">IKURA GUNKAN(1 unidad)</div><div class="menu-item-jp">イクラ軍艦（1個）</div></div><div class="menu-item-price">$4.900</div></div><div class="menu-item-desc">Huevas de salmón con wasabi y soja envueltas en alga nori</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">GUNKAN OMAKASE (1 unidad)</div><div class="menu-item-jp">軍艦おまかせ（1貫）</div></div><div class="menu-item-price">$5.900</div></div><div class="menu-item-desc">Selección del chef sushi.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI UNAGI(1 unidad)</div><div class="menu-item-jp">ウナギ</div></div><div class="menu-item-price">$4.400</div></div><div class="menu-item-desc">Anguila Nigiri</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI TAMAGO (1 unidad)</div><div class="menu-item-jp">たまご</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Clásica tortilla dulce de huevo hecha a la capa.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI KANI (1 unidad)</div><div class="menu-item-jp">にぎりカニ</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Nigiri de centolla de Tierra del Fuego 1 unidad</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI HOTATE (1 unidad)</div><div class="menu-item-jp">ホタテ</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Ostión Patagónico fresco</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Sake (1 unidad)</div><div class="menu-item-jp">酒</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Nigiri de salmón</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Shiromi (1 unidad)</div><div class="menu-item-jp">白身</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Nigiri de pescado blanco fresco.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Ikura Gunkan (1 unidad)</div><div class="menu-item-jp">イクラ軍艦（1個）</div></div><div class="menu-item-price">$4.900</div></div><div class="menu-item-desc">Huevas de salmón con wasabi y soja envueltas en alga nori</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Gunkan Omakase (1 unidad)</div><div class="menu-item-jp">軍艦おまかせ（1貫）</div></div><div class="menu-item-price">$5.900</div></div><div class="menu-item-desc">Selección del chef sushi.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Unagi (1 unidad)</div><div class="menu-item-jp">ウナギ</div></div><div class="menu-item-price">$4.400</div></div><div class="menu-item-desc">Anguila Nigiri</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Tamago (1 unidad)</div><div class="menu-item-jp">たまご</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Clásica tortilla dulce de huevo hecha a la capa.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Kani (1 unidad)</div><div class="menu-item-jp">にぎりカニ</div></div><div class="menu-item-price">$9.900</div></div><div class="menu-item-desc">Nigiri de centolla de Tierra del Fuego 1 unidad</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Hotate (1 unidad)</div><div class="menu-item-jp">ホタテ</div></div><div class="menu-item-price">$4.200</div></div><div class="menu-item-desc">Ostión Patagónico fresco</div></div>
     <div class="menu-subcat">Nigiri Omakase · 1 unidad</div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI SAKE HARASU (1 unidad)</div><div class="menu-item-jp">鮭のお刺身</div></div><div class="menu-item-price">$6.900</div></div><div class="menu-item-desc">Ventresca de Salmón Aburi con mantequilla de miso y Katsuobushi.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI PEZ DE ISLA (1 unidad)</div><div class="menu-item-jp">島の魚の握り</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Nigiri de pescado nativo de Isla de Pascua</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Sake Harasu (1 unidad)</div><div class="menu-item-jp">鮭のお刺身</div></div><div class="menu-item-price">$6.900</div></div><div class="menu-item-desc">Ventresca de Salmón Aburi con mantequilla de miso y Katsuobushi.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Pez De Isla (1 unidad)</div><div class="menu-item-jp">島の魚の握り</div></div><div class="menu-item-price">$10.900</div></div><div class="menu-item-desc">Nigiri de pescado nativo de Isla de Pascua</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI Ebi Miso y Umeboshi (1 unidad)</div><div class="menu-item-jp">エビ味噌＆梅干</div></div><div class="menu-item-price">$6.990</div></div><div class="menu-item-desc">Langostino patagónico con miso dulce y umeboshi.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI Shiromi Yuzukosho (1 unidad)</div><div class="menu-item-jp">白身の魚と柚子胡椒</div></div><div class="menu-item-price">$6.900</div></div><div class="menu-item-desc">Pescado blanco con lactofermento de cáscara de limón y ají.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI HOTATE TRUFA (1 unidad)</div><div class="menu-item-jp">ホタテ＆トリュファ</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Ostiones patagónicos con láminas de trufa.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI WAGYU TRUFA (1 unidad)</div><div class="menu-item-jp">和牛とトリュファ</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Wagyu de Osono a la parrilla, Trufa de temporada</div><div class="menu-item-yokai">Recomendación del chef</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">NIGIRI WAGYU ABURI FOIE (1 unidad)</div><div class="menu-item-jp">和牛とフォアグラの炙り</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Wagyu de Osorno Aburi y Foie Gras</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Hotate Trufa (1 unidad)</div><div class="menu-item-jp">ホタテ＆トリュファ</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Ostiones patagónicos con láminas de trufa.</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Wagyu Trufa (1 unidad)</div><div class="menu-item-jp">和牛とトリュファ</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Wagyu de Osono a la parrilla, Trufa de temporada</div><div class="menu-item-yokai">Recomendación del chef</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Nigiri Wagyu Aburi Foie (1 unidad)</div><div class="menu-item-jp">和牛とフォアグラの炙り</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Wagyu de Osorno Aburi y Foie Gras</div><div class="menu-item-yokai">Recomendación del chef</div></div>
   </div></div>
 
   <div class="menu-cat" id="cat-makis"><div class="menu-grid">
@@ -674,11 +685,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Unagi</div><div class="menu-item-jp">ウナギ</div></div><div class="menu-item-price">$7.000</div></div><div class="menu-item-desc">Anguila roll.</div></div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Oshinko</div><div class="menu-item-jp">お新香</div></div><div class="menu-item-price">$5.900</div></div><div class="menu-item-desc">Maki de takuan, rábano japonés.</div></div>
     <div class="menu-subcat">Temaki — cono de nori y arroz</div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">EBI TEN (1 unidad)</div><div class="menu-item-jp">エビ天</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Camarón tempura y aguacate.</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">OMAKASE (1 unidad)</div><div class="menu-item-jp">おまかせ</div></div><div class="menu-item-price">$13.900</div></div><div class="menu-item-desc">Especial del chef.</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">UNAGI (1 unidad)</div><div class="menu-item-jp">ウナギ</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Anguila y takuan con salsa agridulce</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">SAKE (1 unidad)</div><div class="menu-item-jp">酒</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Salmon and avocado.</div></div>
-    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">SAKE SPICY (1 unidad)</div><div class="menu-item-jp">辛い酒</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Tartar de salmón delicadamente picante.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Ebi Ten (1 unidad)</div><div class="menu-item-jp">エビ天</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Camarón tempura y aguacate.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Omakase (1 unidad)</div><div class="menu-item-jp">おまかせ</div></div><div class="menu-item-price">$13.900</div></div><div class="menu-item-desc">Especial del chef.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Unagi (1 unidad)</div><div class="menu-item-jp">ウナギ</div></div><div class="menu-item-price">$8.900</div></div><div class="menu-item-desc">Anguila y takuan con salsa agridulce</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Sake (1 unidad)</div><div class="menu-item-jp">酒</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Salmon and avocado.</div></div>
+    <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Sake Spicy (1 unidad)</div><div class="menu-item-jp">辛い酒</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Tartar de salmón delicadamente picante.</div></div>
   </div></div>
 
   <div class="menu-cat" id="cat-caliente"><div class="menu-grid">
@@ -954,11 +965,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     </div>
 
     <!-- GOUR.MEDIA BOOKING EMBED -->
-    <div id="reserva-online" style="background:var(--dark2);border:1px solid rgba(200,146,26,.12);border-top:none;position:relative">
+    <div id="reserva-online" style="background:var(--dark2);border:1px solid rgba(200,146,26,.12);border-top:none;position:relative;overflow:hidden">
       <iframe
         id="gourframe"
         src="https://gour.media/booking/tengu/"
-        style="width:100%;height:680px;border:none;display:block"
+        style="width:100%;height:766px;border:none;display:block;margin-top:-86px"
         title="Reservas Tengu — gour.media"
         loading="lazy"
         allow="fullscreen payment">
@@ -1057,7 +1068,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 </section>
 
 <!-- INSTAGRAM FEED -->
-<section style="padding:80px 48px 72px;background:var(--dark2);border-top:1px solid rgba(200,146,26,.08)" id="instagram">
+<section style="padding:60px 48px 56px;background:var(--dark2);border-top:1px solid rgba(200,146,26,.08)" id="instagram">
   <div style="max-width:1100px;margin:0 auto">
 
     <!-- Header -->
@@ -1399,6 +1410,28 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
   s.onload=registrar;
   document.head.appendChild(s);
 })();
+</script>
+<script>
+// Acordeón de subcategorías: agrupa los ítems bajo cada .menu-subcat y los
+// colapsa (la primera subcategoría de cada tab queda abierta).
+document.querySelectorAll('.menu-grid').forEach(function(grid){
+  var kids = Array.prototype.slice.call(grid.children);
+  if(!kids.some(function(k){return k.classList.contains('menu-subcat')})) return;
+  var wrap = null, first = true;
+  kids.forEach(function(k){
+    if(k.classList.contains('menu-subcat')){
+      wrap = document.createElement('div');
+      wrap.className = 'subcat-body';
+      k.after(wrap);
+      if(first){ k.classList.add('open'); first = false; }
+      k.addEventListener('click', function(){ k.classList.toggle('open'); });
+    } else if(wrap){ wrap.appendChild(k); }
+  });
+  grid.querySelectorAll('.menu-subcat').forEach(function(s){
+    var b = s.nextElementSibling;
+    s.dataset.count = b ? b.children.length : 0;
+  });
+});
 </script>
 </body>
 </html>
