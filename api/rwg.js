@@ -26,8 +26,8 @@ function hhmmToTs(fecha, hora) {
   return Math.floor(new Date(`${fecha}T${hora}:00-04:00`).getTime() / 1000);
 }
 
-function availabilityFor(fecha, party) {
-  const d = R.disponibilidad(fecha, party);
+async function availabilityFor(fecha, party) {
+  const d = await R.disponibilidad(fecha, party);
   if (d.error || !d.abierto) return [];
   return d.slots.filter((s) => s.disponible).map((s) => ({
     start_sec: hhmmToTs(fecha, s.hora),
@@ -60,17 +60,17 @@ module.exports = async (req, res) => {
 
   if (method === 'BatchAvailabilityLookup') {
     // b.slot_time: [{date:'YYYY-MM-DD', party_size:N}]
-    const out = (b.slot_time || []).map((q) => ({
+    const out = await Promise.all((b.slot_time || []).map(async (q) => ({
       date: q.date, party_size: q.party_size,
-      available_slots: availabilityFor(q.date, q.party_size || 2),
-    }));
+      available_slots: await availabilityFor(q.date, q.party_size || 2),
+    })));
     return res.status(200).json({ merchant_id: MERCHANT.merchant_id, availability: out });
   }
 
   if (method === 'CreateBooking') {
     const s = b.slot || {}, u = b.user_information || {};
     const fecha = s.date, hora = s.time;
-    const r = R.crearReserva({
+    const r = await R.crearReserva({
       nombre: [u.given_name, u.family_name].filter(Boolean).join(' ') || 'Comensal',
       telefono: u.telephone, fecha, hora, personas: (s.resources && s.resources.party_size) || b.party_size || 2,
       notas: b.additional_request,
@@ -87,7 +87,7 @@ module.exports = async (req, res) => {
   }
 
   if (method === 'GetBookingStatus') {
-    const r = R.estadoReserva(b.booking_id);
+    const r = await R.estadoReserva(b.booking_id);
     if (r.error) return res.status(200).json({ booking_failure: { cause: 'BOOKING_NOT_FOUND', description: r.error } });
     return res.status(200).json({ booking_id: b.booking_id, booking_status: 'CONFIRMED', sandbox_notice: r.aviso });
   }

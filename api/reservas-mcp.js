@@ -39,11 +39,11 @@ const TOOLS = [
   },
 ];
 
-function runTool(name, a) {
+async function runTool(name, a) {
   a = a || {};
-  if (name === 'consultar_disponibilidad') return JSON.stringify(R.disponibilidad(a.fecha, a.personas), null, 1);
-  if (name === 'crear_reserva') return JSON.stringify(R.crearReserva(a), null, 1);
-  if (name === 'estado_reserva') return JSON.stringify(R.estadoReserva(a.codigo), null, 1);
+  if (name === 'consultar_disponibilidad') return JSON.stringify(await R.disponibilidad(a.fecha, a.personas), null, 1);
+  if (name === 'crear_reserva') return JSON.stringify(await R.crearReserva({...a, origen: 'mcp'}), null, 1);
+  if (name === 'estado_reserva') return JSON.stringify(await R.estadoReserva(a.codigo), null, 1);
   throw { code: -32602, message: `Tool desconocida: ${name}` };
 }
 
@@ -73,7 +73,7 @@ module.exports = async (req, res) => {
       case 'tools/list': return reply(msg.id, { tools: TOOLS });
       case 'tools/call': {
         const { name, arguments: args } = msg.params || {};
-        try { return reply(msg.id, { content: [{ type: 'text', text: runTool(name, args) }], isError: false }); }
+        try { return reply(msg.id, { content: [{ type: 'text', text: await runTool(name, args) }], isError: false }); }
         catch (e) {
           if (e && e.code) return fail(msg.id, e.code, e.message);
           return reply(msg.id, { content: [{ type: 'text', text: 'Error interno del tool.' }], isError: true });
