@@ -1363,8 +1363,21 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
      execute:function(a){
        try{
          var set=function(id,v){var e=document.getElementById(id); if(e&&v!=null){e.value=v;}};
+         // srGuests es un <select> con tramos ("4 personas", "5-6 personas"):
+         // el agente manda un número y hay que mapearlo al tramo, o el value
+         // no calza con ninguna opción y el campo queda vacío en silencio.
+         var pax=function(v){
+           var n=parseInt(String(v),10);
+           if(isNaN(n)) return String(v);
+           if(n<=2) return '2 personas';
+           if(n===3) return '3 personas';
+           if(n===4) return '4 personas';
+           if(n<=6) return '5-6 personas';
+           if(n<=8) return '7-8 personas';
+           return 'Evento privado (+9)';
+         };
          set('srName',a.nombre); set('srPhone',a.telefono); set('srDate',a.fecha);
-         set('srTime',a.hora); set('srGuests',a.personas); set('srOcc',a.ocasion); set('srNotes',a.notas);
+         set('srTime',a.hora); set('srGuests',pax(a.personas)); set('srOcc',a.ocasion); set('srNotes',a.notas);
          var r=document.getElementById('reserve'); if(r) r.scrollIntoView({behavior:'smooth'});
          return Promise.resolve(texto('Formulario de reserva completado y visible en pantalla. Pedile a la persona que lo revise y presione "Reservar por WhatsApp" para confirmar — el envío es humano, no del agente.'));
        }catch(e){ return Promise.resolve(texto('No pude completar el formulario: '+e.message)); }
