@@ -99,9 +99,30 @@ async function cargarEventos(){
   if(r.status===401){ sessionStorage.removeItem('tsala'); location.reload(); return; }
   const j=await r.json();
   const evs=j.eventos||[];
-  if(!evs.length){ $('lista').innerHTML='<p id="vacio">Sin experiencias creadas.</p>'; return; }
-  $('lista').innerHTML=evs.map(ev=>{
+  const nuevo='<div style="margin-bottom:12px"><button onclick="nuevoEvento()">+ Nueva experiencia</button></div>';
+  if(!evs.length){ $('lista').innerHTML=nuevo+'<p id="vacio">Sin experiencias creadas.</p>'; return; }
+  $('lista').innerHTML=nuevo+evs.map(ev=>{
     const zonas=(ev.zonas||[]).map(z=>`${z.nombre}: ${z.vendidos}/${z.cupos} · ${clp(z.precio)}`).join(' &nbsp;|&nbsp; ');
+    const editor=`<div id="ed-${ev.slug}" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(200,146,26,.15)">
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">
+        <input id="n-${ev.slug}" value="${(ev.nombre||'').replace(/"/g,'&quot;')}" placeholder="Nombre">
+        <input id="f-${ev.slug}" type="date" value="${ev.fecha}">
+        <input id="h-${ev.slug}" value="${ev.hora}" placeholder="20:00">
+      </div>
+      <input id="s-${ev.slug}" value="${(ev.subtitulo||'').replace(/"/g,'&quot;')}" placeholder="Subtitulo" style="width:100%;margin-bottom:8px">
+      <textarea id="d-${ev.slug}" placeholder="Descripcion" style="width:100%;min-height:56px;margin-bottom:8px;font-family:'Cormorant Garamond',serif;font-size:15px">${(ev.descripcion||'').replace(/</g,'&lt;')}</textarea>
+      <button onclick="guardarEvento('${ev.slug}')">Guardar evento</button>
+      <div style="margin-top:14px">
+        ${(ev.zonas||[]).map(z=>`
+          <div style="display:grid;grid-template-columns:1.1fr 2fr 1fr .8fr auto;gap:8px;margin-bottom:8px;align-items:center">
+            <input id="zn-${z.id}" value="${(z.nombre||'').replace(/"/g,'&quot;')}" placeholder="Zona">
+            <input id="zd-${z.id}" value="${(z.descripcion||'').replace(/"/g,'&quot;')}" placeholder="Descripcion">
+            <input id="zp-${z.id}" type="number" value="${z.precio}" placeholder="Precio">
+            <input id="zc-${z.id}" type="number" value="${z.cupos}" placeholder="Cupos">
+            <button onclick="guardarZona('${z.id}')">Guardar</button>
+          </div>`).join('')}
+      </div>
+    </div>`;
     const tickets=(ev.tickets||[]).map(t=>`
       <div class="card" style="margin:6px 0 0;padding:10px 14px">
         <div><div class="nombre" style="font-size:16px">${(t.nombre||'').replace(/</g,'&lt;')} · ${t.cantidad}p · ${clp(t.monto)}</div>
@@ -125,15 +146,40 @@ async function cargarEventos(){
         <div style="display:flex;gap:8px;align-items:center">
           <span class="estado ${ev.estado==='publicado'?'confirmada':''}">${ev.estado}</span>
           <div class="acciones">
+            <button onclick="toggleEd('${ev.slug}')">Editar</button>
             <button onclick="evento('${ev.slug}','publicado')">Publicar</button>
             <button onclick="evento('${ev.slug}','borrador')">Despublicar</button>
             <button onclick="evento('${ev.slug}','cerrado')">Cerrar</button>
           </div>
         </div>
       </div>
+      ${editor}
       ${tickets?('<div style="margin-top:12px">'+tickets+'</div>'):'<p class="meta" style="margin-top:10px">Sin ventas todavía.</p>'}
     </div>`;
   }).join('');
+}
+function toggleEd(slug){ const d=$('ed-'+slug); d.style.display = d.style.display==='none'?'block':'none'; }
+async function post(body){
+  const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify(body)});
+  return r.json();
+}
+async function guardarEvento(slug){
+  const j=await post({accion:'guardar_evento',slug,nombre:$('n-'+slug).value,subtitulo:$('s-'+slug).value,
+    descripcion:$('d-'+slug).value,fecha:$('f-'+slug).value,hora:$('h-'+slug).value});
+  if(j.error) alert(j.error); else cargarEventos();
+}
+async function guardarZona(id){
+  const j=await post({accion:'guardar_zona',zona:id,nombre:$('zn-'+id).value,descripcion:$('zd-'+id).value,
+    precio:$('zp-'+id).value,cupos:$('zc-'+id).value});
+  if(j.error) alert(j.error); else cargarEventos();
+}
+async function nuevoEvento(){
+  const nombre=prompt('Nombre del evento:'); if(!nombre) return;
+  const slug=prompt('Identificador para la URL (minusculas y guiones):'); if(!slug) return;
+  const fecha=prompt('Fecha (AAAA-MM-DD):'); if(!fecha) return;
+  const hora=prompt('Hora (HH:MM):','20:00'); if(!hora) return;
+  const j=await post({accion:'crear_evento',slug,nombre,fecha,hora});
+  if(j.error) alert(j.error); else cargarEventos();
 }
 async function evento(slug,estado){
   const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify({evento:slug,estado})});
