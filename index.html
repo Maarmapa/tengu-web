@@ -1375,16 +1375,20 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
 // registra recién cuando cargó. Sin el flag, el visitante normal no baja ni un
 // byte extra.
 //
-// Cada execute devuelve { content: [{type:'text', text}] }, la forma de
-// ModelContextToolResult del draft — un string pelado quedó fuera del spec.
+// Cada execute devuelve un valor PLANO. El spec define
+// `callback ToolExecuteCallback = Promise<any>` y el navegador serializa a
+// JSON lo que retornes — no existe ningún ModelContextToolResult. Envolver en
+// {content:[{type:'text'}]} es la convención de MCP-B (el formato de MCP por
+// el cable), y colarla acá le entrega al agente el envoltorio del transporte
+// en vez de la respuesta: doble capa que tiene que desarmar para leer un
+// precio. La página habla el lenguaje de la página.
 (function(){
   function viaMcp(name, args){
     return fetch('/api/mcp',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({jsonrpc:'2.0',id:Date.now(),method:'tools/call',params:{name:name,arguments:args||{}}})})
       .then(function(r){return r.json()})
-      .then(function(j){return texto((j.result&&j.result.content&&j.result.content[0]&&j.result.content[0].text)||'Sin datos.')});
+      .then(function(j){return (j.result&&j.result.content&&j.result.content[0]&&j.result.content[0].text)||'Sin datos.'});
   }
-  function texto(t){ return {content:[{type:'text',text:t}]}; }
   var TOOLS = [
     {name:'get_carta', description:'Carta oficial de Tengu con precios reales en CLP. Sin argumentos: índice de secciones. Con seccion (Comida, Barra, Vinos, Vinos por copa, Sake) o categoria: el detalle.',
      inputSchema:{type:'object',properties:{seccion:{type:'string'},categoria:{type:'string'}}},
@@ -1416,8 +1420,8 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
          set('srName',a.nombre); set('srPhone',a.telefono); set('srDate',a.fecha);
          set('srTime',a.hora); set('srGuests',pax(a.personas)); set('srOcc',a.ocasion); set('srNotes',a.notas);
          var r=document.getElementById('reserve'); if(r) r.scrollIntoView({behavior:'smooth'});
-         return Promise.resolve(texto('Formulario de reserva completado y visible en pantalla. Pedile a la persona que lo revise y presione "Reservar por WhatsApp" para confirmar — el envío es humano, no del agente.'));
-       }catch(e){ return Promise.resolve(texto('No pude completar el formulario: '+e.message)); }
+         return Promise.resolve('Formulario de reserva completado y visible en pantalla. Pedile a la persona que lo revise y presione "Reservar por WhatsApp" para confirmar — el envío es humano, no del agente.');
+       }catch(e){ return Promise.resolve('No pude completar el formulario: '+e.message); }
      }}
   ];
   function registrar(){
