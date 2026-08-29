@@ -49,6 +49,20 @@ module.exports = async (req, res) => {
   const mensaje = ((req.body && req.body.mensaje) || '').toString().slice(0, 400).trim();
   if (!mensaje) return res.status(200).json({ error: 'Mensaje vacío.' });
 
+  // cap económico diario: si se agota, el chat vuelve a las reglas locales
+  const SBB = process.env.TENGU_SB_URL && process.env.TENGU_SB_KEY && process.env.TENGU_SB_SECRET;
+  if (SBB) {
+    try {
+      const tr = await fetch(`${process.env.TENGU_SB_URL}/rest/v1/rpc/tengu_tick_oraculo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: process.env.TENGU_SB_KEY, Authorization: `Bearer ${process.env.TENGU_SB_KEY}` },
+        body: JSON.stringify({ p_secret: process.env.TENGU_SB_SECRET }),
+      });
+      const tj = await tr.json();
+      if (tj && tj.permitido === false) return res.status(200).json({ error: 'límite diario' });
+    } catch (e) { /* si el contador falla, seguimos: el LLM tiene su propio timeout */ }
+  }
+
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 12000);

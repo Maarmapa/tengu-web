@@ -29,6 +29,16 @@ module.exports = async (req, res) => {
   const ok = auth.startsWith('Basic ') &&
     Buffer.from(auth.slice(6), 'base64').toString() === `tengu:${PASS}`;
   if (!ok) {
+    try {
+      const tr = await fetch(`${SB.url}/rest/v1/rpc/tengu_tick_panel_fail`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: `Bearer ${SB.key}` },
+        body: JSON.stringify({ p_secret: SB.secret }),
+      });
+      const tj = await tr.json();
+      if (tj && tj.permitido === false) return res.status(429).json({ error: 'Panel bloqueado por hoy (demasiados intentos fallidos).' });
+    } catch (e) {}
+    await new Promise((r2) => setTimeout(r2, 900));
     res.setHeader('WWW-Authenticate', 'Basic realm="Tengu Sala"');
     return res.status(401).json({ error: 'Clave incorrecta.' });
   }
