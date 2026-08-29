@@ -45,13 +45,26 @@ module.exports = async (req, res) => {
 
   try {
     if (req.method === 'GET') {
+      if (req.query && req.query.vista === 'eventos') {
+        const eventos = await rpc('tengu_eventos_admin', {});
+        return res.status(200).json({ eventos });
+      }
       const fecha = (req.query && req.query.fecha) || hoyChile();
       if (!/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return res.status(400).json({ error: 'fecha inválida' });
       const reservas = await rpc('tengu_listar_dia', { p_fecha: fecha });
       return res.status(200).json({ fecha, reservas });
     }
     if (req.method === 'POST') {
-      const { codigo, estado } = req.body || {};
+      const b = req.body || {};
+      if (b.evento && b.estado) {
+        const r = await rpc('tengu_evento_estado', { p_slug: String(b.evento), p_estado: String(b.estado) });
+        return res.status(200).json(r);
+      }
+      if (b.ticket && b.estado) {
+        const r = await rpc('tengu_ticket_estado_set', { p_codigo: String(b.ticket), p_estado: String(b.estado) });
+        return res.status(200).json(r);
+      }
+      const { codigo, estado } = b;
       if (!codigo || !estado) return res.status(400).json({ error: 'faltan codigo y estado' });
       const r = await rpc('tengu_actualizar_estado', { p_codigo: String(codigo), p_estado: String(estado) });
       return res.status(200).json(r);

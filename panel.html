@@ -34,7 +34,9 @@ button{cursor:pointer}button:hover{border-color:var(--gold)}
     <p class="mono" style="color:var(--gold)">Tengu OS · Panel de sala · v0</p>
     <h1>Reservas del <em>día</em></h1>
   </div>
-  <div style="display:flex;gap:8px;align-items:center">
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+    <button id="tabRes" onclick="vista('reservas')" style="border-color:var(--gold);color:var(--gold)">Reservas</button>
+    <button id="tabEv" onclick="vista('eventos')">Experiencias</button>
     <input type="date" id="fecha">
     <button onclick="cargar()">Ver</button>
   </div>
@@ -81,6 +83,65 @@ async function estado(codigo,estado){
   const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify({codigo,estado})});
   const j=await r.json();
   if(j.error) alert(j.error); else cargar();
+}
+function vista(v){
+  const res=v==='reservas';
+  $('tabRes').style.borderColor=res?'var(--gold)':'rgba(200,146,26,.3)';
+  $('tabRes').style.color=res?'var(--gold)':'var(--cream)';
+  $('tabEv').style.borderColor=res?'rgba(200,146,26,.3)':'var(--gold)';
+  $('tabEv').style.color=res?'var(--cream)':'var(--gold)';
+  $('fecha').style.display=res?'':'none';
+  res?cargar():cargarEventos();
+}
+const clp=n=>'$'+Number(n||0).toLocaleString('es-CL');
+async function cargarEventos(){
+  const r=await fetch('/api/panel?vista=eventos',{headers:hdr()});
+  if(r.status===401){ sessionStorage.removeItem('tsala'); location.reload(); return; }
+  const j=await r.json();
+  const evs=j.eventos||[];
+  if(!evs.length){ $('lista').innerHTML='<p id="vacio">Sin experiencias creadas.</p>'; return; }
+  $('lista').innerHTML=evs.map(ev=>{
+    const zonas=(ev.zonas||[]).map(z=>`${z.nombre}: ${z.vendidos}/${z.cupos} · ${clp(z.precio)}`).join(' &nbsp;|&nbsp; ');
+    const tickets=(ev.tickets||[]).map(t=>`
+      <div class="card" style="margin:6px 0 0;padding:10px 14px">
+        <div><div class="nombre" style="font-size:16px">${(t.nombre||'').replace(/</g,'&lt;')} · ${t.cantidad}p · ${clp(t.monto)}</div>
+        <div class="meta">${t.codigo} · ${t.zona||''}${t.telefono?(' · '+t.telefono):''}${t.email?(' · '+t.email):''}</div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="estado ${t.estado==='pagado'?'confirmada':(t.estado==='anulado'?'cancelada':'')}">${t.estado}</span>
+          <div class="acciones">
+            <button onclick="ticket('${t.codigo}','pagado')">Pagado</button>
+            <button onclick="ticket('${t.codigo}','usado')">Usado</button>
+            <button onclick="ticket('${t.codigo}','anulado')">Anular</button>
+          </div>
+        </div>
+      </div>`).join('');
+    return `<div class="card" style="display:block">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <div>
+          <div class="nombre">${(ev.nombre||'').replace(/</g,'&lt;')}</div>
+          <div class="meta">${ev.fecha} · ${ev.hora} · ${zonas}</div>
+          <div class="meta" style="color:var(--gold);margin-top:4px">Recaudado ${clp(ev.recaudado)} &nbsp;·&nbsp; Comprometido ${clp(ev.comprometido)}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="estado ${ev.estado==='publicado'?'confirmada':''}">${ev.estado}</span>
+          <div class="acciones">
+            <button onclick="evento('${ev.slug}','publicado')">Publicar</button>
+            <button onclick="evento('${ev.slug}','borrador')">Despublicar</button>
+            <button onclick="evento('${ev.slug}','cerrado')">Cerrar</button>
+          </div>
+        </div>
+      </div>
+      ${tickets?('<div style="margin-top:12px">'+tickets+'</div>'):'<p class="meta" style="margin-top:10px">Sin ventas todavía.</p>'}
+    </div>`;
+  }).join('');
+}
+async function evento(slug,estado){
+  const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify({evento:slug,estado})});
+  const j=await r.json(); if(j.error) alert(j.error); else cargarEventos();
+}
+async function ticket(codigo,estado){
+  const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify({ticket:codigo,estado})});
+  const j=await r.json(); if(j.error) alert(j.error); else cargarEventos();
 }
 cargar();
 </script>
