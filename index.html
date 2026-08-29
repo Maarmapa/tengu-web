@@ -1455,7 +1455,7 @@ document.querySelectorAll('.menu-grid').forEach(function(grid){
       wrap = document.createElement('div');
       wrap.className = 'subcat-body';
       k.after(wrap);
-      if(first){ k.classList.add('open'); first = false; }
+      /* todo colapsado por defecto */
       k.addEventListener('click', function(){ k.classList.toggle('open'); });
     } else if(wrap){ wrap.appendChild(k); }
   });

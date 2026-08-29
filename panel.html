@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Sala — Tengu OS</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--black:#060503;--dark:#12100c;--dark2:#1a1510;--gold:#c8921a;--cream:#e8e0d0;--cream2:#b8ae9e;--ok:#5C9E92;--bad:#b8574c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--black);color:var(--cream);font-family:'Cormorant Garamond',serif;padding:28px 18px 80px;max-width:860px;margin:0 auto}
+h1{font-weight:300;font-size:30px}h1 em{color:var(--gold);font-style:italic}
+.mono{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+.top{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+input,button,select{font-family:'DM Mono',monospace;font-size:12px;background:var(--dark2);border:1px solid rgba(200,146,26,.3);color:var(--cream);padding:9px 12px;border-radius:4px}
+button{cursor:pointer}button:hover{border-color:var(--gold)}
+.card{background:var(--dark);border:1px solid rgba(200,146,26,.14);border-radius:8px;padding:14px 16px;margin-bottom:8px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.hora{font-family:'DM Mono',monospace;font-size:16px;color:var(--gold);min-width:56px}
+.nombre{font-size:19px}.meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--cream2);margin-top:2px}
+.estado{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:20px;border:1px solid rgba(200,146,26,.35)}
+.estado.confirmada{color:var(--ok);border-color:var(--ok)}
+.estado.cancelada,.estado.no_show{color:var(--bad);border-color:var(--bad)}
+.acciones{display:flex;gap:6px;flex-wrap:wrap}
+.acciones button{padding:6px 10px;font-size:10px}
+#vacio{color:var(--cream2);padding:30px 0;text-align:center}
+.aviso{font-family:'DM Mono',monospace;font-size:9px;color:rgba(200,146,26,.55);letter-spacing:.12em;text-transform:uppercase;margin-top:26px;text-align:center}
+</style>
+</head>
+<body>
+<div class="top">
+  <div>
+    <p class="mono" style="color:var(--gold)">Tengu OS · Panel de sala · v0</p>
+    <h1>Reservas del <em>día</em></h1>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <input type="date" id="fecha">
+    <button onclick="cargar()">Ver</button>
+  </div>
+</div>
+<div id="lista"><p id="vacio">Ingresa la clave para cargar el día.</p></div>
+<p class="aviso">Sistema en marcha blanca — las solicitudes de agentes y pruebas aparecen aquí. Confirmar una reserva NO avisa aún al comensal (fase notificaciones).</p>
+<script>
+const $=id=>document.getElementById(id);
+function clave(){
+  let c=sessionStorage.getItem('tsala');
+  if(!c){ c=prompt('Clave del panel:')||''; sessionStorage.setItem('tsala',c); }
+  return c;
+}
+function hdr(){ return {'Authorization':'Basic '+btoa('tengu:'+clave()),'Content-Type':'application/json'}; }
+async function cargar(){
+  const f=$('fecha').value;
+  const r=await fetch('/api/panel'+(f?('?fecha='+f):''),{headers:hdr()});
+  if(r.status===401){ sessionStorage.removeItem('tsala'); $('lista').innerHTML='<p id="vacio">Clave incorrecta. Recarga e intenta de nuevo.</p>'; return; }
+  const j=await r.json();
+  if(!$('fecha').value && j.fecha) $('fecha').value=j.fecha;
+  const rs=j.reservas||[];
+  if(!rs.length){ $('lista').innerHTML='<p id="vacio">Sin reservas para '+(j.fecha||'ese día')+'.</p>'; return; }
+  $('lista').innerHTML=rs.map(x=>`
+    <div class="card">
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="hora">${x.hora}</span>
+        <div>
+          <div class="nombre">${(x.nombre||'').replace(/</g,'&lt;')} · ${x.personas}p</div>
+          <div class="meta">${x.codigo} · ${x.origen}${x.telefono?(' · '+x.telefono):''}${x.notas?(' · '+String(x.notas).replace(/</g,'&lt;')):''}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <span class="estado ${x.estado}">${x.estado}</span>
+        <div class="acciones">
+          <button onclick="estado('${x.codigo}','confirmada')">Confirmar</button>
+          <button onclick="estado('${x.codigo}','cancelada')">Cancelar</button>
+          <button onclick="estado('${x.codigo}','no_show')">No-show</button>
+          <button onclick="estado('${x.codigo}','completada')">Completada</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+async function estado(codigo,estado){
+  const r=await fetch('/api/panel',{method:'POST',headers:hdr(),body:JSON.stringify({codigo,estado})});
+  const j=await r.json();
+  if(j.error) alert(j.error); else cargar();
+}
+cargar();
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ const CARTA = require('./_carta.js');
 
 const KEY = process.env.OPENROUTER_API_KEY;
 const MODEL = process.env.ORACULO_MODEL || 'openai/gpt-4o-mini';
+const BASE = (process.env.ORACULO_BASE_URL || 'https://openrouter.ai/api/v1').replace(/\/$/, '');
 
 function cartaCompacta() {
   const bySec = {};
@@ -51,7 +52,7 @@ module.exports = async (req, res) => {
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 12000);
-    const r = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    const r = await fetch(`${BASE}/chat/completions`, {
       method: 'POST',
       signal: ctrl.signal,
       headers: {
