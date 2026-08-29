@@ -60,6 +60,29 @@ module.exports = async (req, res) => {
         const r = await rpc('tengu_evento_estado', { p_slug: String(b.evento), p_estado: String(b.estado) });
         return res.status(200).json(r);
       }
+      if (b.accion === 'guardar_evento') {
+        const r = await rpc('tengu_evento_guardar', {
+          p_slug: String(b.slug || ''), p_nombre: String(b.nombre || ''),
+          p_subtitulo: b.subtitulo || null, p_descripcion: b.descripcion || null,
+          p_fecha: String(b.fecha || ''), p_hora: String(b.hora || ''),
+        });
+        return res.status(200).json(r);
+      }
+      if (b.accion === 'guardar_zona') {
+        const r = await rpc('tengu_zona_guardar', {
+          p_zona: String(b.zona || ''), p_nombre: String(b.nombre || ''),
+          p_descripcion: b.descripcion || null,
+          p_precio: parseInt(b.precio, 10), p_cupos: parseInt(b.cupos, 10),
+        });
+        return res.status(200).json(r);
+      }
+      if (b.accion === 'crear_evento') {
+        const r = await rpc('tengu_evento_crear', {
+          p_slug: String(b.slug || ''), p_nombre: String(b.nombre || ''),
+          p_fecha: String(b.fecha || ''), p_hora: String(b.hora || ''),
+        });
+        return res.status(200).json(r);
+      }
       if (b.ticket && b.estado) {
         const r = await rpc('tengu_ticket_estado_set', { p_codigo: String(b.ticket), p_estado: String(b.estado) });
         return res.status(200).json(r);
