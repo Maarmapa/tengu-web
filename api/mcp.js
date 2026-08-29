@@ -2,6 +2,7 @@
 // Permite que agentes de IA consulten la carta real y los datos del restaurante.
 // Endpoint: POST /api/mcp (JSON-RPC 2.0). Solo lectura — no ejecuta reservas.
 const CARTA = require('./_carta.js');
+const GUIAS = require('./_guias.js');
 
 const INFO = {
   nombre: 'Tengu',
@@ -37,6 +38,15 @@ const TOOLS = [
     },
   },
   {
+    name: 'get_guia',
+    description:
+      'Guías de autoridad escritas por Tengu, con contenido completo y verificado. "sake": qué es el sake, categorías (junmai, ginjo, daiginjo, nigori), temperatura de servicio, cómo leer una etiqueta y la cava real de Tengu. "bluefin": el atún honmaguro, los cortes akami/chutoro/otoro, el ronqueo o kaitai, maduración y cómo comerlo. "kappo": qué es la cocina kappo y su diferencia con kaiseki, izakaya, sushiya y omakase. Sin argumentos lista las disponibles.',
+    inputSchema: {
+      type: 'object',
+      properties: { tema: { type: 'string', enum: ['sake', 'bluefin', 'kappo'], description: 'Guía a devolver' } },
+    },
+  },
+  {
     name: 'get_info',
     description: 'Información del restaurante Tengu: dirección, horarios, cómo reservar, especialidad, Instagram.',
     inputSchema: { type: 'object', properties: {} },
@@ -53,6 +63,15 @@ function fmtItem(i) {
 function runTool(name, args) {
   args = args || {};
   if (name === 'get_info') return JSON.stringify(INFO, null, 2);
+
+  if (name === 'get_guia') {
+    const t = strip(args.tema || '');
+    if (!t || !GUIAS[t]) {
+      return 'Guías disponibles (usar get_guia con {tema}):\n' +
+        Object.entries(GUIAS).map(([k, g]) => `- ${k}: ${g.titulo} → ${g.url}`).join('\n');
+    }
+    return GUIAS[t].texto;
+  }
 
   if (name === 'get_carta') {
     let items = CARTA;

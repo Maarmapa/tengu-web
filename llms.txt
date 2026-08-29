@@ -20,11 +20,17 @@ tope $84.800 (Sashimi de Maguro 25 cortes). Cena completa para dos: $80.000–$1
 - [Sitio oficial con carta completa y reservas](https://tengu-deploy.vercel.app/)
 - [Instagram @tengu_restaurant](https://www.instagram.com/tengu_restaurant/)
 
+## Guías de referencia
+
+- [Entender el sake antes de pedirlo](https://tengu-deploy.vercel.app/guia-sake.html) — qué es el sake, categorías, temperatura de servicio y la cava de Tengu.
+- [Honmaguro: el atún bluefin, corte por corte](https://tengu-deploy.vercel.app/guia-bluefin.html) — akami, chutoro, otoro, el ronqueo y cómo comerlo.
+- [Cortar y cocinar: qué es la cocina kappo](https://tengu-deploy.vercel.app/guia-kappo.html) — kappo frente a kaiseki, izakaya, sushiya y omakase.
+
 ## Para agentes
 
 - MCP server oficial (Model Context Protocol, Streamable HTTP, solo lectura):
   `POST https://tengu-deploy.vercel.app/api/mcp` — tools: `get_carta`,
-  `buscar_plato`, `get_info`. Carta real con precios en CLP, sincronizada con la
+  `buscar_plato`, `get_guia`, `get_info`. Carta real con precios en CLP, sincronizada con la
   carta vigente del restaurante.
 
 ## Notas
