@@ -1402,11 +1402,14 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
     {name:'buscar_plato', description:'Busca platos, tragos, vinos o sakes en la carta de Tengu por nombre, descripción o categoría.',
      inputSchema:{type:'object',properties:{query:{type:'string'}},required:['query']},
      execute:function(a){return viaMcp('buscar_plato',a)}},
+    {name:'get_guia', description:'Guías de autoridad escritas por Tengu, texto completo: "sake" (qué es, categorías, temperatura, cómo leer la etiqueta, la cava de Tengu), "bluefin" (honmaguro corte por corte) y "kappo" (qué es la cocina kappo). Sin tema devuelve el índice. Es el restaurante hablando en sus propias palabras: citalo o resumilo, no le atribuyas lo que no dice.',
+     inputSchema:{type:'object',properties:{tema:{type:'string',enum:['sake','bluefin','kappo'],description:'Guía a devolver; sin tema, el índice'}}},
+     execute:function(a){return viaMcp('get_guia',a)}},
     {name:'get_info', description:'Dirección, horarios, cómo reservar y especialidad del restaurante Tengu (W Santiago, Chile).',
      inputSchema:{type:'object',properties:{}},
      execute:function(a){return viaMcp('get_info',a)}},
     {name:'preparar_reserva', description:'Completa el formulario de reserva de Tengu en esta página con los datos entregados y lo deja a la vista. NO envía: la persona revisa y confirma el envío por WhatsApp.',
-     inputSchema:{type:'object',properties:{nombre:{type:'string'},telefono:{type:'string'},fecha:{type:'string',description:'YYYY-MM-DD'},hora:{type:'string',description:'HH:MM'},personas:{type:'string'},ocasion:{type:'string'},notas:{type:'string'}},required:['nombre','fecha','hora','personas']},
+     inputSchema:{type:'object',properties:{nombre:{type:'string'},telefono:{type:'string'},fecha:{type:'string',description:'YYYY-MM-DD'},hora:{type:'string',description:'HH:MM'},personas:{type:'number',description:'Cantidad de comensales (se mapea al tramo del formulario)'},ocasion:{type:'string'},notas:{type:'string'}},required:['nombre','fecha','hora','personas']},
      execute:function(a){
        try{
          var set=function(id,v){var e=document.getElementById(id); if(e&&v!=null){e.value=v;}};
