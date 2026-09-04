@@ -50,6 +50,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .nav-links a:hover{color:var(--gold)}
 .nav-reserve{font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;color:var(--black);background:var(--gold);padding:10px 20px;text-decoration:none;text-transform:uppercase;transition:background .3s}
 .nav-reserve:hover{background:var(--gold2)}
+.langbtn{font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;color:var(--cream2);background:transparent;border:1px solid rgba(200,146,26,.35);padding:8px 12px;cursor:pointer;text-transform:uppercase;transition:color .3s,border-color .3s,background .3s;margin-right:10px}
+.langbtn:hover{color:var(--gold);border-color:var(--gold)}
 .hero{height:100vh;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 80% at 50% 60%,rgba(139,26,26,.14) 0%,transparent 60%),linear-gradient(180deg,var(--black) 0%,var(--dark) 50%,var(--dark2) 100%)}
 .hero-kanji{position:absolute;font-family:var(--font-jp);font-size:340px;font-weight:300;color:rgba(200,146,26,.04);line-height:1;z-index:1;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:float 8s ease-in-out infinite}
@@ -500,33 +502,34 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 <body>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-<a class="wa-float" href="#" id="waFloat" aria-label="Escribir a Tengu por WhatsApp">
-  <span class="wa-float-tip">Reservar por WhatsApp</span>
+<a class="wa-float" href="#" id="waFloat" aria-label="WhatsApp Tengu">
+  <span class="wa-float-tip" data-en="Book via WhatsApp">Reservar por WhatsApp</span>
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 <nav>
   <a href="#" class="nav-logo">天狗<span>Tengu · Isidora 3000</span></a>
   <ul class="nav-links">
-    <li><a href="#about">Historia</a></li>
-    <li><a href="#menu">Carta</a></li>
-    <li><a href="#sake">Sake</a></li><li><a href="/guia-sake.html">Guías</a></li>
+    <li><a href="#about" data-en="Story">Historia</a></li>
+    <li><a href="#menu" data-en="Menu">Carta</a></li>
+    <li><a href="#sake">Sake</a></li><li><a href="/guia-sake.html" data-en="Guides">Guías</a></li>
     <li><a href="#bar">Bar</a></li>
-    <li><a href="#ai">Oráculo</a></li>
-    <li><a href="#reserve">Reservas</a></li>
+    <li><a href="#ai" data-en="Oracle">Oráculo</a></li>
+    <li><a href="#reserve" data-en="Reservations">Reservas</a></li>
   </ul>
-  <a href="#reserve" class="nav-reserve" style="display:none" id="nav-reserve-desktop">Reservar mesa</a>
+  <button id="lang" class="langbtn" type="button" aria-label="Switch language">EN</button>
+  <a href="#reserve" class="nav-reserve" style="display:none" id="nav-reserve-desktop" data-en="Book a table">Reservar mesa</a>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#about" onclick="toggleMenu()">Historia</a>
-  <a href="#menu" onclick="toggleMenu()">Carta</a>
+  <a href="#about" onclick="toggleMenu()" data-en="Story">Historia</a>
+  <a href="#menu" onclick="toggleMenu()" data-en="Menu">Carta</a>
   <a href="#bar" onclick="toggleMenu()">Bar</a>
   <a href="#sake" onclick="toggleMenu()">Sake</a>
-  <a href="#reserve" onclick="toggleMenu()">Reservas</a>
-  <a href="#ai" onclick="toggleMenu()">Oráculo</a>
-  <a href="#reserve" class="mm-reserve" onclick="toggleMenu()">Reservar mesa</a>
+  <a href="#reserve" onclick="toggleMenu()" data-en="Reservations">Reservas</a>
+  <a href="#ai" onclick="toggleMenu()" data-en="Oracle">Oráculo</a>
+  <a href="#reserve" class="mm-reserve" onclick="toggleMenu()" data-en="Book a table">Reservar mesa</a>
 </div>
 <section class="hero">
   <div class="hero-bg"></div>
@@ -535,21 +538,21 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
   <div class="hero-content">
     <p class="hero-tag">Isidora 3000 · Las Condes</p>
     <h1 class="hero-title"><em>Tengu</em></h1>
-    <p class="hero-sub">天狗 · El Guardián de las Montañas</p>
+    <p class="hero-sub" data-en="天狗 · Guardian of the Mountains">天狗 · El Guardián de las Montañas</p>
     <div class="hero-ctas">
-      <a href="#reserve" class="btn-primary">Reservar mesa</a>
-      <a href="#menu" class="btn-ghost">Ver carta</a>
+      <a href="#reserve" class="btn-primary" data-en="Book a table">Reservar mesa</a>
+      <a href="#menu" class="btn-ghost" data-en="View menu">Ver carta</a>
     </div>
   </div>
-  <div class="hero-scroll"><div class="scroll-line"></div><span>Descubrir</span></div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span data-en="Discover">Descubrir</span></div>
 </section>
 <section class="about" id="about">
   <div>
-    <p class="sec-tag">La leyenda</p>
-    <h2 class="sec-title">Guardianes del bosque,<br><em>maestros del fuego</em></h2>
-    <p class="sec-body">El Tengu es una criatura legendaria del folclore japonés — guardián de las montañas, protector del bosque, símbolo de fuerza, sabiduría y equilibrio espiritual.</p><br>
-    <p class="sec-body">Cada plato nace de esta filosofía: la precisión del maestro y la fuerza de la naturaleza, unidos en una ceremonia que honra la tradición japonesa pura.</p><br>
-    <a href="#menu" class="btn-ghost" style="display:inline-block;margin-top:10px">Explorar la carta</a>
+    <p class="sec-tag" data-en="The legend">La leyenda</p>
+    <h2 class="sec-title" data-en="Guardians of the forest,<br><em>masters of fire</em>">Guardianes del bosque,<br><em>maestros del fuego</em></h2>
+    <p class="sec-body" data-en="The Tengu is a legendary creature of Japanese folklore — mountain guardian, protector of the forest, a symbol of strength, wisdom and spiritual balance.">El Tengu es una criatura legendaria del folclore japonés — guardián de las montañas, protector del bosque, símbolo de fuerza, sabiduría y equilibrio espiritual.</p><br>
+    <p class="sec-body" data-en="Every dish is born from that idea: the precision of the chef and the force of nature, joined in a ceremony that honours Japanese tradition.">Cada plato nace de esta filosofía: la precisión del maestro y la fuerza de la naturaleza, unidos en una ceremonia que honra la tradición japonesa pura.</p><br>
+    <a href="#menu" class="btn-ghost" style="display:inline-block;margin-top:10px" data-en="Explore the menu">Explorar la carta</a>
   </div>
   <div class="about-visual" style="height:auto;background:none;overflow:visible">
     <!-- Mini carrusel en About -->
@@ -577,19 +580,19 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 </section>
 <section class="menu-section" id="menu">
   <div class="menu-header">
-    <p class="sec-tag">La carta oficial</p>
-    <h2 class="sec-title" style="text-align:center">Cada plato, un <em>espíritu</em></h2>
+    <p class="sec-tag" data-en="The official menu">La carta oficial</p>
+    <h2 class="sec-title" style="text-align:center" data-en="Each dish, a <em>spirit</em>">Cada plato, un <em>espíritu</em></h2>
     <div class="gold-line"></div>
   </div>
   
   <div class="menu-tabs">
-    <button class="menu-tab active" onclick="showCat('comenzar',this)">Para Comenzar</button>
-    <button class="menu-tab" onclick="showCat('bluefin',this)">Atún Bluefin</button>
+    <button class="menu-tab active" onclick="showCat('comenzar',this)" data-en="Starters">Para Comenzar</button>
+    <button class="menu-tab" onclick="showCat('bluefin',this)" data-en="Bluefin tuna">Atún Bluefin</button>
     <button class="menu-tab" onclick="showCat('sashimi',this)">Sashimi</button>
     <button class="menu-tab" onclick="showCat('nigiris',this)">Nigiris</button>
     <button class="menu-tab" onclick="showCat('makis',this)">Makis</button>
-    <button class="menu-tab" onclick="showCat('caliente',this)">Cocina Caliente</button>
-    <button class="menu-tab" onclick="showCat('postres',this)">Postres</button>
+    <button class="menu-tab" onclick="showCat('caliente',this)" data-en="Hot kitchen">Cocina Caliente</button>
+    <button class="menu-tab" onclick="showCat('postres',this)" data-en="Desserts">Postres</button>
   </div>
 
   <div class="menu-cat active" id="cat-comenzar"><div class="menu-grid">
@@ -741,19 +744,19 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 <!-- SECCIÓN BAR -->
 <section class="menu-section" id="bar" style="background:var(--black)">
   <div class="menu-header">
-    <p class="sec-tag">La barra</p>
-    <h2 class="sec-title" style="text-align:center">El bar de <em>Tengu</em></h2>
+    <p class="sec-tag" data-en="The bar">La barra</p>
+    <h2 class="sec-title" style="text-align:center" data-en="The bar at <em>Tengu</em>">El bar de <em>Tengu</em></h2>
     <div class="gold-line"></div>
   </div>
   
   <div class="menu-tabs">
-    <button class="menu-tab active" onclick="showBar('cocteles',this)">Coctelería</button>
-    <button class="menu-tab" onclick="showBar('destilados',this)">Destilados</button>
-    <button class="menu-tab" onclick="showBar('cervezas',this)">Cervezas</button>
-    <button class="menu-tab" onclick="showBar('aguas',this)">Aguas & Bebidas</button>
-    <button class="menu-tab" onclick="showBar('vinos',this)">Vinos</button>
-    <button class="menu-tab" onclick="showBar('copa',this)">Por Copa</button>
-    <button class="menu-tab" onclick="showBar('cafe',this)">Cafetería</button>
+    <button class="menu-tab active" onclick="showBar('cocteles',this)" data-en="Cocktails">Coctelería</button>
+    <button class="menu-tab" onclick="showBar('destilados',this)" data-en="Spirits">Destilados</button>
+    <button class="menu-tab" onclick="showBar('cervezas',this)" data-en="Beer">Cervezas</button>
+    <button class="menu-tab" onclick="showBar('aguas',this)" data-en="Water &amp; soft drinks">Aguas & Bebidas</button>
+    <button class="menu-tab" onclick="showBar('vinos',this)" data-en="Wine">Vinos</button>
+    <button class="menu-tab" onclick="showBar('copa',this)" data-en="By the glass">Por Copa</button>
+    <button class="menu-tab" onclick="showBar('cafe',this)" data-en="Coffee">Cafetería</button>
   </div>
 
   <div class="bar-cat active" id="bar-cocteles"><div class="menu-grid">
@@ -936,18 +939,18 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
 <section class="sake-section" id="sake">
   <div>
-    <p class="sec-tag">El ritual del sake</p>
-    <h2 class="sec-title">El universo del <em>sake</em><br>en Santiago</h2>
-    <p class="sec-body">La selección de sake más completa de Chile. Cada variedad cuenta una historia: el terroir del arroz, el agua de montaña, la habilidad del Toji — el maestro cervecero.</p><br>
-    <p class="sec-body">Nuestro sommelier guiará tu experiencia hacia el maridaje perfecto con cada plato.</p><br>
-    <a href="#ai" class="btn-ghost" style="display:inline-block;margin-top:10px;margin-right:10px">Pregunta al Oráculo</a>
-    <a href="/guia-sake.html" class="btn-ghost" style="display:inline-block;margin-top:10px">Leer la guía del sake</a>
+    <p class="sec-tag" data-en="The sake ritual">El ritual del sake</p>
+    <h2 class="sec-title" data-en="The universe of <em>sake</em><br>in Santiago">El universo del <em>sake</em><br>en Santiago</h2>
+    <p class="sec-body" data-en="Chile's most complete sake selection. Each style tells a story: the rice, the mountain water, the skill of the Toji — the brewmaster.">La selección de sake más completa de Chile. Cada variedad cuenta una historia: el terroir del arroz, el agua de montaña, la habilidad del Toji — el maestro cervecero.</p><br>
+    <p class="sec-body" data-en="Our sommelier will guide you to the right pairing for each dish.">Nuestro sommelier guiará tu experiencia hacia el maridaje perfecto con cada plato.</p><br>
+    <a href="#ai" class="btn-ghost" style="display:inline-block;margin-top:10px;margin-right:10px" data-en="Ask the Oracle">Pregunta al Oráculo</a>
+    <a href="/guia-sake.html" class="btn-ghost" style="display:inline-block;margin-top:10px" data-en="Read the sake guide">Leer la guía del sake</a>
   </div>
   <div class="sake-visual">
-    <div class="sake-card"><div class="sake-card-jp">純米</div><div class="sake-card-name">Junmai</div><div class="sake-card-desc">Puro arroz. Intenso, terroso, umami profundo. Para teppanyaki y carnes.</div></div>
-    <div class="sake-card"><div class="sake-card-jp">吟醸</div><div class="sake-card-name">Ginjo</div><div class="sake-card-desc">Floral y afrutado. Elegancia en cada sorbo. Para nigiris y pescados.</div></div>
-    <div class="sake-card"><div class="sake-card-jp">大吟醸</div><div class="sake-card-name">Daiginjo</div><div class="sake-card-desc">El más premium. Refinado, complejo. Para momentos especiales.</div></div>
-    <div class="sake-card"><div class="sake-card-jp">にごり</div><div class="sake-card-name">Nigori</div><div class="sake-card-desc">Sin filtrar. Cremoso y dulce. Para postres y quesos.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">純米</div><div class="sake-card-name">Junmai</div><div class="sake-card-desc" data-en="Pure rice. Intense, earthy, deep umami. For teppanyaki and meats.">Puro arroz. Intenso, terroso, umami profundo. Para teppanyaki y carnes.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">吟醸</div><div class="sake-card-name">Ginjo</div><div class="sake-card-desc" data-en="Floral and fruity. Elegance in every sip. For nigiri and fish.">Floral y afrutado. Elegancia en cada sorbo. Para nigiris y pescados.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">大吟醸</div><div class="sake-card-name">Daiginjo</div><div class="sake-card-desc" data-en="The most premium. Refined, complex. For special moments.">El más premium. Refinado, complejo. Para momentos especiales.</div></div>
+    <div class="sake-card"><div class="sake-card-jp">にごり</div><div class="sake-card-name">Nigori</div><div class="sake-card-desc" data-en="Unfiltered. Creamy and sweet. For desserts and cheese.">Sin filtrar. Cremoso y dulce. Para postres y quesos.</div></div>
   </div>
 <div style="grid-column:1/-1;margin-top:10px">
     <div class="menu-grid">
@@ -973,14 +976,14 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 <section class="reserve-section" id="reserve">
   <div class="reserve-content">
     <div class="reserve-header">
-      <p class="sec-tag">Reservas</p>
-      <h2 class="sec-title" style="text-align:center">Reserva tu <em>ceremonia</em></h2>
+      <p class="sec-tag" data-en="Reservations">Reservas</p>
+      <h2 class="sec-title" style="text-align:center" data-en="Book your <em>ceremony</em>">Reserva tu <em>ceremonia</em></h2>
       <p style="font-size:14px;color:var(--cream2);margin-top:10px;text-align:center">Isidora Goyenechea 3000, local 104 · Las Condes</p>
     </div>
 
     <!-- BOOKING TABS -->
     <div style="display:flex;gap:0;border-bottom:1px solid rgba(200,146,26,.15);margin-bottom:0">
-      <button id="tab-online" onclick="switchReserva('online')" style="font-family:var(--font-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:12px 24px;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--gold);cursor:pointer;transition:all .3s">Reserva Online</button>
+      <button id="tab-online" onclick="switchReserva('online')" style="font-family:var(--font-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:12px 24px;background:none;border:none;border-bottom:2px solid var(--gold);color:var(--gold);cursor:pointer;transition:all .3s" data-en="Book online">Reserva Online</button>
       <button id="tab-whatsapp" onclick="switchReserva('whatsapp')" style="font-family:var(--font-m);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:12px 24px;background:none;border:none;border-bottom:2px solid transparent;color:var(--cream2);cursor:pointer;transition:all .3s">WhatsApp</button>
     </div>
 
@@ -1000,8 +1003,8 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
       <!-- Fallback si gour.media bloquea el iframe -->
       <div id="gour-fallback" style="display:none;padding:48px 32px;text-align:center">
         <p class="sec-tag" style="margin-bottom:12px">Reserva online</p>
-        <p style="font-size:15px;color:var(--cream2);margin-bottom:24px;line-height:1.7">El sistema de reservas se abre en una nueva ventana para garantizar la mejor experiencia.</p>
-        <a href="https://gour.media/booking/tengu/" target="_blank" style="font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;padding:13px 32px;background:var(--gold);color:var(--black);text-decoration:none;display:inline-block">Abrir sistema de reservas ↗</a>
+        <p style="font-size:15px;color:var(--cream2);margin-bottom:24px;line-height:1.7" data-en="The booking system opens in a new window for a better experience.">El sistema de reservas se abre en una nueva ventana para garantizar la mejor experiencia.</p>
+        <a href="https://gour.media/booking/tengu/" target="_blank" style="font-family:var(--font-m);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;padding:13px 32px;background:var(--gold);color:var(--black);text-decoration:none;display:inline-block" data-en="Open booking ↗">Abrir sistema de reservas ↗</a>
       </div>
     </div>
 
@@ -1009,78 +1012,78 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <div id="reserva-whatsapp" style="display:none">
       <div class="reserve-options" style="margin-top:0;border:1px solid rgba(200,146,26,.12);border-top:none">
         <div class="reserve-card" style="border:none;border-right:1px solid rgba(200,146,26,.1)">
-          <h3>Formulario rápido</h3>
-          <div class="card-sub">Confirmación vía WhatsApp</div>
-          <p>Completa los datos y te confirmamos en menos de 30 minutos.</p>
+          <h3 data-en="Quick form">Formulario rápido</h3>
+          <div class="card-sub" data-en="Confirmation via WhatsApp">Confirmación vía WhatsApp</div>
+          <p data-en="Fill in the details and we confirm within 30 minutes.">Completa los datos y te confirmamos en menos de 30 minutos.</p>
           <div class="sr-form">
             <div class="sr-aviso" id="srAviso" role="status" aria-live="polite"></div>
             <div class="sr-row">
-              <input class="sr-input" type="text" placeholder="Nombre completo" id="srName">
-              <input class="sr-input" type="tel" placeholder="WhatsApp / Teléfono" id="srPhone">
+              <input class="sr-input" type="text" placeholder="Nombre completo" data-en-ph="Full name" id="srName">
+              <input class="sr-input" type="tel" placeholder="WhatsApp / Teléfono" data-en-ph="WhatsApp / phone" id="srPhone">
             </div>
             <div class="sr-row">
               <input class="sr-input" type="date" id="srDate" style="color-scheme:dark">
-              <select class="sr-select" id="srTime"><option value="">Hora</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option></select>
+              <select class="sr-select" id="srTime"><option value="" data-en="Time">Hora</option><option>19:00</option><option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option><option>21:30</option><option>22:00</option></select>
             </div>
             <div class="sr-row">
-              <select class="sr-select" id="srGuests"><option value="">Comensales</option><option>2 personas</option><option>3 personas</option><option>4 personas</option><option>5-6 personas</option><option>7-8 personas</option><option>Evento privado (+9)</option></select>
-              <select class="sr-select" id="srOcc"><option value="">Ocasión</option><option>Cena de negocios</option><option>Aniversario</option><option>Cumpleaños</option><option>Cena especial</option><option>Sin ocasión específica</option></select>
+              <select class="sr-select" id="srGuests"><option value="" data-en="Guests">Comensales</option><option value="2 personas" data-en="2 people">2 personas</option><option value="3 personas" data-en="3 people">3 personas</option><option value="4 personas" data-en="4 people">4 personas</option><option value="5-6 personas" data-en="5–6 people">5-6 personas</option><option value="7-8 personas" data-en="7–8 people">7-8 personas</option><option value="Evento privado (+9)" data-en="Private event (9+)">Evento privado (+9)</option></select>
+              <select class="sr-select" id="srOcc"><option value="" data-en="Occasion">Ocasión</option><option value="Cena de negocios" data-en="Business dinner">Cena de negocios</option><option value="Aniversario" data-en="Anniversary">Aniversario</option><option value="Cumpleaños" data-en="Birthday">Cumpleaños</option><option value="Cena especial" data-en="Special dinner">Cena especial</option><option value="Sin ocasión específica" data-en="No particular occasion">Sin ocasión específica</option></select>
             </div>
-            <input class="sr-input" type="text" placeholder="Alergias o solicitudes especiales" id="srNotes">
-            <button class="sr-btn" onclick="submitReserva()">Enviar solicitud de reserva</button>
-            <p class="sr-note">Confirmación por WhatsApp en menos de 30 minutos</p>
+            <input class="sr-input" type="text" placeholder="Alergias o solicitudes especiales" data-en-ph="Allergies or special requests" id="srNotes">
+            <button class="sr-btn" onclick="submitReserva()" data-en="Send booking request">Enviar solicitud de reserva</button>
+            <p class="sr-note" data-en="WhatsApp confirmation within 30 minutes">Confirmación por WhatsApp en menos de 30 minutos</p>
           </div>
         </div>
         <div class="wa-card" style="border:none">
-          <h3>WhatsApp directo</h3>
-          <div class="card-sub" style="color:#25D366">Respuesta inmediata</div>
-          <p>Ideal para grupos, eventos corporativos o solicitudes especiales.</p>
+          <h3 data-en="Direct WhatsApp">WhatsApp directo</h3>
+          <div class="card-sub" style="color:#25D366" data-en="Immediate reply">Respuesta inmediata</div>
+          <p data-en="Best for groups, corporate dinners or special requests.">Ideal para grupos, eventos corporativos o solicitudes especiales.</p>
           <div class="wa-templates">
-            <button class="wa-tmpl" onclick="openWA('Hola! Me gustaria hacer una reserva en Tengu para cenar.')"><span>Reserva estándar</span>Quiero hacer una reserva para cenar...</button>
-            <button class="wa-tmpl" onclick="openWA('Hola! Me interesa organizar una cena corporativa en Tengu.')"><span>Cena corporativa</span>Organizar una cena de negocios...</button>
-            <button class="wa-tmpl" onclick="openWA('Hola! Quiero celebrar un evento especial en Tengu.')"><span>Evento privado</span>Celebrar un evento especial...</button>
+            <button class="wa-tmpl" onclick="openWA('Hola! Me gustaria hacer una reserva en Tengu para cenar.')"><span data-en="Standard booking">Reserva estándar</span><span data-en="I'd like to book a table for dinner...">Quiero hacer una reserva para cenar...</span></button>
+            <button class="wa-tmpl" onclick="openWA('Hola! Me interesa organizar una cena corporativa en Tengu.')"><span data-en="Corporate dinner">Cena corporativa</span><span data-en="Plan a business dinner...">Organizar una cena de negocios...</span></button>
+            <button class="wa-tmpl" onclick="openWA('Hola! Quiero celebrar un evento especial en Tengu.')"><span data-en="Private event">Evento privado</span><span data-en="Celebrate a special event...">Celebrar un evento especial...</span></button>
           </div>
           <button class="wa-btn" onclick="openWA('Hola Tengu! Me gustaria obtener mas informacion y hacer una reserva.')">
             <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Abrir WhatsApp
+            <span data-en="Open WhatsApp">Abrir WhatsApp</span>
           </button>
         </div>
       </div>
     </div>
 
     <div class="reserve-hours" style="margin-top:20px">
-      <div class="rh-item"><span>Horarios</span><p>Mar–Sáb 13:00–15:00 · 19:00–22:00 (última entrada) | Dom 13:00–15:00 | Lun cerrado</p></div>
+      <div class="rh-item"><span data-en="Hours">Horarios</span><p data-en="Tue–Sat 13:00–15:00 · 19:00–22:00 (last seating) | Sun 13:00–15:00 | Mon closed">Mar–Sáb 13:00–15:00 · 19:00–22:00 (última entrada) | Dom 13:00–15:00 | Lun cerrado</p></div>
       <div class="rh-item"><span>Instagram</span><p>@tengu_restaurant</p></div>
-      <div class="rh-item"><span>Ubicación</span><p>Isidora 3000 · Local 104</p></div>
+      <div class="rh-item"><span data-en="Location">Ubicación</span><p>Isidora 3000 · Local 104</p></div>
     </div>
   </div>
 </section>
 <section class="ai-section" id="ai">
   <div class="ai-inner">
     <div class="ai-header">
-      <p class="sec-tag">El Oráculo del Tengu</p>
-      <h2 class="sec-title" style="text-align:center">Tu guía <em>espiritual</em><br>de la experiencia</h2>
-      <p style="font-size:14.5px;color:var(--cream2);text-align:center;margin-top:10px">Pregúntame sobre la carta, el sake, los yokai o haz tu reserva.</p>
+      <p class="sec-tag" data-en="The Tengu Oracle">El Oráculo del Tengu</p>
+      <h2 class="sec-title" style="text-align:center" data-en="Your <em>guide</em><br>to the experience">Tu guía <em>espiritual</em><br>de la experiencia</h2>
+      <p style="font-size:14.5px;color:var(--cream2);text-align:center;margin-top:10px" data-en="Ask about the menu, the sake, the yokai — or book a table.">Pregúntame sobre la carta, el sake, los yokai o haz tu reserva.</p>
     </div>
-    <div class="ai-status"><span class="status-dot"></span><span class="status-text">El Oráculo está despierto</span></div>
+    <div class="ai-status"><span class="status-dot"></span><span class="status-text" data-en="The Oracle is awake">El Oráculo está despierto</span></div>
     <div class="chat-window" id="chatWindow">
       <div class="chat-msg">
         <div class="chat-avatar tengu">天</div>
-        <div class="chat-bubble tengu">Bienvenido a Tengu. Soy el Oráculo — guardián de los sabores y las historias de este restaurante.<br><br>Puedo guiarte por nuestra carta, explicarte el universo del sake, contarte la historia de nuestros yokai o ayudarte a reservar tu mesa. ¿En qué puedo servirte esta noche?</div>
+        <div class="chat-bubble tengu" data-en="Welcome to Tengu. I am the Oracle — keeper of the flavours and stories of this restaurant.<br><br>I can walk you through the menu, the sake, the yokai, or help you book a table. How may I serve you tonight?">Bienvenido a Tengu. Soy el Oráculo — guardián de los sabores y las historias de este restaurante.<br><br>Puedo guiarte por nuestra carta, explicarte el universo del sake, contarte la historia de nuestros yokai o ayudarte a reservar tu mesa. ¿En qué puedo servirte esta noche?</div>
       </div>
     </div>
     <div class="chat-controls">
       <div class="chat-input-row">
-        <textarea class="chat-input" id="chatInput" placeholder="Escribe tu pregunta al Oráculo..." rows="1"></textarea>
+        <textarea class="chat-input" id="chatInput" placeholder="Escribe tu pregunta al Oráculo..." data-en-ph="Ask the Oracle..." rows="1"></textarea>
         <button class="chat-send" id="sendBtn" onclick="sendMessage()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          Enviar
+          <span data-en="Send">Enviar</span>
         </button>
       </div>
       <div class="chat-footer">
         <div class="chat-suggestions">
-          <button class="sugg" onclick="askSugg('sake teppanyaki')">Sake para wagyu</button>
-          <button class="sugg" onclick="askSugg('historia tengu')">Historia del Tengu</button>
+          <button class="sugg" onclick="askSugg('sake teppanyaki')"><span data-en="Sake for wagyu">Sake para wagyu</span></button>
+          <button class="sugg" onclick="askSugg('historia tengu')"><span data-en="The Tengu story">Historia del Tengu</span></button>
           <button class="sugg" onclick="askSugg('reserva')">Hacer reserva</button>
           <button class="sugg" onclick="askSugg('yokai pulpo')">Yokai del pulpo</button>
           <button class="sugg" onclick="askSugg('diferencia')">¿Por qué Tengu?</button>
@@ -1101,14 +1104,14 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
     <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px">
       <div>
         <p class="sec-tag">Instagram</p>
-        <h2 class="sec-title" style="margin-bottom:0">Síguenos en <em>@tengu_restaurant</em></h2>
+        <h2 class="sec-title" style="margin-bottom:0" data-en="Follow <em>@tengu_restaurant</em>">Síguenos en <em>@tengu_restaurant</em></h2>
       </div>
       <a href="https://www.instagram.com/tengu_restaurant/" target="_blank"
         style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-m);font-size:9px;letter-spacing:.2em;color:var(--gold);text-decoration:none;text-transform:uppercase;border:1px solid rgba(200,146,26,.3);padding:10px 20px;transition:all .3s;white-space:nowrap"
         onmouseover="this.style.background='rgba(200,146,26,.08)';this.style.borderColor='var(--gold)'"
         onmouseout="this.style.background='transparent';this.style.borderColor='rgba(200,146,26,.3)'">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        Seguir en Instagram
+        <span data-en="Follow on Instagram">Seguir en Instagram</span>
       </a>
     </div>
 
@@ -1192,20 +1195,20 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 <footer>
   <div>
     <div class="footer-logo">天狗</div>
-    <p class="footer-tagline">El guardián de las montañas.<br>Una experiencia ritual en el corazón de Santiago.</p>
+    <p class="footer-tagline" data-en="Guardian of the mountains.<br>A ritual experience in the heart of Santiago.">El guardián de las montañas.<br>Una experiencia ritual en el corazón de Santiago.</p>
     <a href="https://www.instagram.com/tengu_restaurant/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(184,174,158,.45);margin-top:13px;font-family:var(--font-m);letter-spacing:.1em;text-decoration:none;transition:color .2s" onmouseover="this.style.color='#c8921a'" onmouseout="this.style.color='rgba(184,174,158,.45)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> @tengu_restaurant</a>
   </div>
   <div class="footer-col">
-    <h4>El restaurante</h4>
-    <a href="#about">La historia</a><a href="#menu">La carta</a><a href="#sake">El sake</a><a href="#ai">El Oráculo</a><a href="#reserve">Reservas</a>
+    <h4 data-en="The restaurant">El restaurante</h4>
+    <a href="#about" data-en="The story">La historia</a><a href="#menu" data-en="The menu">La carta</a><a href="#sake">El sake</a><a href="#ai" data-en="The Oracle">El Oráculo</a><a href="#reserve" data-en="Reservations">Reservas</a>
   </div>
   <div class="footer-col">
-    <h4>Visítanos</h4>
+    <h4 data-en="Visit">Visítanos</h4>
     <p>Isidora Goyenechea 3000</p><p>Local 104</p><p>Las Condes · Santiago</p><p style="margin-top:9px">Mar–Sáb 13:00–15:00 · 19:00–22:00 (última entrada) | Dom 13:00–15:00 | Lun cerrado</p>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Tengu · Isidora 3000 · Todos los derechos reservados · <a href="/terminos.html" style="color:rgba(200,146,26,.6);text-decoration:none">Términos y privacidad</a></p>
-    <p>El Guardián de las Montañas · Las Condes · Santiago de Chile</p>
+    <p data-en="© 2025 Tengu · Isidora 3000 · All rights reserved · <a href=&quot;/terminos.html&quot; style=&quot;color:rgba(200,146,26,.6);text-decoration:none&quot;>Terms &amp; privacy</a>">© 2025 Tengu · Isidora 3000 · Todos los derechos reservados · <a href="/terminos.html" style="color:rgba(200,146,26,.6);text-decoration:none">Términos y privacidad</a></p>
+    <p data-en="Guardian of the Mountains · Las Condes · Santiago, Chile">El Guardián de las Montañas · Las Condes · Santiago de Chile</p>
   </div>
 </footer>
 <script>
@@ -1252,7 +1255,7 @@ document.querySelectorAll('a,button,.menu-item,.sake-card,.sugg,.wa-tmpl').forEa
 function showCat(id,btn){document.querySelectorAll('.menu-cat').forEach(c=>c.classList.remove('active'));document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));document.getElementById('cat-'+id).classList.add('active');btn.classList.add('active');}
 function openWA(msg){window.open('/api/wa?msg='+encodeURIComponent(msg),'_blank','noopener');}
 document.getElementById('waFloat').onclick=e=>{e.preventDefault();openWA('Hola! Me gustaria hacer una reserva en Tengu.');};
-function submitReserva(){const name=document.getElementById('srName').value.trim();const phone=document.getElementById('srPhone').value.trim();const date=document.getElementById('srDate').value;const time=document.getElementById('srTime').value;const guests=document.getElementById('srGuests').value;const occ=document.getElementById('srOcc').value;const notes=document.getElementById('srNotes').value.trim();if(!name||!date||!time||!guests){alert('Por favor completa nombre, fecha, hora y número de comensales.');return;}const msg='*Solicitud de reserva — Tengu*\n👤 '+name+(phone?' · '+phone:'')+'\n📅 '+date+' a las '+time+'\n👥 '+guests+(occ?'\n🎉 '+occ:'')+(notes?'\n📝 '+notes:'');openWA(msg);}
+function submitReserva(){const name=document.getElementById('srName').value.trim();const phone=document.getElementById('srPhone').value.trim();const date=document.getElementById('srDate').value;const time=document.getElementById('srTime').value;const guests=document.getElementById('srGuests').value;const occ=document.getElementById('srOcc').value;const notes=document.getElementById('srNotes').value.trim();if(!name||!date||!time||!guests){alert(document.documentElement.lang==='en'?'Please fill in name, date, time and party size.':'Por favor completa nombre, fecha, hora y número de comensales.');return;}const msg='*Solicitud de reserva — Tengu*\n👤 '+name+(phone?' · '+phone:'')+'\n📅 '+date+' a las '+time+'\n👥 '+guests+(occ?'\n🎉 '+occ:'')+(notes?'\n📝 '+notes:'');openWA(msg);}
 const input=document.getElementById('chatInput');
 input.addEventListener('input',()=>{input.style.height='auto';input.style.height=Math.min(input.scrollHeight,100)+'px';});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}});
@@ -1463,10 +1466,11 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
          if(av){
            var horas=[].map.call((document.getElementById('srTime')||{options:[]}).options,function(o){return o.value}).filter(Boolean);
             var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');};
-            av.innerHTML='Un agente completó este formulario: <b>'+esc(tocados.join(', ')||'ningún campo')+'</b>. '+
-                         (noAplicados.length?('No reconocí: <b>'+esc(noAplicados.join(', '))+'</b>'+(noAplicados.some(function(s){return s.indexOf('hora=')===0;})?(' (horas válidas: '+esc(horas.join(', '))+')'):'')+'. '):'')+
-                         'Nada se envió todavía — revisalo y confirmá vos.'+
-                        '<br><button type="button" id="srLimpiar">Descartar y llenarlo yo</button>';
+            var en=document.documentElement.lang==='en';
+            av.innerHTML=(en?'An agent filled this form: <b>':'Un agente completó este formulario: <b>')+esc(tocados.join(', ')||(en?'no fields':'ningún campo'))+'</b>. '+
+                         (noAplicados.length?((en?'I did not recognise: <b>':'No reconocí: <b>')+esc(noAplicados.join(', '))+'</b>'+(noAplicados.some(function(s){return s.indexOf('hora=')===0;})?((en?' (valid times: ':' (horas válidas: ')+esc(horas.join(', '))+')'):'')+'. '):'')+
+                         (en?'Nothing was sent — review it and confirm yourself.':'Nada se envió todavía — revisalo y confirmá vos.')+
+                        '<br><button type="button" id="srLimpiar">'+(en?'Discard and fill it myself':'Descartar y llenarlo yo')+'</button>';
            av.classList.add('on');
            var b=document.getElementById('srLimpiar');
            if(b) b.onclick=function(){
@@ -1478,12 +1482,13 @@ function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué
          }
          var r=document.getElementById('reserve'); if(r) r.scrollIntoView({behavior:'smooth'});
          var horasR=[].map.call((document.getElementById('srTime')||{options:[]}).options,function(o){return o.value}).filter(Boolean);
-          var msg='Formulario de reserva a la vista. Campos completados: '+(tocados.length?tocados.join(', '):'ninguno')+'.';
+          var en2=document.documentElement.lang==='en';
+          var msg=(en2?'Reservation form on screen. Fields filled: ':'Formulario de reserva a la vista. Campos completados: ')+(tocados.length?tocados.join(', '):(en2?'none':'ninguno'))+'.';
           if(noAplicados.length){
-            msg+=' NO pude aplicar: '+noAplicados.join(', ')+'.';
-            if(noAplicados.some(function(s){return s.indexOf('hora=')===0;})) msg+=' La hora debe ser una de: '+horasR.join(', ')+'.';
+            msg+=(en2?' I could not apply: ':' NO pude aplicar: ')+noAplicados.join(', ')+'.';
+            if(noAplicados.some(function(s){return s.indexOf('hora=')===0;})) msg+=(en2?' Time must be one of: ':' La hora debe ser una de: ')+horasR.join(', ')+'.';
           }
-          msg+=' NO se envió nada: la persona revisa y presiona "Enviar solicitud de reserva", que abre WhatsApp — el envío es humano, no del agente.';
+          msg+=(en2?' Nothing was sent: the person reviews and taps the send button, which opens WhatsApp — a human sends it, not the agent.':' NO se envió nada: la persona revisa y presiona "Enviar solicitud de reserva", que abre WhatsApp — el envío es humano, no del agente.');
           return Promise.resolve(msg);
        }catch(e){ return Promise.resolve('No pude completar el formulario: '+e.message); }
      }}
@@ -1531,5 +1536,37 @@ document.querySelectorAll('.menu-grid').forEach(function(grid){
 window.__oraculoLLM=false;
 fetch('/api/oraculo').then(function(r){return r.json()}).then(function(j){window.__oraculoLLM=!!(j&&j.ready)}).catch(function(){});
 </script>
+
+<script>
+(function(){
+  var KEY='tengu_lang';
+  function apply(lang){
+    document.documentElement.lang = lang;
+    var els = document.querySelectorAll('[data-en]');
+    for(var i=0;i<els.length;i++){
+      var el=els[i];
+      if(el.getAttribute('data-es')===null) el.setAttribute('data-es', el.innerHTML);
+      el.innerHTML = (lang==='en') ? el.getAttribute('data-en') : el.getAttribute('data-es');
+    }
+    var ph = document.querySelectorAll('[data-en-ph]');
+    for(var i=0;i<ph.length;i++){
+      var el=ph[i];
+      if(el.getAttribute('data-es-ph')===null) el.setAttribute('data-es-ph', el.getAttribute('placeholder')||'');
+      el.setAttribute('placeholder', lang==='en' ? el.getAttribute('data-en-ph') : el.getAttribute('data-es-ph'));
+    }
+    var b=document.getElementById('lang'); if(b) b.textContent=(lang==='en')?'ES':'EN';
+    try{ localStorage.setItem(KEY, lang); }catch(e){}
+  }
+  var saved=null; try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(!saved) saved=((navigator.language||'').toLowerCase().indexOf('es')===0)?'es':'en';
+  function init(){
+    var b=document.getElementById('lang');
+    if(b) b.addEventListener('click', function(){ apply(document.documentElement.lang==='en'?'es':'en'); });
+    apply(saved);
+  }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
 </body>
 </html>
+
