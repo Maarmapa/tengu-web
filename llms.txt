@@ -15,6 +15,23 @@ o WhatsApp directo desde el sitio.
 Rango de precios: postres desde $3.900 CLP; nigiris $4.200–$10.590 la unidad;
 tope $84.800 (Sashimi de Maguro 25 cortes). Cena completa para dos: $80.000–$150.000 CLP.
 
+## Para agentes
+
+Esta página declara herramientas WebMCP en `document.modelContext`, nativas por origin trial
+en Chrome 149+ y Edge 150+ (sin banderas ni parámetros). En un navegador sin la API,
+https://tengu-deploy.vercel.app/?webmcp carga un polyfill y registra las mismas.
+
+- `get_carta` — carta oficial con precios reales en CLP, por sección o categoría
+- `buscar_plato` — busca platos, tragos, vinos y sakes; acepta español o inglés
+- `get_guia` — guías escritas por el restaurante (sake, bluefin, kappo); {idioma:"en"} da el resumen en inglés
+- `get_info` — dirección, horarios y cómo reservar
+- `preparar_reserva` — completa el formulario de reserva de la página y lo deja a la vista. NO lo envía: la persona revisa y confirma
+
+Las mismas herramientas, salvo `preparar_reserva`, responden por JSON-RPC en
+https://tengu-deploy.vercel.app/api/mcp — declaración en /.well-known/mcp.json
+
+Ninguna herramienta cobra, confirma ni cancela nada.
+
 ## Recursos
 
 - [Sitio oficial con carta completa y reservas](https://tengu-deploy.vercel.app/)

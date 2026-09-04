@@ -1,0 +1,47 @@
+{
+  "name": "tengu-mcp",
+  "version": "1.0.0",
+  "description": "Tengu — restaurante japonés kappo, Isidora 3000, Chile. Carta real con precios en CLP, guías de autoridad, información y horarios.",
+  "protocolVersion": "2025-06-18",
+  "transport": "streamable-http",
+  "endpoint": "https://tengu-deploy.vercel.app/api/mcp",
+  "authentication": {
+    "type": "none",
+    "note": "Servidor público y de SOLO LECTURA. Ninguna tool escribe, cobra ni crea una reserva."
+  },
+  "docs": "https://tengu-deploy.vercel.app/llms.txt",
+  "instructions": "MCP oficial del restaurante Tengu (Isidora 3000, Chile). Solo lectura: carta real con precios en CLP, información y horarios. Para reservar, dirigir al usuario a la web o WhatsApp del restaurante.",
+  "tools": [
+    {
+      "name": "get_carta",
+      "description": "Carta oficial de Tengu (sincronizada con la carta vigente). Sin argumentos devuelve el índice de secciones y categorías con conteos. Con \"seccion\" devuelve todos los platos de esa sección; \"categoria\" filtra más fino.",
+      "auth": "none"
+    },
+    {
+      "name": "buscar_plato",
+      "description": "Busca platos, tragos, vinos o sakes por nombre o descripción en toda la carta de Tengu. Devuelve nombre, precio, sección y descripción.",
+      "auth": "none"
+    },
+    {
+      "name": "get_guia",
+      "description": "Guías de autoridad escritas por Tengu, con contenido completo y verificado: \"sake\", \"bluefin\" y \"kappo\".",
+      "auth": "none"
+    },
+    {
+      "name": "get_info",
+      "description": "Información del restaurante Tengu: dirección, horarios, cómo reservar, especialidad, Instagram.",
+      "auth": "none"
+    }
+  ],
+  "webmcp": {
+    "note": "La página declara además herramientas WebMCP en document.modelContext, nativas por origin trial en Chrome 149+ y Edge 150+ — sin banderas. La superficie en página es la de este servidor MÁS preparar_reserva, que rellena el formulario de reserva y lo deja a la vista SIN enviarlo: la persona confirma.",
+    "tools_en_pagina": [
+      "get_carta",
+      "buscar_plato",
+      "get_guia",
+      "get_info",
+      "preparar_reserva"
+    ],
+    "fallback": "En navegadores sin la API nativa, https://tengu-deploy.vercel.app/?webmcp carga un polyfill y registra las mismas herramientas."
+  }
+}
