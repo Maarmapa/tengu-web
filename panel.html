@@ -44,9 +44,13 @@ button{cursor:pointer}button:hover{border-color:var(--gold)}
 <div id="lista"><p id="vacio">Ingresa la clave para cargar el día.</p></div>
 <p class="aviso">Sistema en marcha blanca — las solicitudes de agentes y pruebas aparecen aquí. Confirmar una reserva NO avisa aún al comensal (fase notificaciones).</p>
 <script>
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
 const $=id=>document.getElementById(id);
+// Escape para TODO lo que entra por innerHTML. El teléfono y el email de una
+// reserva los escribe cualquiera sin autenticarse (POST /api/reservas-mcp,
+// POST /api/rwg): sin esto, un `<svg onload>` en el campo teléfono corre en el
+// panel de sala, que guarda la clave en sessionStorage y lista la PII del día.
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function escA(s){return esc(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
 function clave(){
   let c=sessionStorage.getItem('tsala');
   if(!c){ c=prompt('Clave del panel:')||''; sessionStorage.setItem('tsala',c); }
@@ -60,23 +64,23 @@ async function cargar(){
   const j=await r.json();
   if(!$('fecha').value && j.fecha) $('fecha').value=j.fecha;
   const rs=j.reservas||[];
-  if(!rs.length){ $('lista').innerHTML='<p id="vacio">Sin reservas para '+(j.fecha||'ese día')+'.</p>'; return; }
+  if(!rs.length){ $('lista').innerHTML='<p id="vacio">Sin reservas para '+esc(j.fecha||'ese día')+'.</p>'; return; }
   $('lista').innerHTML=rs.map(x=>`
     <div class="card">
       <div style="display:flex;gap:14px;align-items:center">
-        <span class="hora">${x.hora}</span>
+        <span class="hora">${esc(x.hora)}</span>
         <div>
           <div class="nombre">${esc(x.nombre)} · ${esc(x.personas)}p</div>
           <div class="meta">${esc(x.codigo)} · ${esc(x.origen)}${x.telefono?(' · '+esc(x.telefono)):''}${x.notas?(' · '+esc(x.notas)):''}</div>
         </div>
       </div>
       <div style="display:flex;gap:10px;align-items:center">
-        <span class="estado ${x.estado}">${x.estado}</span>
+        <span class="estado ${escA(x.estado)}">${esc(x.estado)}</span>
         <div class="acciones">
-          <button onclick="estado('${x.codigo}','confirmada')">Confirmar</button>
-          <button onclick="estado('${x.codigo}','cancelada')">Cancelar</button>
-          <button onclick="estado('${x.codigo}','no_show')">No-show</button>
-          <button onclick="estado('${x.codigo}','completada')">Completada</button>
+          <button onclick="estado('${escA(x.codigo)}','confirmada')">Confirmar</button>
+          <button onclick="estado('${escA(x.codigo)}','cancelada')">Cancelar</button>
+          <button onclick="estado('${escA(x.codigo)}','no_show')">No-show</button>
+          <button onclick="estado('${escA(x.codigo)}','completada')">Completada</button>
         </div>
       </div>
     </div>`).join('');
@@ -105,53 +109,53 @@ async function cargarEventos(){
   if(!evs.length){ $('lista').innerHTML=nuevo+'<p id="vacio">Sin experiencias creadas.</p>'; return; }
   $('lista').innerHTML=nuevo+evs.map(ev=>{
     const zonas=(ev.zonas||[]).map(z=>`${esc(z.nombre)}: ${esc(z.vendidos)}/${esc(z.cupos)} · ${clp(z.precio)}`).join(' &nbsp;|&nbsp; ');
-    const editor=`<div id="ed-${ev.slug}" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(200,146,26,.15)">
+    const editor=`<div id="ed-${escA(ev.slug)}" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid rgba(200,146,26,.15)">
       <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px">
-        <input id="n-${ev.slug}" value="${esc(ev.nombre)}" placeholder="Nombre">
-        <input id="f-${ev.slug}" type="date" value="${ev.fecha}">
-        <input id="h-${ev.slug}" value="${ev.hora}" placeholder="20:00">
+        <input id="n-${escA(ev.slug)}" value="${escA(ev.nombre)}" placeholder="Nombre">
+        <input id="f-${escA(ev.slug)}" type="date" value="${escA(ev.fecha)}">
+        <input id="h-${escA(ev.slug)}" value="${escA(ev.hora)}" placeholder="20:00">
       </div>
-      <input id="s-${ev.slug}" value="${(ev.subtitulo||'').replace(/"/g,'&quot;')}" placeholder="Subtitulo" style="width:100%;margin-bottom:8px">
-      <textarea id="d-${ev.slug}" placeholder="Descripcion" style="width:100%;min-height:56px;margin-bottom:8px;font-family:'Cormorant Garamond',serif;font-size:15px">${(ev.descripcion||'').replace(/</g,'&lt;')}</textarea>
-      <button onclick="guardarEvento('${ev.slug}')">Guardar evento</button>
+      <input id="s-${escA(ev.slug)}" value="${escA(ev.subtitulo)}" placeholder="Subtitulo" style="width:100%;margin-bottom:8px">
+      <textarea id="d-${escA(ev.slug)}" placeholder="Descripcion" style="width:100%;min-height:56px;margin-bottom:8px;font-family:'Cormorant Garamond',serif;font-size:15px">${esc(ev.descripcion)}</textarea>
+      <button onclick="guardarEvento('${escA(ev.slug)}')">Guardar evento</button>
       <div style="margin-top:14px">
         ${(ev.zonas||[]).map(z=>`
           <div style="display:grid;grid-template-columns:1.1fr 2fr 1fr .8fr auto;gap:8px;margin-bottom:8px;align-items:center">
-            <input id="zn-${z.id}" value="${esc(z.nombre)}" placeholder="Zona">
-            <input id="zd-${z.id}" value="${(z.descripcion||'').replace(/"/g,'&quot;')}" placeholder="Descripcion">
-            <input id="zp-${z.id}" type="number" value="${z.precio}" placeholder="Precio">
-            <input id="zc-${z.id}" type="number" value="${z.cupos}" placeholder="Cupos">
-            <button onclick="guardarZona('${z.id}')">Guardar</button>
+            <input id="zn-${escA(z.id)}" value="${escA(z.nombre)}" placeholder="Zona">
+            <input id="zd-${escA(z.id)}" value="${escA(z.descripcion)}" placeholder="Descripcion">
+            <input id="zp-${escA(z.id)}" type="number" value="${escA(z.precio)}" placeholder="Precio">
+            <input id="zc-${escA(z.id)}" type="number" value="${escA(z.cupos)}" placeholder="Cupos">
+            <button onclick="guardarZona('${escA(z.id)}')">Guardar</button>
           </div>`).join('')}
       </div>
     </div>`;
     const tickets=(ev.tickets||[]).map(t=>`
       <div class="card" style="margin:6px 0 0;padding:10px 14px">
         <div><div class="nombre" style="font-size:16px">${esc(t.nombre)} · ${esc(t.cantidad)}p · ${clp(t.monto)}</div>
-        <div class="meta">${t.codigo} · ${t.zona||''}${t.telefono?(' · '+t.telefono):''}${t.email?(' · '+t.email):''}</div></div>
+        <div class="meta">${esc(t.codigo)} · ${esc(t.zona)}${t.telefono?(' · '+esc(t.telefono)):''}${t.email?(' · '+esc(t.email)):''}</div></div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="estado ${t.estado==='pagado'?'confirmada':(t.estado==='anulado'?'cancelada':'')}">${t.estado}</span>
+          <span class="estado ${t.estado==='pagado'?'confirmada':(t.estado==='anulado'?'cancelada':'')}">${esc(t.estado)}</span>
           <div class="acciones">
-            <button onclick="ticket('${t.codigo}','pagado')">Pagado</button>
-            <button onclick="ticket('${t.codigo}','usado')">Usado</button>
-            <button onclick="ticket('${t.codigo}','anulado')">Anular</button>
+            <button onclick="ticket('${escA(t.codigo)}','pagado')">Pagado</button>
+            <button onclick="ticket('${escA(t.codigo)}','usado')">Usado</button>
+            <button onclick="ticket('${escA(t.codigo)}','anulado')">Anular</button>
           </div>
         </div>
       </div>`).join('');
     return `<div class="card" style="display:block">
       <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
         <div>
-          <div class="nombre">${(ev.nombre||'').replace(/</g,'&lt;')}</div>
-          <div class="meta">${ev.fecha} · ${ev.hora} · ${zonas}</div>
+          <div class="nombre">${esc(ev.nombre)}</div>
+          <div class="meta">${esc(ev.fecha)} · ${esc(ev.hora)} · ${zonas}</div>
           <div class="meta" style="color:var(--gold);margin-top:4px">Recaudado ${clp(ev.recaudado)} &nbsp;·&nbsp; Comprometido ${clp(ev.comprometido)}</div>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="estado ${ev.estado==='publicado'?'confirmada':''}">${ev.estado}</span>
+          <span class="estado ${ev.estado==='publicado'?'confirmada':''}">${esc(ev.estado)}</span>
           <div class="acciones">
-            <button onclick="toggleEd('${ev.slug}')">Editar</button>
-            <button onclick="evento('${ev.slug}','publicado')">Publicar</button>
-            <button onclick="evento('${ev.slug}','borrador')">Despublicar</button>
-            <button onclick="evento('${ev.slug}','cerrado')">Cerrar</button>
+            <button onclick="toggleEd('${escA(ev.slug)}')">Editar</button>
+            <button onclick="evento('${escA(ev.slug)}','publicado')">Publicar</button>
+            <button onclick="evento('${escA(ev.slug)}','borrador')">Despublicar</button>
+            <button onclick="evento('${escA(ev.slug)}','cerrado')">Cerrar</button>
           </div>
         </div>
       </div>
