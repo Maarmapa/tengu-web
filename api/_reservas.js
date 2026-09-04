@@ -15,6 +15,23 @@ const HORARIOS = {
 };
 const MESAS_POR_SLOT = 8;
 
+// Ventana dura de reserva. Sin esto `disponibilidad` contesta abierto:true para
+// 1999-01-05 y para 2030-12-31, y `crearReserva` acepta cualquier fecha: un
+// script deja el restaurante "sin mesas" para todo un trimestre, y eso lo ve un
+// cliente real en la web.
+const DIAS_MAX = 90;
+
+function fechaFueraDeVentana(fecha) {
+  const hoy = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/Santiago' }));
+  const hoyISO = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  if (fecha < hoyISO) return `Esa fecha ya pasó (hoy es ${hoyISO}).`;
+  const tope = new Date(hoyISO + 'T12:00:00Z');
+  tope.setUTCDate(tope.getUTCDate() + DIAS_MAX);
+  if (fecha > tope.toISOString().slice(0, 10))
+    return `Solo tomamos reservas hasta ${tope.toISOString().slice(0, 10)} (${DIAS_MAX} días). Para fechas más lejanas, por WhatsApp.`;
+  return null;
+}
+
 const SB = process.env.TENGU_SB_URL && process.env.TENGU_SB_KEY && process.env.TENGU_SB_SECRET
   ? { url: process.env.TENGU_SB_URL, key: process.env.TENGU_SB_KEY, secret: process.env.TENGU_SB_SECRET }
   : null;
@@ -43,6 +60,9 @@ function slotsDelDia(fecha) {
 }
 
 async function disponibilidad(fecha, personas) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(fecha || ''))) return { error: 'Fecha inválida (usar YYYY-MM-DD).' };
+  const fueraDeVentana = fechaFueraDeVentana(fecha);
+  if (fueraDeVentana) return { error: fueraDeVentana };
   const slots = slotsDelDia(fecha);
   if (slots === null) return { error: 'Fecha inválida (usar YYYY-MM-DD).' };
   if (!slots.length) return { fecha, abierto: false, nota: 'Lunes cerrado.', slots: [] };
@@ -113,4 +133,4 @@ async function estadoReserva(codigo) {
   return { error: 'Código inválido. Formato: TG-XXXXXXXX o SANDBOX-XXXXXX.' };
 }
 
-module.exports = { disponibilidad, crearReserva, estadoReserva, slotsDelDia };
+module.exports = { disponibilidad, crearReserva, estadoReserva, slotsDelDia, DIAS_MAX };
