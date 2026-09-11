@@ -1,12 +1,21 @@
 // Oráculo híbrido: el chat de la web usa reglas locales (gratis, sin
 // alucinación) y llama acá SOLO cuando ninguna regla matchea. Este endpoint
-// habla con OpenRouter usando la carta real como contexto duro.
-// Se enciende con env OPENROUTER_API_KEY (+ ORACULO_MODEL opcional).
-// GET → {ready:bool} · POST {mensaje} → {texto} | {error}
+// le pasa la carta real como contexto duro.
+//
+// DOS PROVEEDORES, UNA SOLA RUTA. El archivo nació agnóstico y sigue siéndolo:
+//   · ANTHROPIC_API_KEY  → API nativa de Anthropic (/v1/messages)
+//   · OPENROUTER_API_KEY → cualquier modelo por OpenRouter (/chat/completions)
+// Si están las dos, gana Anthropic. La clave NUNCA sale del servidor: esto es
+// un proxy justo porque la versión vieja llamaba desde el navegador y dejaba
+// la key a la vista de cualquiera.
+// GET → {ready:bool, proveedor} · POST {mensaje} → {texto} | {error}
 const CARTA = require('./_carta.js');
 
-const KEY = process.env.OPENROUTER_API_KEY;
-const MODEL = process.env.ORACULO_MODEL || 'openai/gpt-4o-mini';
+const AKEY = process.env.ANTHROPIC_API_KEY;
+const OKEY = process.env.OPENROUTER_API_KEY;
+const ANTHROPIC = !!AKEY;
+const KEY = AKEY || OKEY;
+const MODEL = process.env.ORACULO_MODEL || (ANTHROPIC ? 'claude-opus-5' : 'openai/gpt-4o-mini');
 const BASE = (process.env.ORACULO_BASE_URL || 'https://openrouter.ai/api/v1').replace(/\/$/, '');
 
 function cartaCompacta() {
@@ -42,7 +51,8 @@ module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
-  if (req.method === 'GET') return res.status(200).json({ ready: !!KEY });
+  if (req.method === 'GET')
+    return res.status(200).json({ ready: !!KEY, proveedor: KEY ? (ANTHROPIC ? 'anthropic' : 'openrouter') : null });
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST {mensaje}' });
   if (!KEY) return res.status(200).json({ ready: false });
 
@@ -66,29 +76,70 @@ module.exports = async (req, res) => {
   try {
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 12000);
-    const r = await fetch(`${BASE}/chat/completions`, {
-      method: 'POST',
-      signal: ctrl.signal,
-      headers: {
-        Authorization: `Bearer ${KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://tengu-deploy.vercel.app',
-        'X-Title': 'Oraculo Tengu',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: 300,
-        temperature: 0.6,
-        messages: [
-          { role: 'system', content: SYSTEM },
-          { role: 'user', content: mensaje },
-        ],
-      }),
-    });
+    // Las dos APIs se parecen de lejos y no se parecen de cerca: distinto
+    // camino, distinta cabecera de autenticación y distinta forma de respuesta.
+    const r = ANTHROPIC
+      ? await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          signal: ctrl.signal,
+          headers: {
+            'x-api-key': KEY,
+            'anthropic-version': '2023-06-01',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: MODEL,
+            // Techo alto a propósito: con pensamiento adaptativo los tokens de
+            // razonamiento salen de acá, y con 300 se podía ir el presupuesto
+            // entero en pensar y volver sin una sola palabra de respuesta.
+            // El largo real lo fija el system prompt (110 palabras) y el
+            // recorte de abajo.
+            max_tokens: 1024,
+            // Esfuerzo bajo: esto contesta preguntas de carta, no resuelve
+            // problemas. Además mantiene la respuesta dentro del timeout.
+            output_config: { effort: 'low' },
+            // Sin temperature: los modelos nuevos de Anthropic rechazan los
+            // parámetros de muestreo con un 400.
+            system: SYSTEM,
+            messages: [{ role: 'user', content: mensaje }],
+          }),
+        })
+      : await fetch(`${BASE}/chat/completions`, {
+          method: 'POST',
+          signal: ctrl.signal,
+          headers: {
+            Authorization: `Bearer ${KEY}`,
+            'Content-Type': 'application/json',
+            'HTTP-Referer': 'https://tengu-deploy.vercel.app',
+            'X-Title': 'Oraculo Tengu',
+          },
+          body: JSON.stringify({
+            model: MODEL,
+            max_tokens: 300,
+            temperature: 0.6,
+            messages: [
+              { role: 'system', content: SYSTEM },
+              { role: 'user', content: mensaje },
+            ],
+          }),
+        });
     clearTimeout(t);
     if (!r.ok) return res.status(200).json({ error: `upstream ${r.status}` });
     const j = await r.json();
-    const texto = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+    let texto;
+    if (ANTHROPIC) {
+      // La respuesta es una lista de bloques y el primero puede ser de
+      // pensamiento: hay que quedarse sólo con los de texto.
+      texto = Array.isArray(j.content)
+        ? j.content.filter((b) => b && b.type === 'text').map((b) => b.text).join('\n').trim()
+        : '';
+      // Un clasificador de seguridad puede declinar: llega HTTP 200 con
+      // stop_reason 'refusal' y sin texto. Se trata como sin respuesta y el
+      // chat vuelve a las reglas locales.
+      if (j.stop_reason === 'refusal') texto = '';
+    } else {
+      texto = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+    }
     if (!texto) return res.status(200).json({ error: 'sin respuesta' });
     return res.status(200).json({ texto: texto.trim().slice(0, 1200) });
   } catch (e) {
