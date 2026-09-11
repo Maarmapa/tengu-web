@@ -43,5 +43,8 @@
         }
       ]
     }
-  ]
+  ],
+  "proxy": {
+    "entrypoint": "middleware.mjs"
+  }
 }
