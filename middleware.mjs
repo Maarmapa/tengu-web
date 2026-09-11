@@ -53,11 +53,17 @@ function cookie(request, nombre) {
   return null;
 }
 
-const PORTADA = `<!doctype html>
+// La portada se arma por petición para poder poner la canónica apuntando a la
+// raíz del host que se pidió. Sin eso, como CUALQUIER ruta devuelve esta misma
+// página con 200, Google puede indexar tengu.cl/carta, tengu.cl/lo-que-sea y
+// cien más como páginas distintas de contenido idéntico — justo mientras le
+// estamos construyendo historia al dominio.
+const portada = (origen) => `<!doctype html>
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tengu — Próximamente</title>
 <meta name="description" content="Tengu, cocina japonesa kappo en Isidora Goyenechea 3000, Santiago de Chile. Muy pronto.">
+<link rel="canonical" href="${origen}">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
 <style>
@@ -138,7 +144,7 @@ export default async function middleware(request) {
 
   // 4) Todo lo demás ve la portada. Status 200 y no 404: no es un error, es
   //    que el sitio todavía no abre.
-  return new Response(PORTADA, {
+  return new Response(portada(url.origin + '/'), {
     status: 200,
     headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
   });
