@@ -61,7 +61,16 @@ async function cargar(){
   const f=$('fecha').value;
   const r=await fetch('/api/panel'+(f?('?fecha='+f):''),{headers:hdr()});
   if(r.status===401){ sessionStorage.removeItem('tsala'); $('lista').innerHTML='<p id="vacio">Clave incorrecta. Recarga e intenta de nuevo.</p>'; return; }
-  const j=await r.json();
+  const j=await r.json().catch(()=>({error:'El sistema respondió algo que no se entiende.'}));
+  // Un fallo NO puede verse igual que un día sin reservas. Antes, un 429
+  // (panel bloqueado), un 503 (mal configurado) y un error del backend se
+  // renderizaban los tres como "Sin reservas para ese día", y quien atiende
+  // la sala no tenía forma de distinguir "no hay nadie anotado" de "esto no
+  // está respondiendo".
+  if(!r.ok || j.error){
+    $('lista').innerHTML='<p id="vacio">⚠ '+esc(j.error||('El sistema respondió '+r.status+'.'))+'</p>';
+    return;
+  }
   if(!$('fecha').value && j.fecha) $('fecha').value=j.fecha;
   const rs=j.reservas||[];
   if(!rs.length){ $('lista').innerHTML='<p id="vacio">Sin reservas para '+esc(j.fecha||'ese día')+'.</p>'; return; }
@@ -103,7 +112,11 @@ const clp=n=>'$'+Number(n||0).toLocaleString('es-CL');
 async function cargarEventos(){
   const r=await fetch('/api/panel?vista=eventos',{headers:hdr()});
   if(r.status===401){ sessionStorage.removeItem('tsala'); location.reload(); return; }
-  const j=await r.json();
+  const j=await r.json().catch(()=>({error:'El sistema respondió algo que no se entiende.'}));
+  if(!r.ok || j.error){
+    $('lista').innerHTML='<p id="vacio">⚠ '+esc(j.error||('El sistema respondió '+r.status+'.'))+'</p>';
+    return;
+  }
   const evs=j.eventos||[];
   const nuevo='<div style="margin-bottom:12px"><button onclick="nuevoEvento()">+ Nueva experiencia</button></div>';
   if(!evs.length){ $('lista').innerHTML=nuevo+'<p id="vacio">Sin experiencias creadas.</p>'; return; }

@@ -26,10 +26,16 @@ module.exports = async (req, res) => {
   if (!SB || !PASS) return res.status(503).json({ error: 'Panel no configurado.' });
 
   const auth = req.headers.authorization || '';
-  const ok = auth.startsWith('Basic ') &&
+  const hayCredencial = auth.startsWith('Basic ');
+  const ok = hayCredencial &&
     Buffer.from(auth.slice(6), 'base64').toString() === `tengu:${PASS}`;
   if (!ok) {
-    try {
+    // Sin header Authorization no hay nada que adivinar: es el navegador antes
+    // de que le pidamos la clave, un escaner, o el preview de un link. Antes
+    // eso tambien contaba como intento fallido, y como /panel.html es publico
+    // y descubrible, el ruido de internet podia gastar la cuota del dia y
+    // dejar sin panel al restaurante. Solo cuenta una credencial EQUIVOCADA.
+    if (hayCredencial) try {
       const tr = await fetch(`${SB.url}/rest/v1/rpc/tengu_tick_panel_fail`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: `Bearer ${SB.key}` },
@@ -94,6 +100,9 @@ module.exports = async (req, res) => {
     }
     return res.status(405).json({ error: 'GET o POST' });
   } catch (e) {
-    return res.status(200).json({ error: 'Error consultando el sistema.' });
+    // 502 y no 200: un 200 con {error} adentro hace que el panel, cualquier
+    // monitor y cualquier agente lean una caida como si fuera una respuesta
+    // buena. El texto sigue sin filtrar detalles del backend.
+    return res.status(502).json({ error: 'No pudimos consultar el sistema. Intenta de nuevo.' });
   }
 };
