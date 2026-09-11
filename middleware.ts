@@ -10,10 +10,14 @@
 // antes de que corra una línea nuestra— por una portada con la marca. Para
 // "todavía no lanzamos" alcanza; para "esto no lo puede ver nadie", no.
 //
-// POR QUÉ .mjs Y NO middleware.js. La convención de archivo obliga, en
+// POR QUÉ .ts Y NO middleware.js. La convención de archivo obliga, en
 // proyectos sin framework, a poner "type":"module" en package.json — y eso
 // rompería las diez funciones api/*.js, que son CommonJS. Por eso el
 // entrypoint se declara en vercel.json apuntando acá.
+//   El primer intento fue .mjs y el build falló: el esquema de vercel.json
+//   sólo acepta entrypoints .js, .ts o .py. .ts resuelve las dos cosas —
+//   lo acepta el esquema y es ESM sin ambigüedad. Adentro es JavaScript
+//   liso, sin una sola anotación de tipo.
 //
 // Se enciende con la env TENGU_PASE. Sin esa variable el candado no existe y
 // el sitio se sirve normal: un candado que se activa solo, a medio configurar,
