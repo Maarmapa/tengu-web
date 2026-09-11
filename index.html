@@ -992,7 +992,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
       <div style="max-width:520px;margin:30px auto;border-radius:18px;overflow:hidden;border:1px solid rgba(200,146,26,.28);box-shadow:0 26px 70px rgba(0,0,0,.55);background:#f5f2ec">
         <iframe
           id="gourframe"
-          src="https://gour.media/booking/tengu/"
+          data-src="https://gour.media/booking/tengu/"
           style="width:100%;border:none;display:block;margin-top:-86px"
           scrolling="auto" allowtransparency="true"
           title="Reservas Tengu"
@@ -1323,22 +1323,73 @@ function switchReserva(tab) {
   }
 }
 
-// Detect if iframe blocked and show fallback
-document.addEventListener('DOMContentLoaded', function() {
-  const frame = document.getElementById('gourframe');
-  if (frame) {
-    setTimeout(function() {
+// El widget de gour.media son ~1,3 MB de terceros (su JS, el Tailwind que se
+// baja solo, Font Awesome y las fuentes Noto) y se llevaba puesto el arranque:
+// medido en PSI mobile daba FCP y LCP en 5,0 s con 490 ms de bloqueo. El src
+// vive ahora en data-src y se enchufa cuando el bloque de reservas se acerca.
+// loading="lazy" por sí solo no alcanzaba: el umbral de Chrome es generoso y
+// en la medición lo bajaba igual al cargar la página.
+(function(){
+  var frame = document.getElementById('gourframe');
+  if (!frame) return;
+  var cargado = false;
+
+  function vigilarBloqueo(){
+    // La misma comprobación de siempre, pero recién despues de enchufar el
+    // src: con el iframe vacío, contentWindow.document SI es accesible
+    // (about:blank es del mismo origen), así que no lanzaría la excepción y
+    // el fallback aparecería sin que nadie haya bloqueado nada.
+    setTimeout(function(){
       try {
         if (!frame.contentWindow || !frame.contentWindow.document) {
           document.getElementById('gour-fallback').style.display = 'block';
           frame.style.display = 'none';
         }
       } catch(e) {
-        // Cross-origin blocked — iframe loaded but from different origin, that's OK
+        // Cross-origin: el iframe cargó desde otro origen. Es lo esperado.
       }
     }, 3000);
   }
-});
+
+  var obs = null;
+  function cargar(){
+    if (cargado) return;
+    cargado = true;
+    if (obs) obs.disconnect();
+    frame.src = frame.dataset.src;
+    vigilarBloqueo();
+  }
+
+  // Sin IntersectionObserver (navegador viejo) se carga de entrada: es
+  // preferible una página lenta a una página sin reservas.
+  if (!('IntersectionObserver' in window)) { cargar(); return; }
+
+  obs = new IntersectionObserver(function(entradas){
+    for (var i = 0; i < entradas.length; i++) {
+      if (entradas[i].isIntersecting) { cargar(); return; }
+    }
+  }, { rootMargin: '600px' });
+  obs.observe(frame);
+
+  // Segundo disparador, a proposito. El IntersectionObserver solo entrega
+  // callbacks mientras la pagina se pinta: en una pestana de fondo, en un
+  // iframe oculto o en un navegador que ahorra bateria puede no llegar nunca,
+  // y entonces el bloque de reservas se queda vacio para siempre. Un listener
+  // de scroll no depende de eso. Cargar dos veces no es problema: cargar()
+  // tiene su propio candado.
+  var alScrollear = function(){
+    if (cargado) { window.removeEventListener('scroll', alScrollear); return; }
+    if (frame.getBoundingClientRect().top < window.innerHeight + 600) cargar();
+  };
+  window.addEventListener('scroll', alScrollear, { passive: true });
+  document.addEventListener('scroll', alScrollear, { passive: true, capture: true });
+
+  // Red de seguridad: si alguien vuelve a la pestaña "Reserva Online" estando
+  // oculto el bloque, el observador no dispara nunca (un elemento con
+  // display:none no interseca). El click lo carga en el acto.
+  var tab = document.getElementById('tab-online');
+  if (tab) tab.addEventListener('click', cargar);
+})();
 
 function askSugg(key){if(isStreaming)return;const map={'sake teppanyaki':'¿Qué sake recomiendas para el teppanyaki wagyu?','historia tengu':'¿Cuál es la historia del Tengu en la mitología japonesa?','reserva':'¿Cómo puedo hacer una reserva?','yokai pulpo':'¿Qué espíritu guía al Tako Robatayaki?','diferencia':'¿En qué se diferencia Tengu de otros restaurantes japoneses?','horario':'¿Cuáles son los horarios de Tengu?'};input.value=map[key]||key;sendMessage();}
 
