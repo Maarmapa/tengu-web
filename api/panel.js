@@ -45,7 +45,11 @@ module.exports = async (req, res) => {
       if (tj && tj.permitido === false) return res.status(429).json({ error: 'Panel bloqueado por hoy (demasiados intentos fallidos).' });
     } catch (e) {}
     await new Promise((r2) => setTimeout(r2, 900));
-    res.setHeader('WWW-Authenticate', 'Basic realm="Tengu Sala"');
+    // SIN WWW-Authenticate. Esa cabecera es una invitación formal al navegador
+    // para que tome el control de la autenticación y muestre SU diálogo de
+    // usuario+contraseña. Acá no hace falta —panel.html manda la credencial él
+    // mismo desde JavaScript— y hacía que los dos diálogos pelearan: el nativo
+    // pedía dos campos, el del panel uno, y la página quedaba inusable.
     return res.status(401).json({ error: 'Clave incorrecta.' });
   }
 
