@@ -32,6 +32,7 @@ const TREINTA_DIAS = 60 * 60 * 24 * 30;
 // WhatsApp para que quien caiga en la portada pueda escribirle al restaurante.
 const LIBRES = new Set([
   '/favicon.svg', '/favicon-64.png', '/apple-touch-icon.png', '/api/wa',
+  '/tengu-marca.png',
 ]);
 
 async function sha256(txt) {
@@ -75,11 +76,10 @@ const portada = (origen) => `<!doctype html>
   body{background:#060503;color:#e8e0d0;font-family:'Cormorant Garamond',Georgia,serif;
        min-height:100vh;display:flex;align-items:center;justify-content:center;
        text-align:center;padding:32px;overflow:hidden}
-  .kanji{font-size:clamp(120px,30vw,260px);line-height:1;color:#c8921a;
-         font-family:'Hiragino Mincho ProN','Yu Mincho',serif;font-weight:300;
+  .marca{width:min(46vw,300px);height:auto;display:block;margin:0 auto;
          opacity:0;animation:entra 2.4s ease forwards}
   .nombre{font-size:clamp(28px,7vw,44px);font-weight:300;letter-spacing:.32em;
-          margin:18px 0 0 26px;opacity:0;animation:entra 2.4s .5s ease forwards}
+          margin:26px 0 0 .32em;opacity:0;animation:entra 2.4s .5s ease forwards}
   .pronto{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.42em;
           text-transform:uppercase;color:#c8921a;margin-top:34px;
           opacity:0;animation:entra 2.4s 1.1s ease forwards}
@@ -95,7 +95,7 @@ const portada = (origen) => `<!doctype html>
   @media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important}}
 </style></head>
 <body><main>
-  <div class="kanji">天</div>
+  <img class="marca" src="/tengu-marca.png" alt="Tengu" width="600" height="594">
   <h1 class="nombre">TENGU</h1>
   <p class="pronto">Próximamente</p>
   <p class="donde">Isidora Goyenechea 3000 · Santiago</p>
