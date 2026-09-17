@@ -85,7 +85,7 @@ const portada = (origen) => `<!doctype html>
           opacity:0;animation:entra 2.4s 1.1s ease forwards}
   .donde{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;
          color:#7a7266;margin-top:14px;opacity:0;animation:entra 2.4s 1.5s ease forwards}
-  .links{margin-top:40px;display:flex;gap:26px;justify-content:center;
+  .links{margin-top:40px;display:flex;flex-wrap:wrap;gap:16px 22px;justify-content:center;
          opacity:0;animation:entra 2.4s 1.9s ease forwards}
   .links a{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.24em;
            text-transform:uppercase;color:#b8ae9e;text-decoration:none;
@@ -101,6 +101,7 @@ const portada = (origen) => `<!doctype html>
   <p class="donde">Isidora Goyenechea 3000 · Santiago</p>
   <div class="links">
     <a href="/api/wa">WhatsApp</a>
+    <a href="https://gour.media/tengu/" rel="noopener">Carta</a>
     <a href="https://www.instagram.com/tengu_restaurant/" rel="noopener">Instagram</a>
   </div>
 </main></body></html>`;
