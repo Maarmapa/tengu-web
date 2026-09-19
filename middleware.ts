@@ -66,8 +66,8 @@ function cookie(request, nombre) {
 const portada = (origen) => `<!doctype html>
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tengu — Próximamente</title>
-<meta name="description" content="Tengu, cocina japonesa kappo en Isidora Goyenechea 3000, Santiago de Chile. Muy pronto.">
+<title>Tengu — Cocina japonesa kappo · Isidora Goyenechea, Santiago</title>
+<meta name="description" content="Tengu — cocina japonesa kappo en Isidora Goyenechea 3000, Las Condes, Santiago. Reservas por WhatsApp, carta y novedades.">
 <link rel="canonical" href="${origen}">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Mono:wght@300&display=swap" rel="stylesheet">
@@ -85,6 +85,9 @@ const portada = (origen) => `<!doctype html>
           opacity:0;animation:entra 2.4s 1.1s ease forwards}
   .donde{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.2em;
          color:#7a7266;margin-top:14px;opacity:0;animation:entra 2.4s 1.5s ease forwards}
+  .donde a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(122,114,102,.35);
+           padding-bottom:2px;transition:.3s}
+  .donde a:hover{color:#b8ae9e;border-color:#b8ae9e}
   .links{margin-top:40px;display:flex;flex-wrap:wrap;gap:16px 22px;justify-content:center;
          opacity:0;animation:entra 2.4s 1.9s ease forwards}
   .links a{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.24em;
@@ -97,8 +100,8 @@ const portada = (origen) => `<!doctype html>
 <body><main>
   <img class="marca" src="/tengu-marca.png" alt="Tengu" width="600" height="594">
   <h1 class="nombre">TENGU</h1>
-  <p class="pronto">Próximamente</p>
-  <p class="donde">Isidora Goyenechea 3000 · Santiago</p>
+  <p class="pronto">Cocina japonesa kappo</p>
+  <p class="donde"><a href="https://www.google.com/maps/search/?api=1&query=Tengu%20Isidora%20Goyenechea%203000%20Las%20Condes" rel="noopener">Isidora Goyenechea 3000 · Santiago</a></p>
   <div class="links">
     <a href="/api/wa">WhatsApp</a>
     <a href="https://gour.media/tengu/" rel="noopener">Carta</a>
@@ -106,7 +109,7 @@ const portada = (origen) => `<!doctype html>
   </div>
 </main></body></html>`;
 
-const ROBOTS_CERRADO = `# Tengu — el sitio todavía no abre.
+const ROBOTS_CERRADO = `# Tengu — sitio en preparación.
 User-agent: *
 Allow: /$
 Disallow: /
