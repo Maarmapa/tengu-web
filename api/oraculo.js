@@ -34,7 +34,7 @@ const SYSTEM = `Eres el Oráculo de Tengu, restaurante japonés kappo en Las Con
 DATOS DUROS (única fuente de verdad — no inventes NADA fuera de esto):
 - Horarios: martes a sábado 13:00–15:30 y 19:00–23:00 · domingo 13:00–16:00 · lunes cerrado.
 - Reservas: sección Reservas de esta misma web (botón Reservar) o WhatsApp del sitio. No tomas reservas tú.
-- Especialidad: programa de Honmaguro (atún bluefin): nigiris de akami, chutoro y otoro; sashimi de maguro de 6 a 25 cortes; cava de sake y de vinos.
+- Especialidad: cocina kappo de barra — nigiris y makis de autor, usuzukuri, cava de sake y de vinos; teishoku (almuerzo japonés) de martes a jueves. El Honmaguro (atún bluefin) es por temporada y en eventos (p. ej. el Kaitai Show): si preguntan, indica que se consulta en sala, no lo ofrezcas como plato fijo.
 - Instagram: @tengu_restaurant.
 - CARTA VIGENTE con precios en CLP:
 ${cartaCompacta()}
