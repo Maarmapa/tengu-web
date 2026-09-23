@@ -30,6 +30,9 @@ const TREINTA_DIAS = 60 * 60 * 24 * 30;
 // Rutas que pasan aunque no haya cookie: el ícono para que la portada se vea
 // entera, robots.txt para no devolverle HTML a un crawler, y el redirector de
 // WhatsApp para que quien caiga en la portada pueda escribirle al restaurante.
+// Aparte, todo /_vercel/ (Web Analytics, Speed Insights): son endpoints de la
+// plataforma, no del sitio; si el candado los tapa, el script de analytics
+// recibe la portada en vez de JavaScript y no mide nada.
 const LIBRES = new Set([
   '/favicon.svg', '/favicon-64.png', '/apple-touch-icon.png', '/api/wa',
   '/tengu-marca.png',
@@ -96,7 +99,9 @@ const portada = (origen) => `<!doctype html>
   .links a:hover{color:#c8921a;border-color:#c8921a}
   @keyframes entra{to{opacity:1}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;opacity:1!important}}
-</style></head>
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
 <body><main>
   <img class="marca" src="/tengu-marca.png" alt="Tengu" width="600" height="594">
   <h1 class="nombre">TENGU</h1>
@@ -142,6 +147,7 @@ export default async function middleware(request) {
   if (cookie(request, COOKIE) === (await huella())) return;
 
   // 3) Excepciones que no revelan nada.
+  if (url.pathname.startsWith('/_vercel/')) return;
   if (LIBRES.has(url.pathname)) return;
   if (url.pathname === '/robots.txt') {
     return new Response(ROBOTS_CERRADO, {
