@@ -1,2 +1,6 @@
 .vercel
 .env*
+
+# carta: HTML crudo de Gourmedia (1,3 MB c/u, se baja con tools/carta/sync.sh)
+tools/carta/data/raw-*.html
+tools/carta/data/prev-final.json
