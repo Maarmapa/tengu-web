@@ -49,7 +49,7 @@ const NOTAS={sashimi:'Honmaguro · atún bluefin: por temporada y en eventos. Co
 // Cabecera con foto, solo donde la imagen corresponde a la sección sin ambigüedad.
 // Las secciones sin foto van sin cabecera: media cabecera se ve peor que ninguna.
 const PORTADA={
-  comenzar:['tartar-mora','Otsumami de la barra','center 34%'],
+  comenzar:['uni-ikura-trufa','Erizo, ikura y trufa','center center'],
   sashimi:['tiradito-petalos','Usuzukuri con pétalos y cítricos','center 46%'],
   nigiris:['nigiri-trufa','Nigiri omakase con trufa','center 42%'],
   caliente:['okonomiyaki','Okonomiyaki de la cocina caliente','center 44%'],
