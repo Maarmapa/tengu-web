@@ -1,6 +1,11 @@
 import fs from 'node:fs';
 const D=process.argv[2]; const REPO=new URL('../../',import.meta.url).pathname;
 const data=JSON.parse(fs.readFileSync(`${D}/carta-final.json`,'utf8'));
+// anchos reales de cada foto: el descriptor w del srcset debe ser el ancho del archivo,
+// no el tamaño al que se pidió reducirlo (una foto vertical de 1600 de alto mide 1200 de ancho).
+const FOTOS=JSON.parse(fs.readFileSync(REPO+'fotos/manifest.json','utf8'));
+const srcsetDe=(n)=>{const a=FOTOS[n+'-800.jpg'],b=FOTOS[n+'.jpg'],p=[];
+  if(a)p.push(`fotos/${n}-800.jpg ${a[0]}w`); if(b&&(!a||b[0]!==a[0]))p.push(`fotos/${n}.jpg ${b[0]}w`); return p.join(', ');};
 const index=fs.readFileSync(REPO+'index.html','utf8');
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const clp=n=>'$'+Number(n).toLocaleString('es-CL');
@@ -41,13 +46,27 @@ const MAPA=[
   ['postres','Postres',['postre']],
 ];
 const NOTAS={sashimi:'Honmaguro · atún bluefin: por temporada y en eventos. Consultar en sala.'};
+// Cabecera con foto, solo donde la imagen corresponde a la sección sin ambigüedad.
+// Las secciones sin foto van sin cabecera: media cabecera se ve peor que ninguna.
+const PORTADA={
+  comenzar:['tartar-mora','Otsumami de la barra','center 34%'],
+  sashimi:['tiradito-petalos','Usuzukuri con pétalos y cítricos','center 46%'],
+  nigiris:['nigiri-trufa','Nigiri omakase con trufa','center 42%'],
+  caliente:['okonomiyaki','Okonomiyaki de la cocina caliente','center 44%'],
+};
+const portada=(id,label,n)=>{ const v=PORTADA[id]; if(!v) return '';
+  return `<div class="menu-portada">
+  <img loading="lazy" src="fotos/${v[0]}.jpg" srcset="${srcsetDe(v[0])}" sizes="(max-width:720px) 40vw, 230px" alt="${esc(v[1])}">
+  <div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div>
+</div>`; };
 const grupos=(sec)=>{const g=new Map();for(const it of data[sec].items){if(!g.has(it.sub))g.set(it.sub,[]);g.get(it.sub).push(it);}return g;};
 const comida=grupos('comida'); const asignadas=new Set();
 const tabs=[]; let total=0; const ld=[];
 const bloqueSub=(label, sub, items, bajada)=>{
+  const repetido = norm(sub)===norm(label);
   ld.push({'@type':'MenuSection',name:`${label} — ${subTitulo(sub)}`,hasMenuItem:items.map(it=>({'@type':'MenuItem',name:it.nombre,...(it.desc?{description:it.desc}:{}),...(it.precio!=null?{offers:{'@type':'Offer',price:String(it.precio),priceCurrency:'CLP'}}:{})}))});
   total+=items.length;
-  return `<div class="menu-subcat">${esc(subTitulo(sub))}</div>${bajada?`<div class="menu-bajada">${esc(bajada)}</div>`:''}`+items.map(it=>`
+  return `${repetido?'':`<div class="menu-subcat">${esc(subTitulo(sub))}</div>`}${bajada?`<div class="menu-bajada">${esc(bajada)}</div>`:''}`+items.map(it=>`
 <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">${esc(it.nombre)}</div>${it.jp?`<div class="menu-item-jp">${esc(it.jp)}</div>`:''}</div>${precio(it)}</div>${it.desc?`<div class="menu-item-desc">${esc(it.desc)}</div>`:''}${tag(it)}</div>`).join('');
 };
 for(const [id,label,claves] of MAPA){
@@ -66,7 +85,7 @@ simple('sake','Sake','sake');
 simple('teishoku','Teishoku','teishoku','Martes a jueves, solo almuerzo.');
 
 const tabsHtml=tabs.map((t,i)=>`<button class="menu-tab${i===0?' active':''}" data-cat="${t.id}">${t.label}</button>`).join('');
-const catsHtml=tabs.map((t,i)=>`<div class="menu-cat${i===0?' active':''}" id="cat-${t.id}">${t.nota?`<div class="menu-nota-sec">${esc(t.nota)}</div>`:''}<div class="menu-grid">${t.html}</div></div>`).join('\n');
+const catsHtml=tabs.map((t,i)=>`<div class="menu-cat${i===0?' active':''}" id="cat-${t.id}">${portada(t.id,t.label,(t.html.match(/class="menu-item"/g)||[]).length)}${t.nota?`<div class="menu-nota-sec">${esc(t.nota)}</div>`:''}<div class="menu-grid">${t.html}</div></div>`).join('\n');
 const jsonld=JSON.stringify({'@context':'https://schema.org','@type':'Menu',name:'Carta de Tengu',url:'https://www.tengu.cl/carta.html',inLanguage:'es-CL',hasMenuSection:ld});
 
 const html=`<!doctype html>
@@ -96,6 +115,13 @@ a{color:inherit}
 /* cabecera y estilos de la carta, copiados del sitio */
 ${secCss}
 ${menuCss}
+.menu-portada{display:flex;gap:clamp(16px,3vw,30px);align-items:flex-end;padding:4px 2px 20px;
+              border-bottom:1px solid rgba(200,146,26,.12);margin-bottom:8px}
+.menu-portada img{width:clamp(115px,23vw,230px);aspect-ratio:3/4;object-fit:cover;
+                  filter:brightness(.88);flex:0 0 auto;display:block}
+.mp-txt h2{font-family:var(--font-d);font-size:clamp(26px,5vw,44px);font-weight:300;color:var(--cream);line-height:1}
+.mp-txt p{font-family:var(--font-m);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
+          color:rgba(200,146,26,.75);margin-top:10px}
 /* en esta página las subcategorías son títulos fijos: todo a la vista */
 .menu-subcat{cursor:default}
 .menu-subcat::after{content:none}
