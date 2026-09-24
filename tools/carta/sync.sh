@@ -12,5 +12,6 @@ node extraer.mjs data | head -8
 node final.mjs data | sed -n '2p'
 node generar.mjs data
 node oraculo.mjs data
+node index-carta.mjs data
 node diff.mjs data | tail -3
 echo "→ carta.html regenerada. Diff completo vs 28-ago en data/diff-28ago-vs-23sep.json; comparar data/prev-final.json vs data/carta-final.json para el cambio desde la última corrida."
