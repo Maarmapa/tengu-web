@@ -48,11 +48,10 @@ function item(it){
    +(tag?`<div class="menu-item-yokai">${esc(tag)}</div>`:'')+`</div>`;
 }
 function grupo(label, pares){   // pares: [tituloSub, items]
-  let out=''; let primera=true;
+  let out='';
   for(const [sub,items] of pares){
     ld.push({'@type':'MenuSection',name:`${label} — ${subTitulo(sub)}`,hasMenuItem:items.map(it=>({'@type':'MenuItem',name:it.nombre,...(it.desc?{description:it.desc}:{}),...(it.precio!=null?{offers:{'@type':'Offer',price:String(it.precio),priceCurrency:'CLP'}}:{})}))});
-    out+=`\n    <div class="menu-subcat${primera?' open':''}" data-count="${items.length}" onclick="this.classList.toggle('open')">${esc(subTitulo(sub))}</div>\n    <div class="subcat-body">\n`+items.map(item).join('\n')+`\n    </div>`;
-    primera=false;
+    out+=`\n    <div class="menu-subcat">${esc(subTitulo(sub))}</div>\n`+items.map(item).join('\n');
   }
   return out+'\n  ';
 }
