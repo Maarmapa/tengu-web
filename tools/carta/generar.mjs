@@ -28,11 +28,17 @@ function extraer(cssText, test){
   }
   return out;
 }
-const menuCss=extraer(css, s=>/\.menu-(section|header|tabs|tab|cat|grid|item|subcat|note)\b/.test(s) && !/\.menu-subcat\.open|subcat-body|::after/.test(s)).join('\n');
+const menuCss=extraer(css, s=>/\.menu-(section|header|tabs|tab|cat|grid|item|subcat|note)\b/.test(s) ).join('\n');
 const secCss=extraer(css, s=>/^\.(sec-tag|sec-title|gold-line)(\s|$|\{|,)|\.sec-title em/.test(s) && !/#instagram/.test(s)).join('\n');
 const vars={}; for(const m of css.matchAll(/(--[a-z0-9-]+)\s*:\s*([^;}]+)/g)) vars[m[1]]=m[2].trim();
 const rootCss=':root{'+Object.entries(vars).map(([k,v])=>`${k}:${v}`).join(';')+'}';
-const yokai={}; for(const m of index.matchAll(/menu-item-name">([^<]+)<\/div>[\s\S]{0,700}?menu-item-yokai">([^<]+)</g)) yokai[norm(m[1])]=m[2];
+const yokai={};
+for(const chunk of index.split('<div class="menu-item">').slice(1)){
+  const fin=chunk.indexOf('<div class="menu-item"');            // por si acaso
+  const c=fin>=0?chunk.slice(0,fin):chunk;
+  const n=c.match(/menu-item-name">([^<]+)</); const t=c.match(/menu-item-yokai">([^<]+)</);
+  if(n&&t) yokai[norm(n[1])]=t[1];
+}
 const ALIAS={'nigiri hirame omakase':'nigiri pez de isla','usuzukuri hirame':'usuzukuri pescado de isla','usuzukuri sakana uni':'usuzukuri awabi uni'};
 const tag=it=>{const k=ALIAS[norm(it.nombre)]||norm(it.nombre);return yokai[k]?`<div class="menu-item-yokai">${esc(yokai[k])}</div>`:'';};
 
@@ -62,23 +68,24 @@ const portada=(id,label,n)=>{ const v=PORTADA[id]; if(!v) return '';
 const grupos=(sec)=>{const g=new Map();for(const it of data[sec].items){if(!g.has(it.sub))g.set(it.sub,[]);g.get(it.sub).push(it);}return g;};
 const comida=grupos('comida'); const asignadas=new Set();
 const tabs=[]; let total=0; const ld=[];
+let primeraDeLaPestana=true;
 const bloqueSub=(label, sub, items, bajada)=>{
-  const repetido = norm(sub)===norm(label);
+  const abierta=primeraDeLaPestana; primeraDeLaPestana=false;
   ld.push({'@type':'MenuSection',name:`${label} — ${subTitulo(sub)}`,hasMenuItem:items.map(it=>({'@type':'MenuItem',name:it.nombre,...(it.desc?{description:it.desc}:{}),...(it.precio!=null?{offers:{'@type':'Offer',price:String(it.precio),priceCurrency:'CLP'}}:{})}))});
   total+=items.length;
-  return `${repetido?'':`<div class="menu-subcat">${esc(subTitulo(sub))}</div>`}${bajada?`<div class="menu-bajada">${esc(bajada)}</div>`:''}`+items.map(it=>`
-<div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">${esc(it.nombre)}</div>${it.jp?`<div class="menu-item-jp">${esc(it.jp)}</div>`:''}</div>${precio(it)}</div>${it.desc?`<div class="menu-item-desc">${esc(it.desc)}</div>`:''}${tag(it)}</div>`).join('');
+  return `<div class="menu-subcat${abierta?' open':''}" data-count="${items.length}" onclick="this.classList.toggle('open')">${esc(subTitulo(sub))}</div><div class="subcat-body">${bajada?`<div class="menu-bajada">${esc(bajada)}</div>`:''}`+items.map(it=>`
+<div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">${esc(it.nombre)}</div>${it.jp?`<div class="menu-item-jp">${esc(it.jp)}</div>`:''}</div>${precio(it)}</div>${it.desc?`<div class="menu-item-desc">${esc(it.desc)}</div>`:''}${tag(it)}</div>`).join('')+'</div>';
 };
 for(const [id,label,claves] of MAPA){
-  let html='';
+  let html=''; primeraDeLaPestana=true;
   for(const [sub,items] of comida){ if(claves.some(c=>norm(sub).startsWith(c))){ asignadas.add(sub); html+=bloqueSub(label,sub,items,data.comida.subDesc[sub]); } }
   tabs.push({id,label,html,nota:NOTAS[id]});
 }
 const sueltas=[...comida.keys()].filter(s=>!asignadas.has(s));
 if(sueltas.length){ console.warn('SUBSECCIONES SIN PESTAÑA → van a Cocina Caliente:',sueltas); const t=tabs.find(t=>t.id==='caliente'); for(const s of sueltas) t.html+=bloqueSub('Cocina Caliente',s,comida.get(s),data.comida.subDesc[s]); }
-const simple=(id,label,sec,nota)=>{let html='';for(const [sub,items] of grupos(sec)) html+=bloqueSub(label,sub,items,data[sec].subDesc[sub]);tabs.push({id,label,html,nota});};
+const simple=(id,label,sec,nota)=>{let html=''; primeraDeLaPestana=true;for(const [sub,items] of grupos(sec)) html+=bloqueSub(label,sub,items,data[sec].subDesc[sub]);tabs.push({id,label,html,nota});};
 simple('bar','Bar','bar');
-{ let html='<div class="menu-divisor">Por copa</div>'; for(const [sub,items] of grupos('por-copa')) html+=bloqueSub('Vinos por copa',sub,items);
+{ let html='<div class="menu-divisor">Por copa</div>'; primeraDeLaPestana=true; for(const [sub,items] of grupos('por-copa')) html+=bloqueSub('Vinos por copa',sub,items);
   html+='<div class="menu-divisor">Por botella</div>'; for(const [sub,items] of grupos('vinos')) html+=bloqueSub('Vinos',sub,items,data.vinos.subDesc[sub]);
   tabs.push({id:'vinos',label:'Vinos',html}); }
 simple('sake','Sake','sake');
@@ -122,9 +129,11 @@ ${menuCss}
 .mp-txt h2{font-family:var(--font-d);font-size:clamp(26px,5vw,44px);font-weight:300;color:var(--cream);line-height:1}
 .mp-txt p{font-family:var(--font-m);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
           color:rgba(200,146,26,.75);margin-top:10px}
-/* en esta página las subcategorías son títulos fijos: todo a la vista */
-.menu-subcat{cursor:default}
-.menu-subcat::after{content:none}
+/* Subcategorías plegables: la primera de cada pestaña abierta, el resto cerradas.
+   Con 236 platos, mostrarlo todo de una es un muro; y una sola subsección
+   también se pliega, para que el gesto sea el mismo en toda la carta. */
+.subcat-body{display:none}
+.menu-subcat.open+.subcat-body{display:block}
 .menu-divisor{font-family:var(--font-d);font-size:22px;font-weight:300;font-style:italic;color:var(--gold);margin:34px 0 4px;padding:0 2px}
 .menu-nota-sec{font-family:var(--font-m);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(200,146,26,.6);padding:10px 2px 6px;border-bottom:1px solid rgba(200,146,26,.12)}
 .menu-bajada{font-size:13px;font-style:italic;color:var(--cream2);padding:12px 4px 4px;line-height:1.5}
