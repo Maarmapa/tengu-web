@@ -12,7 +12,9 @@ export const GALERIA = [
   ['g-chirashi',       'Kaisen: pesca y mariscos del día'],
   ['g-donburi',        'Donburi de pesca del día'],
   ['g-yakitori',       'Brochetas de la robata'],
-  ['g-nube',           'La escultura de papel sobre el ventanal'],
+  // La nube sale por ahora: es la más fría del lote (luz de día del ventanal) y
+  // al acercarla al set el papel crema se iba a naranja. Vuelve cuando haya una
+  // foto suya propia, no un recorte del fondo de otra.
   ['g-robata',         'La robata en servicio'],
 ];
 export const VISIBLES = 5;
