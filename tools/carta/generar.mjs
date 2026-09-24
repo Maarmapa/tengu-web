@@ -122,8 +122,9 @@ a{color:inherit}
 /* cabecera y estilos de la carta, copiados del sitio */
 ${secCss}
 ${menuCss}
-.menu-portada{display:flex;gap:clamp(16px,3vw,30px);align-items:flex-end;padding:4px 2px 20px;
+.menu-portada{display:flex;gap:clamp(16px,3vw,30px);align-items:flex-start;padding:2px 2px 20px;
               border-bottom:1px solid rgba(200,146,26,.12);margin-bottom:8px}
+.menu-portada .mp-txt{padding-top:2px}
 .menu-portada img{width:clamp(115px,23vw,230px);aspect-ratio:3/4;object-fit:cover;
                   filter:brightness(.88);flex:0 0 auto;display:block}
 .mp-txt h2{font-family:var(--font-d);font-size:clamp(26px,5vw,44px);font-weight:300;color:var(--cream);line-height:1}
