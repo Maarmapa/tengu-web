@@ -6,16 +6,20 @@
 //
 // Las cinco primeras se ven en la grilla; las demás viven en el visor y el
 // botón anuncia el total. Cambiar una foto es cambiar una línea de esta lista.
+//
+// Cada entrada es [recorte, alt, original]: la grilla usa el recorte apaisado y
+// el visor abre el cuadro entero (v-*), porque ampliar una foto para volver a
+// verla cortada no tiene sentido.
 export const GALERIA = [
-  ['g-barra-pescados', 'El pescado del día dispuesto en la barra'],
-  ['g-barra-montaje',  'El itamae montando el servicio'],
-  ['g-chirashi',       'Kaisen: pesca y mariscos del día'],
-  ['g-donburi',        'Donburi de pesca del día'],
-  ['g-yakitori',       'Brochetas de la robata'],
+  ['g-barra-pescados', 'El pescado del día dispuesto en la barra', 'salon-ventanal'],
+  ['g-barra-montaje',  'El itamae montando el servicio',           'barra-montaje'],
+  ['g-chirashi',       'Kaisen: pesca y mariscos del día',         'chirashi'],
+  ['g-donburi',        'Donburi de pesca del día',                 'donburi'],
+  ['g-yakitori',       'Brochetas de la robata',                   'yakitori'],
   // La nube sale por ahora: es la más fría del lote (luz de día del ventanal) y
   // al acercarla al set el papel crema se iba a naranja. Vuelve cuando haya una
   // foto suya propia, no un recorte del fondo de otra.
-  ['g-robata',         'La robata en servicio'],
+  ['g-robata',         'La robata en servicio',                    'robata'],
 ];
 export const VISIBLES = 5;
 
@@ -35,7 +39,11 @@ export function hazGaleria(FOTOS, esc){
       + (i===vis.length-1 && todas.length>vis.length ? `<span class="mz-todas">Ver las ${todas.length}</span>` : '')
       + `</button>`;
   }).join('');
-  const datos = JSON.stringify(todas.map(([f,alt])=>({s:`fotos/${f}.jpg`,a:alt}))).replace(/'/g,'&#39;');
+  const datos = JSON.stringify(todas.map(([f,alt,orig])=>{
+    const o = {s:`fotos/${f}.jpg`, a:alt};
+    if(orig && FOTOS['v-'+orig+'.jpg']) o.f = `fotos/v-${orig}.jpg`;   // el visor abre la entera
+    return o;
+  })).replace(/'/g,'&#39;');
   return `<!--GAL-INI-->
 <section class="galeria" id="galeria">
   <div class="gal-head"><p class="sec-tag">La barra</p><h2 class="sec-title">El pescado, a la vista</h2><div class="gold-line" style="margin-left:0"></div></div>

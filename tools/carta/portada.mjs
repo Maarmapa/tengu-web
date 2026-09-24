@@ -13,15 +13,19 @@
 // nivel de plato no se puede afirmar —edamame tiene dos candidatos en la carta,
 // gyozas cuatro, las almejas seis— y una foto en el plato equivocado es una
 // promesa falsa al comensal.
+//
+// Cada entrada es [recorte, alt, original]. El mosaico usa el recorte apaisado;
+// el visor abre el ORIGINAL completo: ampliar para volver a ver la foto cortada
+// no tiene sentido, y en los platos redondos el recorte se come el borde.
 export const PORTADA = {
-  comenzar: [['s-uni-ikura','Erizo de Caldera, ikura y trufa'],['s-tartar','Tartar sobre brioche'],
-             ['s-gyozas','Gyozas'],['s-edamame','Edamame']],
-  sashimi:  [['s-tiradito','Usuzukuri con pétalos y cítricos'],['s-usuzukuri','Usuzukuri con jalapeño'],
-             ['s-almejas-canasto','Mariscos frescos del día'],['s-almejas-hielo','Almejas sobre hielo']],
-  nigiris:  [['s-nigiri-trufa','Nigiri omakase con trufa'],['s-nigiris-barra','Nigiris de la barra']],
-  caliente: [['s-okonomiyaki','Okonomiyaki'],['s-almejas-grat','Gratinados de la cocina caliente'],
-             ['s-donburi','Donburi de pesca del día'],['s-chirashi','Kaisen don'],
-             ['s-almejas-limon','Asari al sake']],
+  comenzar: [['s-uni-ikura','Erizo de Caldera, ikura y trufa','uni-ikura-trufa'],['s-tartar','Tartar sobre brioche','tartar-mora'],
+             ['s-gyozas','Gyozas','gyozas'],['s-edamame','Edamame','edamame']],
+  sashimi:  [['s-tiradito','Usuzukuri con pétalos y cítricos','tiradito-petalos'],['s-usuzukuri','Usuzukuri con jalapeño','usuzukuri-jalapeno'],
+             ['s-almejas-canasto','Mariscos frescos del día','almejas-canasto'],['s-almejas-hielo','Almejas sobre hielo','almejas-hielo']],
+  nigiris:  [['s-nigiri-trufa','Nigiri omakase con trufa','nigiri-trufa'],['s-nigiris-barra','Nigiris de la barra','nigiris-barra']],
+  caliente: [['s-okonomiyaki','Okonomiyaki','okonomiyaki'],['s-almejas-grat','Gratinados de la cocina caliente','almejas-gratinadas'],
+             ['s-donburi','Donburi de pesca del día','donburi'],['s-chirashi','Kaisen don','chirashi'],
+             ['s-almejas-limon','Asari al sake','almejas-limon']],
 };
 // cuántas se muestran según cuántas haya: solo 2, 3 y 5 embaldosan sin huecos
 const VISIBLES = n => n>=5 ? 5 : n>=3 ? 3 : n;
@@ -43,7 +47,11 @@ export function hazPortada(id, label, n, FOTOS, esc){
       + (i===vis.length-1 && todas.length>vis.length ? `<span class="mz-todas">Ver las ${todas.length}</span>` : '')
       + `</button>`;
   }).join('');
-  const datos = JSON.stringify(todas.map(([f,alt])=>({s:`fotos/${f}.jpg`,a:alt}))).replace(/'/g,'&#39;');
+  const datos = JSON.stringify(todas.map(([f,alt,orig])=>{
+    const o = {s:`fotos/${f}.jpg`, a:alt};
+    if(orig && FOTOS['v-'+orig+'.jpg']) o.f = `fotos/v-${orig}.jpg`;   // el visor abre la entera
+    return o;
+  })).replace(/'/g,'&#39;');
   return `<div class="menu-portada">
   <div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div>
   <div class="mz mz-n${vis.length}" data-fotos='${datos}'>${celdas}</div>
@@ -86,7 +94,7 @@ export const JS_PORTADA = `
   v.innerHTML='<button class="mz-prev" aria-label="Anterior">&#8249;</button><img alt=""><button class="mz-next" aria-label="Siguiente">&#8250;</button><button class="mz-cerrar" aria-label="Cerrar">&#10005;</button><div class="mz-pie"></div>';
   document.body.appendChild(v);
   var img=v.querySelector('img'), pie=v.querySelector('.mz-pie'), lista=[], i=0;
-  function pinta(){ var f=lista[i]; if(!f) return; img.src=f.s; img.alt=f.a; pie.textContent=(i+1)+' / '+lista.length+'  ·  '+f.a; }
+  function pinta(){ var f=lista[i]; if(!f) return; img.src=f.f||f.s; img.alt=f.a; pie.textContent=(i+1)+' / '+lista.length+'  ·  '+f.a; }
   function abre(fs,n){ lista=fs; i=n; pinta(); v.classList.add('abierto'); document.body.style.overflow='hidden'; }
   function cierra(){ v.classList.remove('abierto'); document.body.style.overflow=''; }
   function mueve(d){ i=(i+d+lista.length)%lista.length; pinta(); }
