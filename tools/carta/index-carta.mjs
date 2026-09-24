@@ -3,6 +3,7 @@
 // Sin esto, index.html conservaba la carta del 28-ago (52 platos que la cocina
 // ya no hace y 38 que faltaban), y su JSON-LD se lo contaba así a Google.
 import fs from 'node:fs';
+import { hazPortada, CSS_PORTADA, JS_PORTADA } from './portada.mjs';
 const D=process.argv[2]; const REPO=new URL('../../',import.meta.url).pathname;
 const data=JSON.parse(fs.readFileSync(`${D}/carta-final.json`,'utf8'));
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -15,14 +16,7 @@ const srcsetDe=(n)=>{const a=FOTOS[n+'-800.jpg'],b=FOTOS[n+'.jpg'],p=[];
 // Foto de cabecera solo donde la imagen corresponde a la sección sin ambigüedad.
 // A nivel de plato no se puede afirmar: edamame tiene dos candidatos en la carta,
 // gyozas cuatro, las almejas seis. A nivel de sección sí.
-const PORTADA={
-  comenzar:['uni-ikura-trufa','Erizo, ikura y trufa'],
-  sashimi:['tiradito-petalos','Usuzukuri con pétalos y cítricos'],
-  nigiris:['nigiri-trufa','Nigiri omakase con trufa'],
-  caliente:['okonomiyaki','Okonomiyaki de la cocina caliente'],
-};
-const portada=(id,label,n)=>{ const v=PORTADA[id]; if(!v) return '';
-  return `<div class="menu-portada"><img loading="lazy" src="fotos/${v[0]}.jpg" srcset="${srcsetDe(v[0])}" sizes="(max-width:768px) 40vw, 230px" alt="${esc(v[1])}"><div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div></div>`; };
+const portada=(id,label,n)=>hazPortada(id,label,n,FOTOS,esc);
 
 // etiquetas "espíritu"/"chef" del sitio: se conservan para los platos que siguen existiendo
 const yokai={};
@@ -128,18 +122,17 @@ html=html.replace(/\s*<button class="menu-tab"[^>]*onclick="showCat\('bluefin',t
     hecho=true; break; }
   if(!hecho){ console.error('no pude reescribir el JSON-LD'); process.exit(1); } }
 
-if(!html.includes('.menu-portada{')){
-  const CSS=`
-.menu-portada{display:flex;gap:clamp(16px,3vw,30px);align-items:flex-start;padding:2px 2px 20px;border-bottom:1px solid rgba(200,146,26,.12);margin-bottom:8px}
-.menu-portada .mp-txt{padding-top:2px}
-.menu-portada img{width:clamp(115px,23vw,230px);aspect-ratio:3/4;object-fit:cover;filter:brightness(.88);flex:0 0 auto;display:block}
-.mp-txt h2{font-family:var(--font-d);font-size:clamp(26px,5vw,44px);font-weight:300;color:var(--cream);line-height:1;margin:0}
-.mp-txt p{font-family:var(--font-m);font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:rgba(200,146,26,.75);margin-top:10px}
-`;
-  const i=html.lastIndexOf('</style>');
-  if(i<0){ console.error('no encuentro </style>'); process.exit(1); }
-  html=html.slice(0,i)+CSS+html.slice(i);
-}
+// Reemplazar entre marcas, no solo insertar: si no, una segunda corrida
+// dejaba el CSS viejo y el HTML nuevo sin estilo.
+{ const bloque=CSS_PORTADA;
+  const re=/\/\*MZ-INI\*\/[\s\S]*?\/\*MZ-FIN\*\//;
+  if(re.test(html)) html=html.replace(re, bloque.trim());
+  else { const i=html.lastIndexOf('</style>'); if(i<0){ console.error('no encuentro </style>'); process.exit(1); }
+         html=html.slice(0,i)+bloque+html.slice(i); } }
+{ const re=/\/\*MZJS-INI\*\/[\s\S]*?\/\*MZJS-FIN\*\//;
+  if(re.test(html)) html=html.replace(re, JS_PORTADA.trim());
+  else { const j=html.lastIndexOf('</body>'); if(j<0){ console.error('no encuentro </body>'); process.exit(1); }
+         html=html.slice(0,j)+'<script>'+JS_PORTADA+'</script>\n'+html.slice(j); } }
 fs.writeFileSync(REPO+'index.html',html);
 const n=ld.reduce((a,s)=>a+s.hasMenuItem.length,0);
 console.log('index.html: carta regenerada ·',n,'platos ·',ld.length,'subsecciones · pestaña Bluefin eliminada');

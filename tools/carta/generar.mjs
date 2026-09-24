@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { hazPortada, CSS_PORTADA, JS_PORTADA } from './portada.mjs';
 const D=process.argv[2]; const REPO=new URL('../../',import.meta.url).pathname;
 const data=JSON.parse(fs.readFileSync(`${D}/carta-final.json`,'utf8'));
 // anchos reales de cada foto: el descriptor w del srcset debe ser el ancho del archivo,
@@ -54,17 +55,7 @@ const MAPA=[
 const NOTAS={sashimi:'Honmaguro · atún bluefin: por temporada y en eventos. Consultar en sala.'};
 // Cabecera con foto, solo donde la imagen corresponde a la sección sin ambigüedad.
 // Las secciones sin foto van sin cabecera: media cabecera se ve peor que ninguna.
-const PORTADA={
-  comenzar:['uni-ikura-trufa','Erizo, ikura y trufa','center center'],
-  sashimi:['tiradito-petalos','Usuzukuri con pétalos y cítricos','center 46%'],
-  nigiris:['nigiri-trufa','Nigiri omakase con trufa','center 42%'],
-  caliente:['okonomiyaki','Okonomiyaki de la cocina caliente','center 44%'],
-};
-const portada=(id,label,n)=>{ const v=PORTADA[id]; if(!v) return '';
-  return `<div class="menu-portada">
-  <img loading="lazy" src="fotos/${v[0]}.jpg" srcset="${srcsetDe(v[0])}" sizes="(max-width:720px) 40vw, 230px" alt="${esc(v[1])}">
-  <div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div>
-</div>`; };
+const portada=(id,label,n)=>hazPortada(id,label,n,FOTOS,esc);
 const grupos=(sec)=>{const g=new Map();for(const it of data[sec].items){if(!g.has(it.sub))g.set(it.sub,[]);g.get(it.sub).push(it);}return g;};
 const comida=grupos('comida'); const asignadas=new Set();
 const tabs=[]; let total=0; const ld=[];
@@ -122,14 +113,7 @@ a{color:inherit}
 /* cabecera y estilos de la carta, copiados del sitio */
 ${secCss}
 ${menuCss}
-.menu-portada{display:flex;gap:clamp(16px,3vw,30px);align-items:flex-start;padding:2px 2px 20px;
-              border-bottom:1px solid rgba(200,146,26,.12);margin-bottom:8px}
-.menu-portada .mp-txt{padding-top:2px}
-.menu-portada img{width:clamp(115px,23vw,230px);aspect-ratio:3/4;object-fit:cover;
-                  filter:brightness(.88);flex:0 0 auto;display:block}
-.mp-txt h2{font-family:var(--font-d);font-size:clamp(26px,5vw,44px);font-weight:300;color:var(--cream);line-height:1}
-.mp-txt p{font-family:var(--font-m);font-size:9px;letter-spacing:.24em;text-transform:uppercase;
-          color:rgba(200,146,26,.75);margin-top:10px}
+${CSS_PORTADA}
 /* Subcategorías plegables: la primera de cada pestaña abierta, el resto cerradas.
    Con 236 platos, mostrarlo todo de una es un muro; y una sola subsección
    también se pliega, para que el gesto sea el mismo en toda la carta. */
@@ -165,6 +149,7 @@ ${catsHtml}
   fromHash(); window.addEventListener('hashchange',fromHash);
 })();
 </script>
+<script>${JS_PORTADA}</script>
 </body></html>`;
 fs.writeFileSync(REPO+'carta.html',html);
 console.log('carta.html:',(Buffer.byteLength(html)/1024).toFixed(1),'KB ·',total,'platos ·',tabs.length,'pestañas ·',ld.length,'subsecciones · sueltas:',sueltas.length);
