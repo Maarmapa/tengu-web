@@ -38,17 +38,20 @@ export function hazPortada(id, label, n, FOTOS, esc){
     if(a) out.push(`fotos/${f}-800.jpg ${a[0]}w`);
     if(b && (!a || b[0]!==a[0])) out.push(`fotos/${f}.jpg ${b[0]}w`);
     return out.join(', '); };
-  const fotos = p.fotos.filter(([f]) => FOTOS[f+'.jpg']).slice(0,5);
+  const todas = p.fotos.filter(([f]) => FOTOS[f+'.jpg']);
+  // Cuatro es lo que aguanta la fila sin que las tiras se angosten; las demás
+  // siguen en el visor y el botón anuncia el total, como en la referencia.
+  const fotos = todas.slice(0,4);
   if(!fotos.length) return '';
   const celda = ([f,alt], i) => {
     const grande = i===0;
     const sizes = grande ? '(max-width:720px) 100vw, 46vw' : '(max-width:720px) 50vw, 23vw';
-    const ultima = i===fotos.length-1 && fotos.length>1;
+    const ultima = i===fotos.length-1 && todas.length>1;
     return `<button class="mz-celda${grande?' mz-grande':''}" type="button" data-i="${i}" aria-label="Ver ${esc(alt)}">`
       + `<img loading="lazy" src="fotos/${f}.jpg" srcset="${srcset(f)}" sizes="${sizes}" alt="${esc(alt)}">`
-      + (ultima ? `<span class="mz-todas">Ver las ${fotos.length}</span>` : '') + `</button>`;
+      + (ultima ? `<span class="mz-todas">Ver las ${todas.length}</span>` : '') + `</button>`;
   };
-  const datos = JSON.stringify(fotos.map(([f,alt])=>({s:`fotos/${f}.jpg`,a:alt})));
+  const datos = JSON.stringify(todas.map(([f,alt])=>({s:`fotos/${f}.jpg`,a:alt})));
   return `<div class="menu-portada">
   <div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div>
   <div class="mz mz-n${fotos.length}" data-fotos='${datos.replace(/'/g,"&#39;")}'>${fotos.map(celda).join('')}</div>
@@ -64,7 +67,7 @@ export const CSS_PORTADA = `
    recortaría a una franja, y con 4 dejaba un hueco en la grilla de 3x2. Van en
    tiras verticales parejas: misma proporción que la foto, cero recorte, sin huecos.
    El ancho se limita para que con 2 fotos no queden gigantes. */
-.mz{display:grid;gap:5px;grid-template-columns:repeat(var(--n),1fr);max-width:min(100%,calc(var(--n) * 310px))}
+.mz{display:grid;gap:4px;grid-template-columns:repeat(var(--n),1fr);max-width:min(100%,calc(var(--n) * 310px))}
 .mz-n1{--n:1}.mz-n2{--n:2}.mz-n3{--n:3}.mz-n4{--n:4}.mz-n5{--n:5}
 .mz-celda{position:relative;overflow:hidden;padding:0;border:0;background:var(--dark2);cursor:pointer;display:block;aspect-ratio:3/4}
 .mz-celda img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88);transition:filter .4s,transform .6s}

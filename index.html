@@ -368,7 +368,12 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
 /* ── HERO VIDEO/PHOTO BG ── */
 .hero-photo{position:absolute;inset:0;z-index:0}
-.hero-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.35)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.42) saturate(.95)}
+/* Velo sobre la foto: el oscurecimiento parejo dejaba la chaqueta blanca del
+   itamae como el punto más claro del cuadro y el título perdía contraste. */
+.hero-photo::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 60% at 50% 52%,rgba(6,5,3,.72) 0%,rgba(6,5,3,.30) 55%,transparent 100%),
+             linear-gradient(180deg,rgba(6,5,3,.55) 0%,transparent 28%,transparent 64%,rgba(6,5,3,.72) 100%)}
 
 /* ── GALLERY WITH REAL PHOTOS ── */
 .photo-gallery{padding:0;background:var(--black)}
@@ -700,7 +705,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 
   <div class="menu-cat" id="cat-caliente"><div class="menu-portada">
   <div class="mp-txt"><h2>Cocina Caliente</h2><p>21 platos</p></div>
-  <div class="mz mz-n5" data-fotos='[{"s":"fotos/okonomiyaki.jpg","a":"Okonomiyaki"},{"s":"fotos/almejas-gratinadas.jpg","a":"Gratinados de la cocina caliente"},{"s":"fotos/donburi.jpg","a":"Donburi de pesca del día"},{"s":"fotos/chirashi.jpg","a":"Kaisen don"},{"s":"fotos/almejas-limon.jpg","a":"Asari al sake"}]'><button class="mz-celda mz-grande" type="button" data-i="0" aria-label="Ver Okonomiyaki"><img loading="lazy" src="fotos/okonomiyaki.jpg" srcset="fotos/okonomiyaki-800.jpg 600w, fotos/okonomiyaki.jpg 1200w" sizes="(max-width:720px) 100vw, 46vw" alt="Okonomiyaki"></button><button class="mz-celda" type="button" data-i="1" aria-label="Ver Gratinados de la cocina caliente"><img loading="lazy" src="fotos/almejas-gratinadas.jpg" srcset="fotos/almejas-gratinadas-800.jpg 600w, fotos/almejas-gratinadas.jpg 1200w" sizes="(max-width:720px) 50vw, 23vw" alt="Gratinados de la cocina caliente"></button><button class="mz-celda" type="button" data-i="2" aria-label="Ver Donburi de pesca del día"><img loading="lazy" src="fotos/donburi.jpg" srcset="fotos/donburi-800.jpg 800w, fotos/donburi.jpg 1600w" sizes="(max-width:720px) 50vw, 23vw" alt="Donburi de pesca del día"></button><button class="mz-celda" type="button" data-i="3" aria-label="Ver Kaisen don"><img loading="lazy" src="fotos/chirashi.jpg" srcset="fotos/chirashi-800.jpg 800w, fotos/chirashi.jpg 1600w" sizes="(max-width:720px) 50vw, 23vw" alt="Kaisen don"></button><button class="mz-celda" type="button" data-i="4" aria-label="Ver Asari al sake"><img loading="lazy" src="fotos/almejas-limon.jpg" srcset="fotos/almejas-limon-800.jpg 600w, fotos/almejas-limon.jpg 1200w" sizes="(max-width:720px) 50vw, 23vw" alt="Asari al sake"><span class="mz-todas">Ver las 5</span></button></div>
+  <div class="mz mz-n4" data-fotos='[{"s":"fotos/okonomiyaki.jpg","a":"Okonomiyaki"},{"s":"fotos/almejas-gratinadas.jpg","a":"Gratinados de la cocina caliente"},{"s":"fotos/donburi.jpg","a":"Donburi de pesca del día"},{"s":"fotos/chirashi.jpg","a":"Kaisen don"},{"s":"fotos/almejas-limon.jpg","a":"Asari al sake"}]'><button class="mz-celda mz-grande" type="button" data-i="0" aria-label="Ver Okonomiyaki"><img loading="lazy" src="fotos/okonomiyaki.jpg" srcset="fotos/okonomiyaki-800.jpg 600w, fotos/okonomiyaki.jpg 1200w" sizes="(max-width:720px) 100vw, 46vw" alt="Okonomiyaki"></button><button class="mz-celda" type="button" data-i="1" aria-label="Ver Gratinados de la cocina caliente"><img loading="lazy" src="fotos/almejas-gratinadas.jpg" srcset="fotos/almejas-gratinadas-800.jpg 600w, fotos/almejas-gratinadas.jpg 1200w" sizes="(max-width:720px) 50vw, 23vw" alt="Gratinados de la cocina caliente"></button><button class="mz-celda" type="button" data-i="2" aria-label="Ver Donburi de pesca del día"><img loading="lazy" src="fotos/donburi.jpg" srcset="fotos/donburi-800.jpg 800w, fotos/donburi.jpg 1600w" sizes="(max-width:720px) 50vw, 23vw" alt="Donburi de pesca del día"></button><button class="mz-celda" type="button" data-i="3" aria-label="Ver Kaisen don"><img loading="lazy" src="fotos/chirashi.jpg" srcset="fotos/chirashi-800.jpg 800w, fotos/chirashi.jpg 1600w" sizes="(max-width:720px) 50vw, 23vw" alt="Kaisen don"><span class="mz-todas">Ver las 5</span></button></div>
 </div><div class="menu-grid">
     <div class="menu-subcat">Tempuras</div>
     <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Langostinos</div><div class="menu-item-jp">エビ</div></div><div class="menu-item-price">$18.900</div></div><div class="menu-item-desc">Langostinos tempurizados 5 unidades</div><div class="menu-item-yokai">Recomendación del chef</div></div>
@@ -1209,7 +1214,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
    recortaría a una franja, y con 4 dejaba un hueco en la grilla de 3x2. Van en
    tiras verticales parejas: misma proporción que la foto, cero recorte, sin huecos.
    El ancho se limita para que con 2 fotos no queden gigantes. */
-.mz{display:grid;gap:5px;grid-template-columns:repeat(var(--n),1fr);max-width:min(100%,calc(var(--n) * 310px))}
+.mz{display:grid;gap:4px;grid-template-columns:repeat(var(--n),1fr);max-width:min(100%,calc(var(--n) * 310px))}
 .mz-n1{--n:1}.mz-n2{--n:2}.mz-n3{--n:3}.mz-n4{--n:4}.mz-n5{--n:5}
 .mz-celda{position:relative;overflow:hidden;padding:0;border:0;background:var(--dark2);cursor:pointer;display:block;aspect-ratio:3/4}
 .mz-celda img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88);transition:filter .4s,transform .6s}
