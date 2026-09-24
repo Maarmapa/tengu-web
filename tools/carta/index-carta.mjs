@@ -4,6 +4,7 @@
 // ya no hace y 38 que faltaban), y su JSON-LD se lo contaba así a Google.
 import fs from 'node:fs';
 import { hazPortada, CSS_PORTADA, JS_PORTADA } from './portada.mjs';
+import { hazGaleria, CSS_GALERIA } from './galeria.mjs';
 const D=process.argv[2]; const REPO=new URL('../../',import.meta.url).pathname;
 const data=JSON.parse(fs.readFileSync(`${D}/carta-final.json`,'utf8'));
 const esc=s=>String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -133,6 +134,17 @@ html=html.replace(/\s*<button class="menu-tab"[^>]*onclick="showCat\('bluefin',t
   if(re.test(html)) html=html.replace(re, JS_PORTADA.trim());
   else { const j=html.lastIndexOf('</body>'); if(j<0){ console.error('no encuentro </body>'); process.exit(1); }
          html=html.slice(0,j)+'<script>'+JS_PORTADA+'</script>\n'+html.slice(j); } }
+// galería de la barra, entre Historia y la Carta — reemplaza entre marcas
+{ const sec=hazGaleria(FOTOS,esc);
+  const re=/<!--GAL-INI-->[\s\S]*?<!--GAL-FIN-->/;
+  if(re.test(html)) html=html.replace(re, sec);
+  else { const i=html.indexOf('<section class="menu-section" id="menu">');
+         if(i<0){ console.error('no encuentro #menu'); process.exit(1); }
+         html=html.slice(0,i)+sec+'\n'+html.slice(i); }
+  const reC=/\/\*GAL-CSS-INI\*\/[\s\S]*?\/\*GAL-CSS-FIN\*\//;
+  if(reC.test(html)) html=html.replace(reC, CSS_GALERIA.trim());
+  else { const j=html.lastIndexOf('</style>'); html=html.slice(0,j)+CSS_GALERIA+html.slice(j); } }
+
 fs.writeFileSync(REPO+'index.html',html);
 const n=ld.reduce((a,s)=>a+s.hasMenuItem.length,0);
 console.log('index.html: carta regenerada ·',n,'platos ·',ld.length,'subsecciones · pestaña Bluefin eliminada');
