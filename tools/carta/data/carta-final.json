@@ -4,7 +4,7 @@
    "Para comenzar",
    "Otsumami (1 Unid)",
    "Sashimi",
-   "Uzuzukuri",
+   "Usuzukuri",
    "Tempuras",
    "Tártaros",
    "Nigiri Tradicional ( 1 Unid )",
@@ -20,8 +20,8 @@
   ],
   "subDesc": {
    "Otsumami (1 Unid)": "Reinterpretaciones de platos en formato de bocados",
-   "Mini Donburis": "Mini cuencos de arroz ,proteinas y toppings",
-   "Donburis": "Cuencos de arroz , proteinas y toppings"
+   "Mini Donburis": "Mini cuencos de arroz,proteínas y toppings",
+   "Donburis": "Cuencos de arroz, proteínas y toppings"
   },
   "items": [
    {
@@ -37,7 +37,7 @@
     "sub": "Para comenzar",
     "nombre": "Asari Ponzu (Unidades)",
     "desde": false,
-    "desc": "Almejas frescas en una magnifica salsa ponzu",
+    "desc": "Almejas frescas en una magnífica salsa ponzu",
     "precio": 10900,
     "extra": null,
     "jp": ""
@@ -136,7 +136,7 @@
     "sub": "Para comenzar",
     "nombre": "Risotto Uni",
     "desde": false,
-    "desc": "Risotto frio de Erizos de Caldera",
+    "desc": "Risotto frío de Erizos de Caldera",
     "precio": 15900,
     "extra": null,
     "jp": ""
@@ -163,7 +163,7 @@
     "sub": "Para comenzar",
     "nombre": "Gyosas Ebi (5 unid.)",
     "desde": false,
-    "desc": "Gyozas de Camaron y Sweet Chily Oil",
+    "desc": "Gyozas de Camarón y Sweet Chili Oil",
     "precio": 9990,
     "extra": null,
     "jp": "餃子エビ"
@@ -172,7 +172,7 @@
     "sub": "Para comenzar",
     "nombre": "Gyosas Veggie Setas (5 unid.)",
     "desde": false,
-    "desc": "Rellenas de setas de estación y Yogurth acido trufado",
+    "desc": "Rellenas de setas de estación y Yogurt ácido trufado",
     "precio": 14990,
     "extra": null,
     "jp": "ベジギョーザ"
@@ -181,7 +181,7 @@
     "sub": "Para comenzar",
     "nombre": "Miso Soup",
     "desde": false,
-    "desc": "Reconfortante y clasica sopa Miso Shiru",
+    "desc": "Reconfortante y clásica sopa Miso Shiru",
     "precio": 4500,
     "extra": null,
     "jp": "みそ汁"
@@ -190,7 +190,7 @@
     "sub": "Otsumami (1 Unid)",
     "nombre": "Unagi Tamago (1 unid.)",
     "desde": false,
-    "desc": "Anguila a la parrilla sobre torrtilla de huevo dulce",
+    "desc": "Anguila a la parrilla sobre tortilla de huevo dulce",
     "precio": 8900,
     "extra": null,
     "jp": "ウナギ卵"
@@ -217,14 +217,14 @@
     "sub": "Sashimi",
     "nombre": "9 Cortes (Mix de Pescado del Día)",
     "desde": false,
-    "desc": "Sashimis mixto de pesca del dia",
+    "desc": "Sashimis mixto de pesca del día",
     "precio": null,
     "extra": null,
     "jp": "9カット"
    },
    {
     "sub": "Sashimi",
-    "nombre": "15 Cortes (Incluye Atun Bluefin)",
+    "nombre": "15 Cortes (Incluye Atún Bluefin)",
     "desde": false,
     "desc": "Sashimi mixto, incluye atún bluefin.",
     "precio": 40900,
@@ -268,16 +268,16 @@
     "jp": ""
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Sake",
     "desde": false,
-    "desc": "Slice de Salmon y Ponzu",
+    "desc": "Slice de Salmón y Ponzu",
     "precio": 17900,
     "extra": null,
     "jp": "鮭薄造り"
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Shiromi (Pescado Blanco)",
     "desde": false,
     "desc": "Alice de pescado blanco y ponzu",
@@ -286,7 +286,7 @@
     "jp": "白身"
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Sakana Uni",
     "desde": false,
     "desc": "Pesca blanca y topping de Erizos de Caldera y Ponzu",
@@ -295,34 +295,34 @@
     "jp": "鮑薄造り雲丹"
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Hotate Miso",
     "desde": false,
-    "desc": "Ostiones Patagonicos y salsa Sumiso y aceite de Yuzu",
+    "desc": "Ostiones Patagónicos y salsa Sumiso y aceite de Yuzu",
     "precio": 22900,
     "extra": null,
     "jp": "ホタテ味噌"
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Awabi Uni",
     "desde": false,
-    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma citrica y erizos de caldera.",
+    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma cítrica y erizos de caldera.",
     "precio": 19900,
     "extra": null,
     "jp": ""
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Awabi Hotate",
     "desde": false,
-    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma citrica y ostiones de la Patagonia de Chile.",
+    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma cítrica y ostiones de la Patagonia de Chile.",
     "precio": 19900,
     "extra": null,
     "jp": ""
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Hirame",
     "desde": false,
     "desc": "Usuzukuri de lenguado",
@@ -331,7 +331,7 @@
     "jp": "薄造り魚ウニ"
    },
    {
-    "sub": "Uzuzukuri",
+    "sub": "Usuzukuri",
     "nombre": "Usuzukuri Omakase",
     "desde": false,
     "desc": "Encántese con elección del chef",
@@ -377,7 +377,7 @@
    },
    {
     "sub": "Tártaros",
-    "nombre": "Tartar de Salmon",
+    "nombre": "Tartar de Salmón",
     "desde": false,
     "desc": "Acompañado de raíz de loto crocante, salmón con notas spicy.",
     "precio": 10900,
@@ -406,7 +406,7 @@
     "sub": "Nigiri Tradicional ( 1 Unid )",
     "nombre": "Ikura Gunkan (1 unid.)",
     "desde": false,
-    "desc": "Ovas de Salmon Wasabi y soya envuelto en Nori",
+    "desc": "Ovas de Salmón Wasabi y soya envuelto en Nori",
     "precio": 4900,
     "extra": null,
     "jp": "イクラ軍艦（1個）"
@@ -415,7 +415,7 @@
     "sub": "Nigiri Tradicional ( 1 Unid )",
     "nombre": "Gunkan Omakase (1 unid.)",
     "desde": false,
-    "desc": "Eleccion del Itamae",
+    "desc": "Elección del Itamae",
     "precio": 5900,
     "extra": null,
     "jp": "軍艦おまかせ（1貫）"
@@ -433,7 +433,7 @@
     "sub": "Nigiri Tradicional ( 1 Unid )",
     "nombre": "Nigiri Tamago (1 unid.)",
     "desde": false,
-    "desc": "Clásica tortilla de huevo dulce hecha por capaz",
+    "desc": "Clásica tortilla de huevo dulce hecha por capas",
     "precio": 4200,
     "extra": null,
     "jp": "たまご"
@@ -460,7 +460,7 @@
     "sub": "Nigiri Omakase ( 1 Unid )",
     "nombre": "Nigiri Sake Harasu (1 unid.)",
     "desde": false,
-    "desc": "Ventresca de Salmon Aburi y mantequilla de miso y Katsuobushi",
+    "desc": "Ventresca de Salmón Aburi y mantequilla de miso y Katsuobushi",
     "precio": 6900,
     "extra": null,
     "jp": "鮭のお刺身"
@@ -469,7 +469,7 @@
     "sub": "Nigiri Omakase ( 1 Unid )",
     "nombre": "Nigiri Hirame Omakase",
     "desde": false,
-    "desc": "A seleccion del chef",
+    "desc": "A selección del chef",
     "precio": 6900,
     "extra": null,
     "jp": "島の魚の握り"
@@ -496,7 +496,7 @@
     "sub": "Nigiri Omakase ( 1 Unid )",
     "nombre": "Nigiri Shiromi Yuzukosho (1 unid.)",
     "desde": false,
-    "desc": "Pescado blanco y lactofemento de piel de limon y aji",
+    "desc": "Pescado blanco y lactofermento de piel de limón y ají",
     "precio": 6900,
     "extra": null,
     "jp": "白身の魚と柚子胡椒"
@@ -523,7 +523,7 @@
     "sub": "Nigiri Omakase ( 1 Unid )",
     "nombre": "Nigiri Wagyu Trufa (1 unid.)",
     "desde": false,
-    "desc": "Wagyu de Osono Aburi, Trufa de temporada",
+    "desc": "Wagyu de Osorno Aburi, Trufa de temporada",
     "precio": 7900,
     "extra": null,
     "jp": "和牛とトリュファ"
@@ -550,7 +550,7 @@
     "sub": "Makis",
     "nombre": "Hashiman Maki",
     "desde": false,
-    "desc": "Centro de camaron,salmon cebollin sin arroz, envuelto en palta",
+    "desc": "Centro de camarón, salmón cebollín sin arroz, envuelto en palta",
     "precio": 16900,
     "extra": null,
     "jp": "八幡巻き"
@@ -559,7 +559,7 @@
     "sub": "Makis",
     "nombre": "Raijin Maki",
     "desde": false,
-    "desc": "Centro de Camaron,Tamagoyaki, Takuan y cebollin,envuelto en Anguila Aburi y crispy tempura",
+    "desc": "Centro de Camarón, Tamagoyaki, Takuan y cebollín, envuelto en Anguila Aburi y crispy tempura",
     "precio": 16900,
     "extra": null,
     "jp": "雷神巻き"
@@ -568,7 +568,7 @@
     "sub": "Makis",
     "nombre": "Fujin Maki",
     "desde": false,
-    "desc": "Piure tempura,cebollin,aji verde, envuelto en pescado blanco y ponzu",
+    "desc": "Piure tempura, cebollín, ají verde, envuelto en pescado blanco y ponzu",
     "precio": 15900,
     "extra": null,
     "jp": ""
@@ -577,7 +577,7 @@
     "sub": "Makis",
     "nombre": "Hotate Maki",
     "desde": false,
-    "desc": "Salmon, camaron, cebollin sin arroz envuelto en nori y Ostiones Ptagonicos Aburi en mantequilla trufada",
+    "desc": "Salmón, camarón, cebollín sin arroz envuelto en nori y Ostiones Patagónicos Aburi en mantequilla trufada",
     "precio": 15900,
     "extra": null,
     "jp": "ホタテ巻き"
@@ -586,7 +586,7 @@
     "sub": "Makis",
     "nombre": "Hokkaido Maki",
     "desde": false,
-    "desc": "Centro de pescado blanco cebollin y aji verde con topping de Erizos e Ikura",
+    "desc": "Centro de pescado blanco cebollín y ají verde con topping de Erizos e Ikura",
     "precio": 17900,
     "extra": null,
     "jp": ""
@@ -604,7 +604,7 @@
     "sub": "Makis",
     "nombre": "Koi Maki",
     "desde": false,
-    "desc": "Triple textura de Salmon en su centro agridulce, envuelto Aburi y topping de crocancia de Salmon",
+    "desc": "Triple textura de Salmón en su centro agridulce, envuelto Aburi y topping de crocancia de Salmón",
     "precio": 16900,
     "extra": null,
     "jp": "鯉巻き"
@@ -613,7 +613,7 @@
     "sub": "Makis",
     "nombre": "Kabuto Maki",
     "desde": false,
-    "desc": "Centro de pescado blanco, Aji verde, pepino y topping de tartar de locos, Edamame wasabi y yuzu",
+    "desc": "Centro de pescado blanco, Ají verde, pepino y topping de tartar de locos, Edamame wasabi y yuzu",
     "precio": 16900,
     "extra": null,
     "jp": "兜巻き"
@@ -622,7 +622,7 @@
     "sub": "Makis",
     "nombre": "Naruto Maki",
     "desde": false,
-    "desc": "Salmon, camarón,masago y wakame envuelto en pepino",
+    "desc": "Salmón, camarón, masago y wakame envuelto en pepino",
     "precio": 14900,
     "extra": null,
     "jp": "ナルト巻"
@@ -631,7 +631,7 @@
     "sub": "Makis",
     "nombre": "Isa Maki",
     "desde": false,
-    "desc": "Anguila crocante, cebolla tempura, cebollín, masago env en salmón aburí en aceite de sésamo salsa unagui y ceste de limon",
+    "desc": "Anguila crocante, cebolla tempura, cebollín, masago env en salmón aburi en aceite de sésamo salsa unagi y ceste de limón",
     "precio": 16900,
     "extra": null,
     "jp": ""
@@ -640,7 +640,7 @@
     "sub": "Makis",
     "nombre": "Horenzo Maki",
     "desde": false,
-    "desc": "Centro de vegetales fresco y tempura, envuelto en espinaca y arroz con topping de tartar de salmon semi spicy",
+    "desc": "Centro de vegetales fresco y tempura, envuelto en espinaca y arroz con topping de tartar de salmón semi spicy",
     "precio": 16900,
     "extra": null,
     "jp": "ホレンゾ巻き"
@@ -649,7 +649,7 @@
     "sub": "Makis",
     "nombre": "Sapporo Maki",
     "desde": false,
-    "desc": "Centro de pescado blanco, takuan, cebollin, palta env en papel de arroz, tártaro de Centollla y salsa ponzu ( sin arroz)",
+    "desc": "Centro de pescado blanco, takuan, cebollín, palta env en papel de arroz, tártaro de Centolla y salsa ponzu ( sin arroz)",
     "precio": 19900,
     "extra": null,
     "jp": "札幌巻き"
@@ -658,7 +658,7 @@
     "sub": "Makis",
     "nombre": "Tengu Maki",
     "desde": false,
-    "desc": "Centro de Anguila crocante,palta,cebolla tempura,cebollin, env en arroz y masago",
+    "desc": "Centro de Anguila crocante, palta, cebolla tempura, cebollín, env en arroz y masago",
     "precio": 16900,
     "extra": null,
     "jp": "天狗巻き"
@@ -667,7 +667,7 @@
     "sub": "Makis",
     "nombre": "Ebisu Maki",
     "desde": false,
-    "desc": "Locos, masago,takuan,cebollin, acompañado de salsa tengu.",
+    "desc": "Locos, masago, takuan, cebollín, acompañado de salsa tengu.",
     "precio": 16900,
     "extra": null,
     "jp": "恵比寿巻き"
@@ -739,7 +739,7 @@
     "sub": "Mini Donburis",
     "nombre": "Sake Ikura Don",
     "desde": false,
-    "desc": "MIni cuenco de arroz Salmon e Ikura",
+    "desc": "Mini cuenco de arroz Salmón e Ikura",
     "precio": 14900,
     "extra": null,
     "jp": "ウニイクラ丼"
@@ -757,7 +757,7 @@
     "sub": "Mini Donburis",
     "nombre": "Mini Donburi Omakase",
     "desde": false,
-    "desc": "mini cuenco,base de arroz lonchas de Wagyu de Osorno, tartufo italiano y yema de huevo curada",
+    "desc": "mini cuenco, base de arroz lonchas de Wagyu de Osorno, tartufo italiano y yema de huevo curada",
     "precio": 21900,
     "extra": null,
     "jp": "ミニ丼おまかせ"
@@ -811,7 +811,7 @@
     "sub": "Ramen",
     "nombre": "Tempura Udon",
     "desde": false,
-    "desc": "Caldo base de Dashi y Kombu, fideo Udon,yema de huevo y camarones tempura",
+    "desc": "Caldo base de Dashi y Kombu, fideo Udon, yema de huevo y camarones tempura",
     "precio": 13900,
     "extra": null,
     "jp": ""
@@ -956,17 +956,17 @@
  "bar": {
   "subs": [
    "AGUAS Y BEBIDAS",
-   "COCTELERIA TENGU",
+   "COCTELERÍA TENGU",
    "CERVEZAS CON Y SIN ALCOHOL",
    "MOCKTAIL",
-   "COCTELERIA CLÁSICA",
+   "COCTELERÍA CLÁSICA",
    "GIN",
    "VODKA",
    "WHISKY",
    "TEQUILA Y MEZCAL",
    "PISCO Y FERNET",
    "RON",
-   "CAFETERIA"
+   "CAFETERÍA"
   ],
   "subDesc": {},
   "items": [
@@ -1133,7 +1133,7 @@
     "jp": "レッドブル"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Taiko",
     "desde": false,
     "desc": "Tequila Don Julio Blanco, Cordial de pomelo-wasabi, vermouth blanco, soda y borde de tajin shichimi togarashi.",
@@ -1142,7 +1142,7 @@
     "jp": "太鼓"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Sake Sour",
     "desde": false,
     "desc": "",
@@ -1151,7 +1151,7 @@
     "jp": "サケサワー"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Hanami",
     "desde": false,
     "desc": "Gin macerado en cranberry y shēng de arándanos, agua fresca de pepino, terminado con yuzusoda. Equilibrio perfecto entre acidez y frescor.",
@@ -1160,7 +1160,7 @@
     "jp": "花見"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Shinkansen",
     "desde": false,
     "desc": "Reversión de Clásico Espresso Martini Vodka fat-wash con pasta de miso y durazno nectarín, notas tostadas de sésamo. Acompañado de un shot de café y licor de café. Equilibrio entre dulzor, tostado y profundidad.",
@@ -1169,7 +1169,7 @@
     "jp": "新幹線"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Kumo",
     "desde": false,
     "desc": "Mezcal 400 Conejos, jugo natural de naranja y limón, finalizado con un toque de Cointreau.",
@@ -1178,7 +1178,7 @@
     "jp": "クラウド"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Sayuri",
     "desde": false,
     "desc": "Cordial de jengibre, miel y soya. Johnnie walker gold, terminado con soda.",
@@ -1187,7 +1187,7 @@
     "jp": "さゆり"
    },
    {
-    "sub": "COCTELERIA TENGU",
+    "sub": "COCTELERÍA TENGU",
     "nombre": "Umeshu Highball",
     "desde": false,
     "desc": "Licor de ciruela japonesa y soda.",
@@ -1259,7 +1259,7 @@
     "jp": "奈良ハイボール"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Pisco Sour",
     "desde": false,
     "desc": "Alto carmen 40, transparente.",
@@ -1268,7 +1268,7 @@
     "jp": "ピスコサワー"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Negroni",
     "desde": false,
     "desc": "",
@@ -1277,7 +1277,7 @@
     "jp": "ネグローニ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Limoncello",
     "desde": false,
     "desc": "Corto de Limoncello elaborado en TENGU.",
@@ -1286,7 +1286,7 @@
     "jp": "リモンチェッロ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Chambord",
     "desde": false,
     "desc": "Corto de Licor premium de frambuesas negras",
@@ -1295,7 +1295,7 @@
     "jp": "シャンボール"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Martini",
     "desde": false,
     "desc": "",
@@ -1304,7 +1304,7 @@
     "jp": "マティーニ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Limoncello Spritz",
     "desde": false,
     "desc": "Limoncello elaborado en Tengu, acompañado de espumante y finalizado con agua con gas.",
@@ -1313,7 +1313,7 @@
     "jp": "リモンチェッロスプリッツ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Chambord Spritz",
     "desde": false,
     "desc": "Licor de frambuesas negras acompañado de espumante y finalizado con agua con gas.",
@@ -1322,7 +1322,7 @@
     "jp": "シャンボールスプリッツ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Aperol Spritz",
     "desde": false,
     "desc": "Clásico italiano. Aperol, espumante brut y soda.",
@@ -1331,7 +1331,7 @@
     "jp": "アペロールスプリッツ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Rosso Sprit",
     "desde": false,
     "desc": "Vermut, espumante y soda",
@@ -1340,16 +1340,16 @@
     "jp": "赤いスプリッツ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Tequila Margarita",
     "desde": false,
-    "desc": "A base de tequila Don Julio. Sabor citrico, toque salino y herbal.",
+    "desc": "A base de tequila Don Julio. Sabor cítrico, toque salino y herbal.",
     "precio": 12900,
     "extra": null,
     "jp": "マルガリータテキーラ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Ramazzotti",
     "desde": false,
     "desc": "",
@@ -1358,7 +1358,7 @@
     "jp": "ラマッツォッティ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Moscow Mule",
     "desde": false,
     "desc": "Con ginger beer fermentación natural.",
@@ -1367,7 +1367,7 @@
     "jp": "モスコーミュール"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Vermut Soda",
     "desde": false,
     "desc": "",
@@ -1376,7 +1376,7 @@
     "jp": "ベルモットソーダ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Carajillo",
     "desde": false,
     "desc": "Licor 43 y café de grano. opción descafeinado (avisar).",
@@ -1385,7 +1385,7 @@
     "jp": "カラヒーヨ"
    },
    {
-    "sub": "COCTELERIA CLÁSICA",
+    "sub": "COCTELERÍA CLÁSICA",
     "nombre": "Espresso Martini Clásico",
     "desde": false,
     "desc": "",
@@ -1565,7 +1565,7 @@
     "jp": "ザカパ23年。"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Americano",
     "desde": false,
     "desc": "",
@@ -1574,7 +1574,7 @@
     "jp": "アメリカーノ"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Cortado",
     "desde": false,
     "desc": "",
@@ -1583,7 +1583,7 @@
     "jp": "コルタード"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Cappuccino",
     "desde": false,
     "desc": "",
@@ -1592,8 +1592,8 @@
     "jp": "カプチーノ"
    },
    {
-    "sub": "CAFETERIA",
-    "nombre": "TÉ Verde , Tetera",
+    "sub": "CAFETERÍA",
+    "nombre": "TÉ Verde, Tetera",
     "desde": false,
     "desc": "Genmaisha o Sencha",
     "precio": 3500,
@@ -1601,7 +1601,7 @@
     "jp": "緑茶 · ティーポット"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Espresso Descafeinado",
     "desde": false,
     "desc": "Descafeinado",
@@ -1610,7 +1610,7 @@
     "jp": "デカフェ"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Espresso",
     "desde": false,
     "desc": "",
@@ -1619,7 +1619,7 @@
     "jp": "エスプレッソ"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Ristretto",
     "desde": false,
     "desc": "",
@@ -1628,7 +1628,7 @@
     "jp": "リストレット"
    },
    {
-    "sub": "CAFETERIA",
+    "sub": "CAFETERÍA",
     "nombre": "Espresso Doble",
     "desde": false,
     "desc": "",
@@ -1703,7 +1703,7 @@
     "sub": "Botella 720 ml",
     "nombre": "Sanuki Cloudy",
     "desde": false,
-    "desc": "Citrico, limon, lactico y yogurt.",
+    "desc": "Cítrico, limón, láctico y yogurt.",
     "precio": 34900,
     "extra": null,
     "jp": "讃岐雲海"
@@ -1765,7 +1765,7 @@
    "GAMAY",
    "SYRAH",
    "PINOT NOIR",
-   "CARMENERE",
+   "CARMÉNÈRE",
    "CABERNET SAUVIGNON",
    "CINSAULT",
    "ENSAMBLAJE",
@@ -1796,7 +1796,7 @@
     "sub": "ESPUMOSOS",
     "nombre": "Azur",
     "desde": false,
-    "desc": "Extra Brut - Limari",
+    "desc": "Extra Brut - Limarí",
     "precio": 29900,
     "extra": null,
     "jp": "アズール"
@@ -1832,7 +1832,7 @@
     "sub": "SAUVIGNON BLANC",
     "nombre": "Amayna Cordon Huinca 🍷",
     "desde": false,
-    "desc": "de Garces Silva - Leyda – San Antonio Cordón Huinca es un Single Vineyard, proveniente de un sector específico con suelos graníticos de baja fertilidad. La cercanía al mar permite una maduración lenta de las uvas, conservando una gran frescura y complejidad.",
+    "desc": "de Garcés Silva - Leyda – San Antonio Cordón Huinca es un Single Vineyard, proveniente de un sector específico con suelos graníticos de baja fertilidad. La cercanía al mar permite una maduración lenta de las uvas, conservando una gran frescura y complejidad.",
     "precio": 29900,
     "extra": null,
     "jp": "アマイナ コルドン フインカ 🍷"
@@ -1904,7 +1904,7 @@
     "sub": "CHARDONNAY",
     "nombre": "Villard – Arganat",
     "desde": false,
-    "desc": "del Valle de Casa Blanca, Categoria Premium. Uno de los vinos ícono de la viña chilena Villard. Proviene del Valle de Casablanca y está elaborado con una estricta selección de parcelas de Chardonnay, buscando competir con grandes blancos de nivel internacional.",
+    "desc": "del Valle de Casa Blanca, Categoría Premium. Uno de los vinos ícono de la viña chilena Villard. Proviene del Valle de Casablanca y está elaborado con una estricta selección de parcelas de Chardonnay, buscando competir con grandes blancos de nivel internacional.",
     "precio": 49990,
     "extra": null,
     "jp": ""
@@ -1913,7 +1913,7 @@
     "sub": "CHARDONNAY",
     "nombre": "Amelia",
     "desde": false,
-    "desc": "de Concha y Toro - Limarí - 2024 El Amelia Chardonnay de Viña Concha y Toro⁠￼ es considerado por muchos críticos como uno de los grandes Chardonnay de Chile. Actualmente proviene del viñedo Quebrada Seca, en el Valle de Limarí, una zona costera con suelos calcáreos que recuerdan en cierta medida a algunas zonas de Borgoña. Pasa alrededor de 10 a 12 meses en barricas de roble francés, una parte de ellas nuevas, lo que aporta complejidad sin tapar la expresión del terroír.",
+    "desc": "de Concha y Toro - Limarí - 2024 El Amelia Chardonnay de Viña Concha y Toro⁠￼ es considerado por muchos críticos como uno de los grandes Chardonnay de Chile. Actualmente proviene del viñedo Quebrada Seca, en el Valle de Limarí, una zona costera con suelos calcáreos que recuerdan en cierta medida a algunas zonas de Borgoña. Pasa alrededor de 10 a 12 meses en barricas de roble francés, una parte de ellas nuevas, lo que aporta complejidad sin tapar la expresión del terroir.",
     "precio": 33900,
     "extra": null,
     "jp": ""
@@ -1922,7 +1922,7 @@
     "sub": "CHARDONNAY",
     "nombre": "Villard Gran Vin",
     "desde": false,
-    "desc": "Le Chardonnay de Valle de Casablanca, Linea Grand Vin - año 2024.",
+    "desc": "Le Chardonnay de Valle de Casablanca, Línea Grand Vin - año 2024.",
     "precio": 31900,
     "extra": null,
     "jp": "ヴィラード"
@@ -1976,7 +1976,7 @@
     "sub": "SYRAH",
     "nombre": "Villard Gran Vin",
     "desde": false,
-    "desc": "de Valle de Casa Blanca, Linea Grand Vin, año 2023.",
+    "desc": "de Valle de Casa Blanca, Línea Grand Vin, año 2023.",
     "precio": 31900,
     "extra": null,
     "jp": "ヴィラード"
@@ -2012,7 +2012,7 @@
     "sub": "PINOT NOIR",
     "nombre": "Villard",
     "desde": false,
-    "desc": "del Valle de Casa Blanca, Linea Grand Vin, año 2024.",
+    "desc": "del Valle de Casa Blanca, Línea Grand Vin, año 2024.",
     "precio": 31900,
     "extra": null,
     "jp": "ヴィラード"
@@ -2054,7 +2054,7 @@
     "jp": ""
    },
    {
-    "sub": "CARMENERE",
+    "sub": "CARMÉNÈRE",
     "nombre": "Carmin de Peumo",
     "desde": false,
     "desc": "de Concha y Toro 2022 - Peumo, Cachapoal Ícono del Carménère chileno. Vino de color rojo profundo e intenso. En nariz despliega complejas notas de frutos negros maduros, ciruelas, mora, especias, tabaco y cacao. En boca es estructurado, elegante y de gran concentración, con taninos sedosos y un final largo y persistente. Un referente del Carménère chileno, que expresa con precisión el carácter único de los viñedos de Peumo.",
@@ -2063,7 +2063,7 @@
     "jp": "ペウモのカルミン"
    },
    {
-    "sub": "CARMENERE",
+    "sub": "CARMÉNÈRE",
     "nombre": "Lopez Pangue",
     "desde": false,
     "desc": "",
@@ -2072,7 +2072,7 @@
     "jp": ""
    },
    {
-    "sub": "CARMENERE",
+    "sub": "CARMÉNÈRE",
     "nombre": "Terrunyo",
     "desde": false,
     "desc": "",
@@ -2081,7 +2081,7 @@
     "jp": ""
    },
    {
-    "sub": "CARMENERE",
+    "sub": "CARMÉNÈRE",
     "nombre": "Amatista",
     "desde": false,
     "desc": "del Valle de Colchagua, denominación de origen Apalta. Año 2023",
@@ -2090,7 +2090,7 @@
     "jp": "アメジスト"
    },
    {
-    "sub": "CARMENERE",
+    "sub": "CARMÉNÈRE",
     "nombre": "Marques de Casa Concha",
     "desde": false,
     "desc": "",
@@ -2285,7 +2285,7 @@
     "sub": "SAUVIGNON BLANC",
     "nombre": "Amayna",
     "desde": false,
-    "desc": "de Garces Silva - Leyda – San Antonio",
+    "desc": "de Garcés Silva - Leyda – San Antonio",
     "precio": 6900,
     "extra": null,
     "jp": "アマイナ"
@@ -2312,7 +2312,7 @@
     "sub": "ESPUMOSOS",
     "nombre": "Gemma",
     "desde": false,
-    "desc": "Brut - Valle del Limari",
+    "desc": "Brut - Valle del Limarí",
     "precio": 6000,
     "extra": null,
     "jp": "ジェマ"
@@ -2321,23 +2321,23 @@
  },
  "teishoku": {
   "subs": [
-   "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )"
+   "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )"
   ],
   "subDesc": {
-   "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )": "Contiene una proteina , gohan , Sopa Miso y Tsukemono ( encurtidos )"
+   "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )": "Contiene una proteína, gohan, Sopa Miso y Tsukemono ( encurtidos )"
   },
   "items": [
    {
-    "sub": "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )",
+    "sub": "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )",
     "nombre": "Sakana Shioyaki",
     "desde": false,
-    "desc": "Pescado blanco a la parrilla limón y toping de nabo",
+    "desc": "Pescado blanco a la parrilla limón y topping de nabo",
     "precio": 19900,
     "extra": null,
     "jp": ""
    },
    {
-    "sub": "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )",
+    "sub": "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )",
     "nombre": "Salmón Teriyaki Teishoku",
     "desde": false,
     "desc": "Salmón con salsa teriyaki, arroz blanco, sopa miso, tsukemono.",
@@ -2346,7 +2346,7 @@
     "jp": ""
    },
    {
-    "sub": "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )",
+    "sub": "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )",
     "nombre": "Tonkatsu Teishoku",
     "desde": false,
     "desc": "Chuleta de cerdo empanizada con salsa tonkatsu, arroz blanco, miso con wakame, tsukemono.",
@@ -2355,7 +2355,7 @@
     "jp": ""
    },
    {
-    "sub": "Almuerzo clasico Japones ( disponibles de Martes a Jueves solo almuerzo )",
+    "sub": "Almuerzo clásico Japonés ( disponibles de Martes a Jueves solo almuerzo )",
     "nombre": "Karaage Teishoku",
     "desde": false,
     "desc": "Pollo frito estilo japonés, arroz al vapor, sopa miso, tsukemono.",

@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {corregir} from './ortografia.mjs';
 const D=process.argv[2]; const REPO=new URL('../../',import.meta.url).pathname;
 const SECS=['comida','bar','sake','vinos','por-copa','teishoku'];
 const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\([^)]*\)/g,'').replace(/[^a-z0-9]+/g,' ').trim();
@@ -20,7 +21,15 @@ const titulo=s=>s.replace(/\s*\(\s*/g,' (').replace(/\s*\)/g,')').replace(/\s+/g
   .split(' ').map((w,wi)=>{ const lw=w.toLowerCase(); if(wi>0&&['al','el','la','de','en','y','o','a','lo','del','con','los','las'].includes(lw)) return lw; if(/^\(?\d/.test(w)||w.length<=2) return w; 
     const core=w.replace(/[()]/g,''); if(core===core.toUpperCase()||core===core.toLowerCase()) return w[0]==='('?'('+core[0].toUpperCase()+core.slice(1).toLowerCase()+(w.endsWith(')')?')':''):core[0].toUpperCase()+core.slice(1).toLowerCase()+(w.endsWith(')')?')':''); return w; }).join(' ')
   .replace(/\(\s*(\d+)\s*unid[^)]*\)/gi,'($1 unid.)').replace(/\b(Aoc|Doc|Ipa|Xo|Vsop|Igp)\b/g,m=>m.toUpperCase());
-let dups=0, sinJp=0, total=0; const out={}; const dupList=[];
+let dups=0, sinJp=0, total=0; const out={}; const dupList=[]; const orto=[];
+// Los títulos de subsección se corrigen ANTES que nada y en los tres lugares donde
+// viven —la lista subs, las claves de subDesc y el campo sub de cada plato—, porque
+// el vínculo entre plato y subsección es el texto: corregir uno solo lo rompe.
+for(const sec of SECS){
+  live[sec].subs=live[sec].subs.map(corregir);
+  live[sec].subDesc=Object.fromEntries(Object.entries(live[sec].subDesc).map(([k,v])=>[corregir(k),corregir(v)]));
+  for(const it of live[sec].items) it.sub=corregir(it.sub);
+}
 for(const sec of SECS){
   const seen=new Map(); const items=[];
   for(const it of live[sec].items){
@@ -41,7 +50,14 @@ for(const sec of SECS){
     if(!jp){ let best='',bs=0; for(const [k,v] of Object.entries(jpMap)){const s_=sim(k,nb); if(s_>bs){bs=s_;best=v;}} if(bs>=0.67) jp=best; }
     if(!jp) sinJp++; total++;
     const desde=/desde:?\s*$/i.test(it.desc.trim()); it.desc=it.desc.replace(/\s*desde:?\s*$/i,'');
-    items.push({sub:it.sub, nombre:titulo(it.nombre), desde, desc:it.desc.replace(/\s+,/g,',').replace(/\s+/g,' ').replace(/\s*\*?\s*(acompañar con:?|ver variedad|revisar variedad)\s*\*?\s*$/i,'').replace(/\*\s*$/,'').trim(), precio:it.precio, extra:it.extra||null, jp});
+    // La ortografía se arregla de este lado (ver ortografia.mjs): solo lo que la
+    // propia carta contradice y lo que directamente no es una palabra.
+    const nomCrudo=titulo(it.nombre);
+    const descCrudo=it.desc.replace(/\s+,/g,',').replace(/\s+/g,' ').replace(/\s*\*?\s*(acompañar con:?|ver variedad|revisar variedad)\s*\*?\s*$/i,'').replace(/\*\s*$/,'').trim();
+    const nombre=corregir(nomCrudo), desc=corregir(descCrudo);
+    if(nombre!==nomCrudo) orto.push(`${sec}: ${nomCrudo} → ${nombre}`);
+    if(desc!==descCrudo) orto.push(`${sec} / ${nombre}: ${descCrudo.slice(0,60)}…`);
+    items.push({sub:it.sub, nombre, desde, desc, precio:it.precio, extra:it.extra||null, jp});
   }
   out[sec]={subs:live[sec].subs, subDesc:live[sec].subDesc, items};
 }
@@ -61,6 +77,15 @@ for(const sec of SECS){
 // se arregla a mano. No vale la pena detectar renombres hasta que pase una vez.
 const rescatados=[];
 let prev=null; try{ prev=JSON.parse(fs.readFileSync(`${D}/prev-final.json`,'utf8')); }catch(e){}
+// El dataset anterior pasa por el MISMO corrector antes de compararlo. Si no, dos
+// cosas se rompen: lo que rescata el freno queda con la ortografía vieja, y una
+// subsección corregida ("Uzuzukuri" → "Usuzukuri") parece desaparecida, así que el
+// freno reviviría la vieja al lado de la nueva y los platos saldrían duplicados.
+if(prev) for(const sec of SECS){
+  prev[sec].subs=prev[sec].subs.map(corregir);
+  prev[sec].subDesc=Object.fromEntries(Object.entries(prev[sec].subDesc||{}).map(([k,v])=>[corregir(k),corregir(v)]));
+  for(const it of prev[sec].items){ it.sub=corregir(it.sub); it.nombre=corregir(it.nombre); it.desc=corregir(it.desc); }
+}
 if(prev) for(const sec of SECS){
   const antes=prev[sec], ahora=out[sec];
   if(!antes||!antes.items.length) continue;
@@ -96,6 +121,11 @@ if(rescatados.length){
 
 fs.writeFileSync(`${D}/carta-final.json`,JSON.stringify(out,null,1));
 total=SECS.reduce((n,s)=>n+out[s].items.length,0);   // después del freno, que puede devolver platos
+if(orto.length){
+  console.error(`✎ ortografía corregida de este lado en ${orto.length} fichas (ver tools/carta/ortografia.mjs):`);
+  orto.slice(0,6).forEach(o=>console.error('    · '+o));
+  if(orto.length>6) console.error(`    … y ${orto.length-6} más`);
+}
 console.log('duplicados:', dupList.join(' · '));
 console.log(`dataset final: ${total} platos · duplicados quitados: ${dups} · sin japonés (nuevos, no se inventa): ${sinJp}`);
 console.log('muestra de títulos normalizados:');

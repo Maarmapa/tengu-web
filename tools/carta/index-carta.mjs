@@ -74,11 +74,19 @@ function reemplazarGrid(sel, contenido, id, label, n){
 }
 
 const COMIDA=[['comenzar','Para Comenzar',['para comenzar','otsumami','tartaros']],
-  ['sashimi','Sashimi',['sashimi','uzuzukuri']],['nigiris','Nigiris',['nigiri tradicional','nigiri omakase']],
+  ['sashimi','Sashimi',['sashimi','usuzukuri','uzuzukuri']],['nigiris','Nigiris',['nigiri tradicional','nigiri omakase']],
   ['makis','Makis',['makis','hosomaki','temaki']],
   ['caliente','Cocina Caliente',['tempuras','ramen','cocina caliente','donburis','mini donburis']],
   ['postres','Postres',['postre']]];
-for(const [id,label,claves] of COMIDA){ const pares=porSub('comida',claves); const n=pares.reduce((a,[,it])=>a+it.length,0);
+// Una subsección nueva de Gourmedia que no calce con ninguna pestaña se caía del
+// sitio sin decir nada: index.html quedaba con menos platos que carta.html y nadie
+// se enteraba. Ahora se avisa y cae en Cocina Caliente, igual que en generar.mjs.
+const asignadasC=new Set(COMIDA.flatMap(([,,cl])=>porSub('comida',cl).map(([s])=>s)));
+const sueltasC=data.comida.subs.filter(s=>!asignadasC.has(s)&&data.comida.items.some(i=>i.sub===s));
+if(sueltasC.length) console.error('⚠️  SUBSECCIONES SIN PESTAÑA → van a Cocina Caliente:',sueltasC);
+for(const [id,label,claves] of COMIDA){ let pares=porSub('comida',claves);
+  if(id==='caliente'&&sueltasC.length) pares=pares.concat(sueltasC.map(s=>[s,data.comida.items.filter(i=>i.sub===s)]));
+  const n=pares.reduce((a,[,it])=>a+it.length,0);
   reemplazarGrid(new RegExp(`<div class="menu-cat[^"]*" id="cat-${id}"`), grupo(label,pares), id, label, n); }
 
 const BAR=[['cocteles','Coctelería',['cocteleria','mocktail']],['destilados','Destilados',['gin','vodka','whisky','tequila','pisco','ron']],

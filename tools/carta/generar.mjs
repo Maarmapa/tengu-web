@@ -46,7 +46,7 @@ const tag=it=>{const k=ALIAS[norm(it.nombre)]||norm(it.nombre);return yokai[k]?`
 // ---- pestañas como en el sitio ----
 const MAPA=[
   ['comenzar','Para Comenzar',['para comenzar','otsumami','tartaros']],
-  ['sashimi','Sashimi',['sashimi','uzuzukuri']],
+  ['sashimi','Sashimi',['sashimi','usuzukuri','uzuzukuri']],
   ['nigiris','Nigiris',['nigiri tradicional','nigiri omakase']],
   ['makis','Makis',['makis','hosomaki','temaki']],
   ['caliente','Cocina Caliente',['tempuras','ramen','cocina caliente','donburis','mini donburis']],
