@@ -100,6 +100,11 @@ a{color:inherit}
    los dos hacen que ninguna se recorte a ningún ancho de pantalla. El max-height
    es para que en una pantalla angosta la fila no se coma la vista. */
 .mz{display:flex;gap:4px;justify-content:center;max-height:74vh}
+/* Mosaico: la misma geometría que la galería de la barra —celda grande del doble en
+   ancho y alto, todas a 3:2—. Recorta, así que va solo donde el recorte no se come
+   el plato; lo decide MOSAICO en este archivo, no el CSS. */
+.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3;max-height:none}
+.mz-mosaico .mz-grande{grid-row:1/3}
 /* Dos fotos verticales no llenan el ancho ni estirándolas: la fila necesitaría 874px
    de alto. Ahí el título se corre al lado y las baldosas van a su proporción exacta. */
 .mp-duo{display:flex;gap:34px;align-items:flex-end}
@@ -125,7 +130,9 @@ a{color:inherit}
   .mp-duo{display:block}
   .mp-duo .mz{justify-content:center;height:auto}
   .mz{flex-wrap:wrap;max-height:none;aspect-ratio:auto!important}
+  .mz-mosaico{display:flex}
   .mz-celda{flex:0 0 calc(50% - 2px)!important;aspect-ratio:3/4!important}
+  .mz-mosaico .mz-grande{grid-row:auto;flex-basis:100%!important;aspect-ratio:3/2!important}
 }
 /*MZ-FIN*/
 /* Subcategorías plegables: la primera de cada pestaña abierta, el resto cerradas.
@@ -243,7 +250,7 @@ a{color:inherit}
 <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Sake Spicy (1 unid.)</div><div class="menu-item-jp">辛い酒</div></div><div class="menu-item-price">$7.900</div></div><div class="menu-item-desc">Tártaro de salmón sutil picante.</div></div></div></div></div>
 <div class="menu-cat" id="cat-caliente"><div class="menu-portada">
   <div class="mp-txt"><h2>Cocina Caliente</h2><p>21 platos</p></div>
-  <div class="mz" style="aspect-ratio:4.387" data-fotos='[{"s":"fotos/t-okonomiyaki.jpg","a":"Okonomiyaki","f":"fotos/v-okonomiyaki.jpg"},{"s":"fotos/t-almejas-gratinadas.jpg","a":"Gratinados de la cocina caliente","f":"fotos/v-almejas-gratinadas.jpg"},{"s":"fotos/t-donburi.jpg","a":"Donburi de pesca del día","f":"fotos/v-donburi.jpg"},{"s":"fotos/t-chirashi.jpg","a":"Kaisen don","f":"fotos/v-chirashi.jpg"},{"s":"fotos/t-almejas-limon.jpg","a":"Asari al sake","f":"fotos/v-almejas-limon.jpg"}]'><button class="mz-celda" type="button" data-i="0" style="flex:0.750 1 0" aria-label="Ver Okonomiyaki"><img loading="lazy" src="fotos/t-okonomiyaki.jpg" width="675" height="900" alt="Okonomiyaki"></button><button class="mz-celda" type="button" data-i="1" style="flex:0.750 1 0" aria-label="Ver Gratinados de la cocina caliente"><img loading="lazy" src="fotos/t-almejas-gratinadas.jpg" width="675" height="900" alt="Gratinados de la cocina caliente"></button><button class="mz-celda" type="button" data-i="2" style="flex:1.099 1 0" aria-label="Ver Donburi de pesca del día"><img loading="lazy" src="fotos/t-donburi.jpg" width="900" height="819" alt="Donburi de pesca del día"></button><button class="mz-celda" type="button" data-i="3" style="flex:1.038 1 0" aria-label="Ver Kaisen don"><img loading="lazy" src="fotos/t-chirashi.jpg" width="900" height="867" alt="Kaisen don"></button><button class="mz-celda" type="button" data-i="4" style="flex:0.750 1 0" aria-label="Ver Asari al sake"><img loading="lazy" src="fotos/t-almejas-limon.jpg" width="675" height="900" alt="Asari al sake"></button></div>
+  <div class="mz mz-mosaico" data-fotos='[{"s":"fotos/t-okonomiyaki.jpg","a":"Okonomiyaki","f":"fotos/v-okonomiyaki.jpg"},{"s":"fotos/t-almejas-gratinadas.jpg","a":"Gratinados de la cocina caliente","f":"fotos/v-almejas-gratinadas.jpg"},{"s":"fotos/t-donburi.jpg","a":"Donburi de pesca del día","f":"fotos/v-donburi.jpg"},{"s":"fotos/t-chirashi.jpg","a":"Kaisen don","f":"fotos/v-chirashi.jpg"},{"s":"fotos/t-almejas-limon.jpg","a":"Asari al sake","f":"fotos/v-almejas-limon.jpg"}]'><button class="mz-celda mz-grande" type="button" data-i="0" aria-label="Ver Donburi de pesca del día"><img loading="lazy" src="fotos/t-donburi.jpg" width="900" height="819" alt="Donburi de pesca del día"></button><button class="mz-celda" type="button" data-i="1" aria-label="Ver Okonomiyaki"><img loading="lazy" src="fotos/t-okonomiyaki.jpg" width="675" height="900" alt="Okonomiyaki"></button><button class="mz-celda" type="button" data-i="2" aria-label="Ver Gratinados de la cocina caliente"><img loading="lazy" src="fotos/t-almejas-gratinadas.jpg" width="675" height="900" alt="Gratinados de la cocina caliente"></button><button class="mz-celda" type="button" data-i="3" aria-label="Ver Kaisen don"><img loading="lazy" src="fotos/t-chirashi.jpg" width="900" height="867" alt="Kaisen don"></button><button class="mz-celda" type="button" data-i="4" aria-label="Ver Asari al sake"><img loading="lazy" src="fotos/t-almejas-limon.jpg" width="675" height="900" alt="Asari al sake"></button></div>
 </div><div class="menu-grid"><div class="menu-subcat open" data-count="4" onclick="this.classList.toggle('open')">Tempuras</div><div class="subcat-body">
 <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Langostinos</div><div class="menu-item-jp">エビ</div></div><div class="menu-item-price">$18.900</div></div><div class="menu-item-desc">Langostinos tempurizados 5 unidades</div><div class="menu-item-yokai">Recomendación del chef</div></div>
 <div class="menu-item"><div class="menu-item-top"><div><div class="menu-item-name">Veggie</div><div class="menu-item-jp">ベジー</div></div><div class="menu-item-price">$9.990</div></div><div class="menu-item-desc">Mix de vegetales de temporada y salsa tradicional tempura.</div><div class="menu-item-yokai">Espíritu del Ryujin — dos tesoros del mar</div></div>

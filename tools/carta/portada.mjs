@@ -34,23 +34,38 @@ export const PORTADA = {
 // todas. Con más de cinco habría que partirla en dos renglones; hoy no pasa.
 const VISIBLES = 5;
 
+// Excepción: la sección que va con el mosaico de la galería —celda grande más cuatro
+// chicas— en vez de la fila. El mosaico recorta, así que solo sirve donde el recorte
+// no se come el plato, y eso depende de las fotos, no de la sección: hace falta una
+// foto apaisada para la celda grande y platos que aguanten el 3:2 en las chicas.
+// Cocina Caliente cumple porque el donburi y el chirashi son casi cuadrados.
+// El valor es la foto que va de grande; el resto la sigue en orden.
+const MOSAICO = { caliente: 'donburi' };
+
 export function hazPortada(id, label, n, FOTOS, esc){
   const lista = PORTADA[id]; if(!lista) return '';
   const todas = lista.filter(([f]) => FOTOS['t-'+f+'.jpg']);
   if(!todas.length) return '';
-  const vis = todas.slice(0, VISIBLES);
+  let vis = todas.slice(0, VISIBLES);
+  // Mosaico: la foto elegida va primera, en la celda grande.
+  const mosaico = MOSAICO[id] && vis.length === 5 && vis.some(([f])=>f===MOSAICO[id]);
+  if(mosaico){
+    const g = vis.find(([f])=>f===MOSAICO[id]);
+    vis = [g, ...vis.filter(x=>x!==g)];
+  }
   // Con dos fotos verticales la fila no llena el ancho ni estirándola (necesitaría
   // 874px de alto), y queda medio renglón de negro que se lee como que faltan fotos.
   // Ahí el título se corre al lado y las baldosas van a su proporción exacta.
-  const duo = vis.length <= 2;
+  const duo = !mosaico && vis.length <= 2;
   // Fila: flex-grow proporcional a la proporción de cada foto. Con flex-basis 0 el
   // ancho termina siendo exactamente alto × proporción, así la fila cierra justa y
   // ninguna foto necesita recorte.
   const celdas = vis.map(([f,alt],i)=>{
     const [w,h] = FOTOS['t-'+f+'.jpg'];
     const ar = (w/h).toFixed(3);
-    const caja = duo ? `flex:0 0 auto;aspect-ratio:${ar}` : `flex:${ar} 1 0`;
-    return `<button class="mz-celda" type="button" data-i="${i}" style="${caja}" aria-label="Ver ${esc(alt)}">`
+    const caja = mosaico ? '' : (duo ? `flex:0 0 auto;aspect-ratio:${ar}` : `flex:${ar} 1 0`);
+    const clase = 'mz-celda' + (mosaico && i===0 ? ' mz-grande' : '');
+    return `<button class="${clase}" type="button" data-i="${i}"${caja?` style="${caja}"`:''} aria-label="Ver ${esc(alt)}">`
       + `<img loading="lazy" src="fotos/t-${f}.jpg" width="${w}" height="${h}" alt="${esc(alt)}">`
       + (i===vis.length-1 && todas.length>vis.length ? `<span class="mz-todas">Ver las ${todas.length}</span>` : '')
       + `</button>`;
@@ -66,10 +81,10 @@ export function hazPortada(id, label, n, FOTOS, esc){
   // Con un alto fijo en CSS las dos restricciones se peleaban —la fila medía 378px
   // pero los anchos correspondían a 396— y esa diferencia se la comía el recorte.
   const suma = vis.reduce((a,[f])=>{const [w,h]=FOTOS['t-'+f+'.jpg']; return a+w/h;},0);
-  const caja = duo ? '' : ` style="aspect-ratio:${suma.toFixed(3)}"`;
+  const caja = (mosaico || duo) ? '' : ` style="aspect-ratio:${suma.toFixed(3)}"`;
   return `<div class="menu-portada${duo?' mp-duo':''}">
   <div class="mp-txt"><h2>${esc(label)}</h2><p>${n} platos</p></div>
-  <div class="mz"${caja} data-fotos='${datos}'>${celdas}</div>
+  <div class="mz${mosaico?' mz-mosaico':''}"${caja} data-fotos='${datos}'>${celdas}</div>
 </div>`;
 }
 
@@ -83,6 +98,11 @@ export const CSS_PORTADA = `
    los dos hacen que ninguna se recorte a ningún ancho de pantalla. El max-height
    es para que en una pantalla angosta la fila no se coma la vista. */
 .mz{display:flex;gap:4px;justify-content:center;max-height:74vh}
+/* Mosaico: la misma geometría que la galería de la barra —celda grande del doble en
+   ancho y alto, todas a 3:2—. Recorta, así que va solo donde el recorte no se come
+   el plato; lo decide MOSAICO en este archivo, no el CSS. */
+.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3;max-height:none}
+.mz-mosaico .mz-grande{grid-row:1/3}
 /* Dos fotos verticales no llenan el ancho ni estirándolas: la fila necesitaría 874px
    de alto. Ahí el título se corre al lado y las baldosas van a su proporción exacta. */
 .mp-duo{display:flex;gap:34px;align-items:flex-end}
@@ -108,7 +128,9 @@ export const CSS_PORTADA = `
   .mp-duo{display:block}
   .mp-duo .mz{justify-content:center;height:auto}
   .mz{flex-wrap:wrap;max-height:none;aspect-ratio:auto!important}
+  .mz-mosaico{display:flex}
   .mz-celda{flex:0 0 calc(50% - 2px)!important;aspect-ratio:3/4!important}
+  .mz-mosaico .mz-grande{grid-row:auto;flex-basis:100%!important;aspect-ratio:3/2!important}
 }
 /*MZ-FIN*/`;
 
