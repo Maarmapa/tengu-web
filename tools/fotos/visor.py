@@ -71,7 +71,14 @@ ORIGEN = [
     'salon-ventanal', 'barra-montaje', 'yakitori', 'robata',
 ]
 
-# Recortes apaisados de la galería de la barra. Ahí la geometría de Omakase sí
+# Proporción de la celda del mosaico. Era 3:2 (1,50), copiada de Omakase, y con esa
+# los platos redondos NO CABEN: el bowl del chirashi ocupa el 78% del alto de su foto
+# y una banda 3:2 solo muestra el 69%; el donburi necesita 79% y mostraba 73%. No es
+# cuestión de mover el recorte, la celda es demasiado ancha. En 5:4 entran los dos
+# enteros y el mosaico crece de 448 a 537 px de alto, que es barato.
+RATIO_CELDA = 1.25
+
+# Recortes de la galería de la barra. Ahí la geometría de Omakase sí
 # funciona porque son escenas, no platos. La posición va como FRACCIÓN del recorrido
 # vertical disponible, no en pixeles, para que no dependa del tamaño del original.
 # Los dos bowls van en 1.00 —al ras de abajo— porque son casi cuadrados (1,04 y 1,10):
@@ -173,7 +180,7 @@ def main():
             continue
         im = crudos[nombre]
         W, H = im.size
-        bh = min(H, int(W / 1.5))           # la galería va en 3:2 apaisado
+        bh = min(H, int(W / RATIO_CELDA))   # la celda del mosaico
         y = int((H - bh) * frac)
         rec = escala(iguala(im.crop((0, y, W, y + bh))), 1600)
         rec.save(os.path.join(FOTOS, corte + '.jpg'), 'JPEG',

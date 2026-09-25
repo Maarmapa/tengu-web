@@ -9,9 +9,9 @@
 // lo alto y encima ampliarla un 33%, y en un plato redondo visto desde arriba esa
 // mitad es el plato. Los recortes s-* que hacían falta para eso ya no existen.
 //
-// La galería de la barra sí mantiene aquella geometría: sus fotos son escenas —la
-// barra, la robata, el pescado en el mesón— y una franja horizontal de una escena
-// se sigue leyendo. Un plato cortado, no.
+// La galería de la barra sí mantiene el mosaico, pero con celdas en 5:4: sus fotos
+// son escenas —la barra, la robata, el pescado en el mesón— y una franja de una
+// escena se sigue leyendo. Un plato cortado, no.
 //
 // Qué foto va en qué sección se decide a nivel de SECCIÓN, nunca de plato: a nivel
 // de plato no se puede afirmar —edamame tiene dos candidatos en la carta, gyozas
@@ -35,10 +35,9 @@ export const PORTADA = {
 const VISIBLES = 5;
 
 // Excepción: la sección que va con el mosaico de la galería —celda grande más cuatro
-// chicas— en vez de la fila. El mosaico recorta, así que solo sirve donde el recorte
-// no se come el plato, y eso depende de las fotos, no de la sección: hace falta una
-// foto apaisada para la celda grande y platos que aguanten el 3:2 en las chicas.
-// Cocina Caliente cumple porque el donburi y el chirashi son casi cuadrados.
+// chicas— en vez de la fila. El mosaico recorta igual, aunque las celdas sean 5:4,
+// así que solo va donde el recorte no se come el plato. Cocina Caliente cumple
+// porque sus cinco fotos tienen el plato centrado y con aire alrededor.
 // El valor es la foto que va de grande; el resto la sigue en orden.
 const MOSAICO = { caliente: 'donburi' };
 
@@ -99,9 +98,11 @@ export const CSS_PORTADA = `
    es para que en una pantalla angosta la fila no se coma la vista. */
 .mz{display:flex;gap:4px;justify-content:center;max-height:74vh}
 /* Mosaico: la misma geometría que la galería de la barra —celda grande del doble en
-   ancho y alto, todas a 3:2—. Recorta, así que va solo donde el recorte no se come
-   el plato; lo decide MOSAICO en este archivo, no el CSS. */
-.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3;max-height:none}
+   ancho y alto—, pero con celdas en 5:4, no en 3:2. La proporción de Omakase dejaba
+   el bowl fuera: el del chirashi ocupa el 78% del alto de su foto y una celda 3:2
+   solo muestra el 69%. En 5:4 los platos redondos entran enteros. El aspect-ratio
+   del mosaico es 2,5 porque la fila son 4 anchos de celda y dos altos. */
+.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:2.5;max-height:none}
 .mz-mosaico .mz-grande{grid-row:1/3}
 /* Dos fotos verticales no llenan el ancho ni estirándolas: la fila necesitaría 874px
    de alto. Ahí el título se corre al lado y las baldosas van a su proporción exacta. */

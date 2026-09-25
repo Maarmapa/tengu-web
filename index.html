@@ -1214,9 +1214,11 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
    es para que en una pantalla angosta la fila no se coma la vista. */
 .mz{display:flex;gap:4px;justify-content:center;max-height:74vh}
 /* Mosaico: la misma geometría que la galería de la barra —celda grande del doble en
-   ancho y alto, todas a 3:2—. Recorta, así que va solo donde el recorte no se come
-   el plato; lo decide MOSAICO en este archivo, no el CSS. */
-.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3;max-height:none}
+   ancho y alto—, pero con celdas en 5:4, no en 3:2. La proporción de Omakase dejaba
+   el bowl fuera: el del chirashi ocupa el 78% del alto de su foto y una celda 3:2
+   solo muestra el 69%. En 5:4 los platos redondos entran enteros. El aspect-ratio
+   del mosaico es 2,5 porque la fila son 4 anchos de celda y dos altos. */
+.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:2.5;max-height:none}
 .mz-mosaico .mz-grande{grid-row:1/3}
 /* Dos fotos verticales no llenan el ancho ni estirándolas: la fila necesitaría 874px
    de alto. Ahí el título se corre al lado y las baldosas van a su proporción exacta. */
@@ -1251,7 +1253,7 @@ footer{padding:52px 48px 32px;border-top:1px solid rgba(200,146,26,.09);display:
 /*GAL-CSS-INI*/
 .galeria{padding:0 48px 76px;background:var(--dark)}
 .gal-head{margin-bottom:22px}
-.gal{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3/1;max-width:100%}
+.gal{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:5/2;max-width:100%}
 .gal-celda{position:relative;overflow:hidden;padding:0;border:0;background:var(--dark2);cursor:pointer;display:block}
 .gal-celda img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9);transition:filter .4s,transform .6s}
 .gal-celda:hover img{filter:brightness(1);transform:scale(1.03)}

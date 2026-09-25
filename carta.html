@@ -101,9 +101,11 @@ a{color:inherit}
    es para que en una pantalla angosta la fila no se coma la vista. */
 .mz{display:flex;gap:4px;justify-content:center;max-height:74vh}
 /* Mosaico: la misma geometría que la galería de la barra —celda grande del doble en
-   ancho y alto, todas a 3:2—. Recorta, así que va solo donde el recorte no se come
-   el plato; lo decide MOSAICO en este archivo, no el CSS. */
-.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3;max-height:none}
+   ancho y alto—, pero con celdas en 5:4, no en 3:2. La proporción de Omakase dejaba
+   el bowl fuera: el del chirashi ocupa el 78% del alto de su foto y una celda 3:2
+   solo muestra el 69%. En 5:4 los platos redondos entran enteros. El aspect-ratio
+   del mosaico es 2,5 porque la fila son 4 anchos de celda y dos altos. */
+.mz-mosaico{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:2.5;max-height:none}
 .mz-mosaico .mz-grande{grid-row:1/3}
 /* Dos fotos verticales no llenan el ancho ni estirándolas: la fila necesitaría 874px
    de alto. Ahí el título se corre al lado y las baldosas van a su proporción exacta. */

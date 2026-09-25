@@ -56,7 +56,7 @@ export const CSS_GALERIA = `
 /*GAL-CSS-INI*/
 .galeria{padding:0 48px 76px;background:var(--dark)}
 .gal-head{margin-bottom:22px}
-.gal{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:3/1;max-width:100%}
+.gal{display:grid;gap:4px;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:5/2;max-width:100%}
 .gal-celda{position:relative;overflow:hidden;padding:0;border:0;background:var(--dark2);cursor:pointer;display:block}
 .gal-celda img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.9);transition:filter .4s,transform .6s}
 .gal-celda:hover img{filter:brightness(1);transform:scale(1.03)}
