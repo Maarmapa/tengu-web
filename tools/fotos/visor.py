@@ -74,11 +74,14 @@ ORIGEN = [
 # Recortes apaisados de la galería de la barra. Ahí la geometría de Omakase sí
 # funciona porque son escenas, no platos. La posición va como FRACCIÓN del recorrido
 # vertical disponible, no en pixeles, para que no dependa del tamaño del original.
+# Los dos bowls van en 1.00 —al ras de abajo— porque son casi cuadrados (1,04 y 1,10):
+# en una celda 3:2 se pierde el 30% del alto y, centrados, el borde se cortaba arriba
+# y abajo. Pegados abajo el bowl entra entero y lo que se va es mesa.
 GALERIA = {
     'g-barra-pescados': ('salon-ventanal', 0.85),
     'g-barra-montaje':  ('barra-montaje',  0.55),
-    'g-chirashi':       ('chirashi',       0.624),
-    'g-donburi':        ('donburi',        0.632),
+    'g-chirashi':       ('chirashi',       1.00),
+    'g-donburi':        ('donburi',        1.00),
     'g-yakitori':       ('yakitori',       0.619),
     'g-robata':         ('robata',         0.45),
 }
