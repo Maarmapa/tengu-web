@@ -65,9 +65,12 @@ function reemplazarGrid(sel, contenido, id, label, n){
   // cerrar el menu-grid por balance
   let d=0,k=gAbs; while(k<html.length){ if(html.startsWith('<div',k))d++; else if(html.startsWith('</div>',k)){d--; if(d===0){k+=6;break;}} k++; }
   const cab = id ? portada(id,label,n) : '';
-  // borrar una portada previa para que correr esto dos veces no la duplique
+  // Borrar una portada previa para que correr esto dos veces no la duplique. Se busca
+  // por prefijo de clase, no por la etiqueta exacta: la cabecera lleva una clase extra
+  // (mp-duo) cuando la sección tiene dos fotos, y buscando el string exacto no calzaba,
+  // así que en vez de reemplazarla agregaba otra en cada corrida.
   let ini=gAbs; const antes=html.slice(b[0],gAbs);
-  const pi=antes.indexOf('<div class="menu-portada">');
+  const pi=antes.search(/<div class="menu-portada[ "]/);
   if(pi>=0){ let dd=0,q=b[0]+pi; while(q<html.length){ if(html.startsWith('<div',q))dd++; else if(html.startsWith('</div>',q)){dd--; if(dd===0){q+=6;break;}} q++; }
     html=html.slice(0,b[0]+pi)+html.slice(q); const delta=q-(b[0]+pi); ini=gAbs-delta; k-=delta; }
   html=html.slice(0,ini)+cab+'<div class="menu-grid">'+contenido+'</div>'+html.slice(k);

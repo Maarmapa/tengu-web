@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""Genera las fotos que abre el visor: el cuadro ENTERO, no el recorte del mosaico.
+"""Genera las fotos de las secciones de la carta: el cuadro ENTERO, sin recortar.
 
-El mosaico necesita recortes apaisados y acotados —en los platos redondos el
-contenido se corta arriba a propósito— pero ampliar una foto para volver a verla
-cortada no tiene sentido: el visor tiene que mostrar el plato completo, como lo
-hace la ficha de Omakase que sirvió de referencia.
+Antes el mosaico pedía recortes apaisados de 1,5 (los archivos s-*). Las fotos de
+Tengu son verticales de 1200x1600, así que para llegar a ese 1,5 había que botar la
+mitad de la foto a lo alto y encima ampliarla un 33%. En un plato redondo visto
+desde arriba esa mitad ES el plato, y por eso salían cortados. La referencia de
+Omakase funciona con esa geometría porque ellos disparan apaisado nativo.
 
-Los archivos v-* son el original entero con la misma corrección de color que
-llevan los recortes (hacia cal +45 / luz 112, con tope), para que no salte el
-color al abrir la foto.
+La fila justificada que los reemplaza no recorta nada: todas las fotos van al mismo
+alto y el ancho lo decide cada una. Por eso acá salen enteras, en dos tamaños:
+
+    t-*   ~900 px, para las baldosas de la fila
+    v-*  ~1600 px, para el visor a pantalla completa
+
+Las dos llevan la misma corrección de color que igualó el set de la galería (hacia
+cal +45 / luz 112, con tope), así que no salta el color al abrir una foto.
 """
 import os, sys
 from PIL import Image, ImageOps, ImageStat
@@ -21,22 +27,20 @@ FOTOS = os.path.normpath(os.path.join(WEB, 'fotos'))
 # dejaba de ser crema.
 CAL, LUZ = 45.0, 112.0
 TOPE_CAL, TOPE_LUZ_MIN, TOPE_LUZ_MAX = 12.0, 0.88, 1.28
-LADO, CALIDAD = 1600, 82
+CALIDAD = 82
+LADO_VISOR = 1600   # v-*: el visor llega a 92vw × 84vh
+LADO_BALDOSA = 900  # t-*: la baldosa mide ~330 CSS px, o sea 660 en retina
 
-# recorte del mosaico -> original entero
-ORIGEN = {
-    's-uni-ikura': 'uni-ikura-trufa',   's-tartar': 'tartar-mora',
-    's-gyozas': 'gyozas',               's-edamame': 'edamame',
-    's-tiradito': 'tiradito-petalos',   's-usuzukuri': 'usuzukuri-jalapeno',
-    's-almejas-canasto': 'almejas-canasto', 's-almejas-hielo': 'almejas-hielo',
-    's-nigiri-trufa': 'nigiri-trufa',   's-nigiris-barra': 'nigiris-barra',
-    's-okonomiyaki': 'okonomiyaki',     's-almejas-grat': 'almejas-gratinadas',
-    's-donburi': 'donburi',             's-chirashi': 'chirashi',
-    's-almejas-limon': 'almejas-limon',
-    'g-barra-pescados': 'salon-ventanal', 'g-barra-montaje': 'barra-montaje',
-    'g-chirashi': 'chirashi',           'g-donburi': 'donburi',
-    'g-yakitori': 'yakitori',           'g-robata': 'robata',
-}
+# Fotos que usan las secciones de la carta y la galería de la barra. La galería sigue
+# con sus recortes g-* apaisados —ahí funcionan, porque son escenas y no platos— y de
+# acá solo saca la foto entera para el visor.
+ORIGEN = [
+    'uni-ikura-trufa', 'tartar-mora', 'gyozas', 'edamame',
+    'tiradito-petalos', 'usuzukuri-jalapeno', 'almejas-canasto', 'almejas-hielo',
+    'nigiri-trufa', 'nigiris-barra',
+    'okonomiyaki', 'almejas-gratinadas', 'donburi', 'chirashi', 'almejas-limon',
+    'salon-ventanal', 'barra-montaje', 'yakitori', 'robata',
+]
 
 
 def medir(im):
@@ -54,28 +58,34 @@ def iguala(im):
     return im.point(lut_r + lut_g + lut_b)
 
 
+def escala(im, lado):
+    w, h = im.size
+    if max(w, h) <= lado:
+        return im
+    k = lado / max(w, h)
+    return im.resize((round(w * k), round(h * k)), Image.LANCZOS)
+
+
 def main():
     hechas, faltan = [], []
-    for corte, orig in sorted(ORIGEN.items()):
+    for orig in sorted(set(ORIGEN)):
         src = os.path.join(FOTOS, orig + '.jpg')
         if not os.path.exists(src):
             faltan.append(orig)
             continue
-        im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
-        w, h = im.size
-        if max(w, h) > LADO:
-            k = LADO / max(w, h)
-            im = im.resize((round(w * k), round(h * k)), Image.LANCZOS)
-        dst = os.path.join(FOTOS, 'v-' + orig + '.jpg')
-        iguala(im).save(dst, 'JPEG', quality=CALIDAD, optimize=True, progressive=True)
-        if 'v-' + orig not in [x[0] for x in hechas]:
-            hechas.append(('v-' + orig, im.size))
+        base = iguala(ImageOps.exif_transpose(Image.open(src)).convert('RGB'))
+        for pre, lado in (('v-', LADO_VISOR), ('t-', LADO_BALDOSA)):
+            im = escala(base, lado)
+            im.save(os.path.join(FOTOS, pre + orig + '.jpg'), 'JPEG',
+                    quality=CALIDAD, optimize=True, progressive=True)
+            if pre == 't-':
+                hechas.append((orig, im.size))
     for n, s in hechas:
-        print('  %-24s %dx%d' % (n, s[0], s[1]))
+        print('  %-24s baldosa %dx%d (ratio %.2f)' % (n, s[0], s[1], s[0] / s[1]))
     if faltan:
         print('FALTAN originales: ' + ', '.join(sorted(set(faltan))), file=sys.stderr)
         return 1
-    print('%d fotos enteras para el visor' % len(hechas))
+    print('%d fotos enteras · v-* para el visor, t-* para las baldosas' % len(hechas))
     return 0
 
 
