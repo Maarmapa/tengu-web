@@ -20,10 +20,28 @@
   ],
   "subDesc": {
    "Otsumami (1 Unid)": "Reinterpretaciones de platos en formato de bocados",
-   "Donburis": "Cuencos de arroz , proteinas y toppings",
-   "Mini Donburis": "Mini cuencos de arroz ,proteinas y toppings"
+   "Mini Donburis": "Mini cuencos de arroz ,proteinas y toppings",
+   "Donburis": "Cuencos de arroz , proteinas y toppings"
   },
   "items": [
+   {
+    "sub": "Para comenzar",
+    "nombre": "Caviar Kenoz",
+    "desde": false,
+    "desc": "Caviar Oscietra, 15 gr.",
+    "precio": 29900,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "Para comenzar",
+    "nombre": "Asari Ponzu (Unidades)",
+    "desde": false,
+    "desc": "Almejas frescas en una magnifica salsa ponzu",
+    "precio": 10900,
+    "extra": null,
+    "jp": ""
+   },
    {
     "sub": "Para comenzar",
     "nombre": "Caviar Uraqi",
@@ -50,15 +68,6 @@
     "precio": 14990,
     "extra": null,
     "jp": "ギョーザの舌"
-   },
-   {
-    "sub": "Para comenzar",
-    "nombre": "Caviar Kenoz",
-    "desde": false,
-    "desc": "Caviar Oscietra, 15 gr.",
-    "precio": 29900,
-    "extra": null,
-    "jp": ""
    },
    {
     "sub": "Para comenzar",
@@ -89,6 +98,15 @@
    },
    {
     "sub": "Para comenzar",
+    "nombre": "Kakis (Ostras Japonesas 5 Unidades)",
+    "desde": false,
+    "desc": "",
+    "precio": 13900,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "Para comenzar",
     "nombre": "Tamago Sando",
     "desde": false,
     "desc": "Sandwich de huevo en texturas y láminas de trufa.",
@@ -113,6 +131,15 @@
     "precio": 14900,
     "extra": null,
     "jp": "牛黒サンド"
+   },
+   {
+    "sub": "Para comenzar",
+    "nombre": "Risotto Uni",
+    "desde": false,
+    "desc": "Risotto frio de Erizos de Caldera",
+    "precio": 15900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "Para comenzar",
@@ -275,6 +302,24 @@
     "precio": 22900,
     "extra": null,
     "jp": "ホタテ味噌"
+   },
+   {
+    "sub": "Uzuzukuri",
+    "nombre": "Usuzukuri Awabi Uni",
+    "desde": false,
+    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma citrica y erizos de caldera.",
+    "precio": 19900,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "Uzuzukuri",
+    "nombre": "Usuzukuri Awabi Hotate",
+    "desde": false,
+    "desc": "Láminas de locos, cortadas al estilo tradicional japonés, acompañadas de una espuma citrica y ostiones de la Patagonia de Chile.",
+    "precio": 19900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "Uzuzukuri",
@@ -532,10 +577,28 @@
     "sub": "Makis",
     "nombre": "Hotate Maki",
     "desde": false,
-    "desc": "Futomaki sin arroz con centro de Camarón tempura,Salmón,palta y cebollín con topping de Ostión ligeramente sopleteado con mantequilla trufada",
+    "desc": "Salmon, camaron, cebollin sin arroz envuelto en nori y Ostiones Ptagonicos Aburi en mantequilla trufada",
     "precio": 15900,
     "extra": null,
     "jp": "ホタテ巻き"
+   },
+   {
+    "sub": "Makis",
+    "nombre": "Hokkaido Maki",
+    "desde": false,
+    "desc": "Centro de pescado blanco cebollin y aji verde con topping de Erizos e Ikura",
+    "precio": 17900,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "Makis",
+    "nombre": "Uni Maki",
+    "desde": false,
+    "desc": "Bomba crocante tempura con centro de Erizos de Caldera y Dashi Ponzu",
+    "precio": 11900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "Makis",
@@ -559,7 +622,7 @@
     "sub": "Makis",
     "nombre": "Naruto Maki",
     "desde": false,
-    "desc": "Katsuramuki de pepino sin arroz con centro de salmón, langostinos,wakame,cebollín y ají verde",
+    "desc": "Salmon, camarón,masago y wakame envuelto en pepino",
     "precio": 14900,
     "extra": null,
     "jp": "ナルト巻"
@@ -821,7 +884,7 @@
     "nombre": "Asari Bata-mushi (5 unid.)",
     "desde": false,
     "desc": "Almejas salteadas en sake con mantequilla y morchella",
-    "precio": 10900,
+    "precio": 11900,
     "extra": null,
     "jp": ""
    },
@@ -1749,15 +1812,6 @@
    },
    {
     "sub": "SAUVIGNON BLANC",
-    "nombre": "Calyptra",
-    "desde": false,
-    "desc": "del valle de casa blanca, año 2020",
-    "precio": 29900,
-    "extra": null,
-    "jp": ""
-   },
-   {
-    "sub": "SAUVIGNON BLANC",
     "nombre": "Domaine Pellé AOC Sancerre 🇫🇷",
     "desde": false,
     "desc": "Domaine Pellé Sancerre Blanc · Sauvignon Blanc · Sancerre, Francia Es un Sauvignon Blanc de la denominación Sancerre, en el Valle del Loira, Francia. Un Sancerre de gran fineza y mineralidad. Expresa aromas de cítricos, flores blancas y fruta de hueso, acompañados de una marcada tensión y frescura. Elegante, preciso y persistente, con un final mineral que invita a seguir bebiendo.",
@@ -1785,10 +1839,10 @@
    },
    {
     "sub": "SAUVIGNON BLANC",
-    "nombre": "Amayna Inox",
+    "nombre": "Calyptra",
     "desde": false,
-    "desc": "de Garcés Silva 2022 - San Antonio Los suelos graníticos y el clima marítimo nos entregan un Syrah de intenso color violáceo, con notas de frutos negros y rojos que se funden armoniosamente con la madera, resultando un vino espaciado, fresco y de gran carácter. Potencial de guarda: 6 años.",
-    "precio": 22900,
+    "desc": "del valle de casa blanca, año 2020",
+    "precio": 29900,
     "extra": null,
     "jp": ""
    },
@@ -1800,6 +1854,15 @@
     "precio": 27900,
     "extra": null,
     "jp": "灰の迷路"
+   },
+   {
+    "sub": "SAUVIGNON BLANC",
+    "nombre": "Amayna Inox",
+    "desde": false,
+    "desc": "de Garcés Silva 2022 - San Antonio Los suelos graníticos y el clima marítimo nos entregan un Syrah de intenso color violáceo, con notas de frutos negros y rojos que se funden armoniosamente con la madera, resultando un vino espaciado, fresco y de gran carácter. Potencial de guarda: 6 años.",
+    "precio": 22900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "CHARDONNAY",
@@ -1836,6 +1899,24 @@
     "precio": 74900,
     "extra": null,
     "jp": "エラスリスの黒板2024"
+   },
+   {
+    "sub": "CHARDONNAY",
+    "nombre": "Villard – Arganat",
+    "desde": false,
+    "desc": "del Valle de Casa Blanca, Categoria Premium. Uno de los vinos ícono de la viña chilena Villard. Proviene del Valle de Casablanca y está elaborado con una estricta selección de parcelas de Chardonnay, buscando competir con grandes blancos de nivel internacional.",
+    "precio": 49990,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "CHARDONNAY",
+    "nombre": "Amelia",
+    "desde": false,
+    "desc": "de Concha y Toro - Limarí - 2024 El Amelia Chardonnay de Viña Concha y Toro⁠￼ es considerado por muchos críticos como uno de los grandes Chardonnay de Chile. Actualmente proviene del viñedo Quebrada Seca, en el Valle de Limarí, una zona costera con suelos calcáreos que recuerdan en cierta medida a algunas zonas de Borgoña. Pasa alrededor de 10 a 12 meses en barricas de roble francés, una parte de ellas nuevas, lo que aporta complejidad sin tapar la expresión del terroír.",
+    "precio": 33900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "CHARDONNAY",
@@ -1884,6 +1965,15 @@
    },
    {
     "sub": "SYRAH",
+    "nombre": "LA Cumbre de Errazuriz 2023",
+    "desde": false,
+    "desc": "",
+    "precio": 49900,
+    "extra": null,
+    "jp": "エラスリズの頂上2023"
+   },
+   {
+    "sub": "SYRAH",
     "nombre": "Villard Gran Vin",
     "desde": false,
     "desc": "de Valle de Casa Blanca, Linea Grand Vin, año 2023.",
@@ -1901,15 +1991,6 @@
     "jp": "フォンシーベンタールカラバンテス"
    },
    {
-    "sub": "SYRAH",
-    "nombre": "LA Cumbre de Errazuriz 2023",
-    "desde": false,
-    "desc": "",
-    "precio": 49900,
-    "extra": null,
-    "jp": "エラスリズの頂上2023"
-   },
-   {
     "sub": "PINOT NOIR",
     "nombre": "Ocio",
     "desde": false,
@@ -1917,6 +1998,15 @@
     "precio": 39900,
     "extra": null,
     "jp": "娯楽"
+   },
+   {
+    "sub": "PINOT NOIR",
+    "nombre": "Las Pizarras (Aconcagua Costa)",
+    "desde": false,
+    "desc": "Viña Errazuriz",
+    "precio": 74900,
+    "extra": null,
+    "jp": ""
    },
    {
     "sub": "PINOT NOIR",
@@ -1955,11 +2045,20 @@
     "jp": "灰の迷路"
    },
    {
+    "sub": "PINOT NOIR",
+    "nombre": "Amelia",
+    "desde": false,
+    "desc": "de Concha y Toro 2023 - Valle del Limarí",
+    "precio": 33900,
+    "extra": null,
+    "jp": ""
+   },
+   {
     "sub": "CARMENERE",
     "nombre": "Carmin de Peumo",
     "desde": false,
     "desc": "de Concha y Toro 2022 - Peumo, Cachapoal Ícono del Carménère chileno. Vino de color rojo profundo e intenso. En nariz despliega complejas notas de frutos negros maduros, ciruelas, mora, especias, tabaco y cacao. En boca es estructurado, elegante y de gran concentración, con taninos sedosos y un final largo y persistente. Un referente del Carménère chileno, que expresa con precisión el carácter único de los viñedos de Peumo.",
-    "precio": 120000,
+    "precio": 99900,
     "extra": null,
     "jp": "ペウモのカルミン"
    },
@@ -1974,6 +2073,15 @@
    },
    {
     "sub": "CARMENERE",
+    "nombre": "Terrunyo",
+    "desde": false,
+    "desc": "",
+    "precio": 38990,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "CARMENERE",
     "nombre": "Amatista",
     "desde": false,
     "desc": "del Valle de Colchagua, denominación de origen Apalta. Año 2023",
@@ -1982,11 +2090,20 @@
     "jp": "アメジスト"
    },
    {
+    "sub": "CARMENERE",
+    "nombre": "Marques de Casa Concha",
+    "desde": false,
+    "desc": "",
+    "precio": 26900,
+    "extra": null,
+    "jp": ""
+   },
+   {
     "sub": "CABERNET SAUVIGNON",
     "nombre": "Don Melchor",
     "desde": false,
     "desc": "Cabernet Sauvignon, Puente Alto, Valle del Maipo, 2022 . Concha y Toro Cabernet Sauvignon de clase mundial, elegante y complejo. Destacan notas de frutos negros, cedro, tabaco y especias. Estructurado, refinado y de prolongada persistencia, ideal para acompañar carnes rojas y platos de gran intensidad. Don Melchor fue ser elegido “Wine of the Year” (Vino del Año) 2024 por la prestigiosa publicación estadounidense Wine Spectator.",
-    "precio": 220000,
+    "precio": 199000,
     "extra": null,
     "jp": "ドン・メルチャー"
    },
@@ -2009,6 +2126,15 @@
     "jp": ""
    },
    {
+    "sub": "CABERNET SAUVIGNON",
+    "nombre": "Marques de Casa Concha",
+    "desde": false,
+    "desc": "",
+    "precio": 26900,
+    "extra": null,
+    "jp": ""
+   },
+   {
     "sub": "CINSAULT",
     "nombre": "Oriundo",
     "desde": false,
@@ -2019,10 +2145,28 @@
    },
    {
     "sub": "ENSAMBLAJE",
+    "nombre": "Almaviva",
+    "desde": false,
+    "desc": "Un tinto ícono chileno de alta gama, nacido de la célebre alianza entre Baron Philippe de Rothschild y Viña Concha y Toro. Proviene del prestigioso terroir de Puente Alto, en el Valle del Maipo, y destaca por ser una añada que, a pesar de haber sido particularmente cálida y seca, logró mantener una frescura, tensión y elegancia excepcionales gracias a una vendimia temprana y precisa. Composición (Ensamblaje): Predomina el Cabernet Sauvignon (74%), complementado con Carménère (19%), Cabernet Franc (5%) y Petit Verdot (2%).Crianza: Aproximadamente 20 meses en barricas de roble francés (73% de ellas de primer uso).Graduación Alcohólica: 15% Vol. Es amplia, compleja y elegantemente estructurada. Seduce primero con una capa de frutas frescas como cassis, fresas silvestres y zarzamora. Al abrirse, emergen notas sofisticadas de tabaco fino, cedro, grafito, tierra húmeda y suaves especias, enriquecidas por sutiles matices herbales (como aceitunas negras) aportados por el Carménère",
+    "precio": 249000,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "ENSAMBLAJE",
     "nombre": "GE",
     "desde": false,
     "desc": "",
     "precio": 75900,
+    "extra": null,
+    "jp": ""
+   },
+   {
+    "sub": "ENSAMBLAJE",
+    "nombre": "Epu",
+    "desde": false,
+    "desc": "",
+    "precio": 58900,
     "extra": null,
     "jp": ""
    },
@@ -2073,6 +2217,24 @@
    },
    {
     "sub": "OTRAS CEPAS",
+    "nombre": "EL Afán (MencÍa)",
+    "desde": false,
+    "desc": "Valle del Maipo, Viña GG. El Afán de Gonzalo Guzmán corresponde a un 100% Mencía, una cepa originaria del noroeste de España, y es considerado uno de los primeros vinos de Mencía elaborados en Chile. Vino de carácter fresco y vibrante, elaborado con la variedad española Mencía. Presenta aromas de cerezas, frambuesas, granada y pimienta blanca, acompañados por delicadas notas florales y especiadas. En boca es jugoso, elegante y de gran frescura, con taninos suaves, marcada acidez y un final persistente que invita a seguir bebiendo. Una propuesta original y poco común en Chile, que destaca por su equilibrio y expresión frutal.",
+    "precio": 35900,
+    "extra": null,
+    "jp": "情熱"
+   },
+   {
+    "sub": "OTRAS CEPAS",
+    "nombre": "Alba de Andes (Albariño)",
+    "desde": false,
+    "desc": "Albariño, Gonzalo Guzmán, Alto del Maipo, Pirque. Gonzalo Guzmán fue uno de los pioneros en introducir cepas españolas poco conocidas en Chile, entre ellas Albariño, Mencía, Graciano y Verdejo. Las primeras plantaciones de Albariño en Pirque se remontan a 2008, cuando aún trabajaba en Viña El Principal. Perfil del vino El Alba de Andes Albariño proviene de Pirque, en el sector Maipo-Andes. Dependiendo de la añada, Gonzalo ha trabajado el vino con contacto de pieles, acercándolo incluso al estilo de un vino naranjo. En nariz suelen aparecer: * Flores blancas. * Durazno y frutas blancas. * Notas cítricas de mandarina, pomelo y limón. * Toques minerales y herbales.",
+    "precio": 32990,
+    "extra": null,
+    "jp": "アンデスの夜明け"
+   },
+   {
+    "sub": "OTRAS CEPAS",
     "nombre": "Matetic Corralillo (Garnacha)",
     "desde": false,
     "desc": "",
@@ -2088,24 +2250,6 @@
     "precio": 27900,
     "extra": null,
     "jp": "ベリャビスタ山地"
-   },
-   {
-    "sub": "OTRAS CEPAS",
-    "nombre": "Alba de Andes (Albariño)",
-    "desde": false,
-    "desc": "Albariño, Gonzalo Guzmán, Alto del Maipo, Pirque. Gonzalo Guzmán fue uno de los pioneros en introducir cepas españolas poco conocidas en Chile, entre ellas Albariño, Mencía, Graciano y Verdejo. Las primeras plantaciones de Albariño en Pirque se remontan a 2008, cuando aún trabajaba en Viña El Principal. Perfil del vino El Alba de Andes Albariño proviene de Pirque, en el sector Maipo-Andes. Dependiendo de la añada, Gonzalo ha trabajado el vino con contacto de pieles, acercándolo incluso al estilo de un vino naranjo. En nariz suelen aparecer: * Flores blancas. * Durazno y frutas blancas. * Notas cítricas de mandarina, pomelo y limón. * Toques minerales y herbales.",
-    "precio": 32990,
-    "extra": null,
-    "jp": "アンデスの夜明け"
-   },
-   {
-    "sub": "OTRAS CEPAS",
-    "nombre": "EL Afán (MencÍa)",
-    "desde": false,
-    "desc": "Valle del Maipo, Viña GG. El Afán de Gonzalo Guzmán corresponde a un 100% Mencía, una cepa originaria del noroeste de España, y es considerado uno de los primeros vinos de Mencía elaborados en Chile. Vino de carácter fresco y vibrante, elaborado con la variedad española Mencía. Presenta aromas de cerezas, frambuesas, granada y pimienta blanca, acompañados por delicadas notas florales y especiadas. En boca es jugoso, elegante y de gran frescura, con taninos suaves, marcada acidez y un final persistente que invita a seguir bebiendo. Una propuesta original y poco común en Chile, que destaca por su equilibrio y expresión frutal.",
-    "precio": 35900,
-    "extra": null,
-    "jp": "情熱"
    }
   ]
  },

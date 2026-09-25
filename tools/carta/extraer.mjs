@@ -5,20 +5,35 @@ const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replac
 const toks = s => new Set(norm(s).split(' ').filter(t=>t.length>2 && !['unid','unidad','unidades','de','del','la','el','y','con','ml','cortes','piezas'].includes(t)));
 const sim = (a,b)=>{const A=toks(a),B=toks(b);if(!A.size||!B.size)return 0;let n=0;for(const t of A)if(B.has(t))n++;return n/Math.max(A.size,B.size);};
 
-// ---- nuestra carta (28-ago, con los 3 precios ya corregidos) ----
+// ---- nuestra carta anterior, solo para recuperar los nombres en japonés ----
+// Sale de prev-final.json (la copia que sync.sh guarda antes de correr). Antes se
+// reconstruía leyendo el JSON-LD de index.html con una tabla de prefijos que ya no
+// calza con lo que escribe index-carta.mjs, así que 'ours' quedaba casi vacío y el
+// japonés se perdía en silencio. El diff vive en diff.mjs; acá solo se extrae.
 const html = fs.readFileSync(REPO+'index.html','utf8');
 const jp = {}; for (const m of html.matchAll(/menu-item-name">([^<]+)<\/div><div class="menu-item-jp">([^<]*)</g)) jp[norm(m[1])] = m[2];
-const ldm = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)||[]; let menu=null;
-for (const b of ldm){const j=JSON.parse(b.replace(/^<[^>]+>/,'').replace(/<\/script>$/,''));if(j.hasMenu)menu=j.hasMenu;}
-const FAM = [['Comida — ','comida'],['Barra — ','bar'],['Vinos por copa — ','por-copa'],['Sake — ','sake'],['Vinos — ','vinos']];
-const ours = {comida:[],bar:[],'por-copa':[],sake:[],vinos:[],teishoku:[]};
-for (const s of menu.hasMenuSection){const f=FAM.find(([p])=>s.name.startsWith(p));if(!f)continue;
-  for (const it of s.hasMenuItem||[]) ours[f[1]].push({sub:s.name.slice(f[0].length),nombre:it.name,desc:it.description||'',precio:it.offers?+it.offers.price:null,jp:jp[norm(it.name)]||''});}
+let ours;
+try { const prev = JSON.parse(fs.readFileSync(`${D}/prev-final.json`,'utf8'));
+      ours = Object.fromEntries(SECS.map(s=>[s,(prev[s]&&prev[s].items)||[]]));
+} catch(e) { ours = Object.fromEntries(SECS.map(s=>[s,[]])); }
 
 // ---- extracción viva ----
 function limpiar(h){const j=h.lastIndexOf('</nav>');let b=h.slice(j>0?j:0);const d=b.indexOf('id="drawer"');if(d>0)b=b.slice(0,d);
-  return b.replace(/<script[\s\S]*?<\/script>/g,' ').replace(/<style[\s\S]*?<\/style>/g,' ').replace(/<[^>]+>/g,'\n').replace(/&amp;/g,'&').replace(/&#8217;/g,'’').replace(/&nbsp;/g,' ')
+  return b.replace(/<script[\s\S]*?<\/script>/g,' ').replace(/<style[\s\S]*?<\/style>/g,' ').replace(/<[^>]+>/g,'\n')
+   .replace(/&(#\d+|#x[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]{1,9});/g,entidad)
    .split('\n').map(x=>x.replace(/\s+/g,' ').trim()).filter(Boolean);}
+// Decodificación genérica en vez de tres replace sueltos (&amp;, &#8217;, &nbsp;). Con
+// los tres, "Villard &#8211; Arganat" llegaba así a la carta publicada, al JSON-LD que
+// lee Google y al Oráculo. El guion medio no es un caso raro: Gourmedia lo usa para
+// separar productor y etiqueta, así que iba a volver a pasar con cada vino nuevo.
+const NOMBRADAS={amp:'&',nbsp:' ',quot:'"',apos:"'",lt:'<',gt:'>',ndash:'–',mdash:'—',hellip:'…',
+  rsquo:'’',lsquo:'‘',ldquo:'“',rdquo:'”',deg:'°',eacute:'é',aacute:'á',iacute:'í',oacute:'ó',
+  uacute:'ú',ntilde:'ñ',Ntilde:'Ñ',uuml:'ü',middot:'·',bull:'·',laquo:'«',raquo:'»',shy:''};
+function entidad(m,cuerpo){
+  if(cuerpo[0]==='#'){ const n=cuerpo[1]==='x'||cuerpo[1]==='X' ? parseInt(cuerpo.slice(2),16) : parseInt(cuerpo.slice(1),10);
+    return Number.isFinite(n)&&n>0&&n<=0x10FFFF ? String.fromCodePoint(n) : m; }
+  return cuerpo in NOMBRADAS ? NOMBRADAS[cuerpo] : m;   // desconocida: se deja cruda, se ve y se reporta
+}
 const esPrecio = l => /^[0-9]{1,3}(\.[0-9]{3})+$|^[0-9]{3,6}$/.test(l);
 const SIN_PRECIO = /^(acompañar con:?|ver variedad|revisar variedad)/i;
 const nameLike = l => { const let_=l.replace(/[^A-Za-zÁÉÍÓÚÑáéíóúñ]/g,''); if(!let_.length) return false;
@@ -56,21 +71,15 @@ for (const sec of SECS) {
 }
 fs.writeFileSync(`${D}/carta-viva.json`, JSON.stringify(live,null,1));
 
-// ---- diff vs 28-ago ----
-console.log('=== DIFF: carta viva (23-sep) vs nuestra (28-ago) ===');
-let tot={add:0,del:0,chg:0};
+// La hora del render manda sobre la de la descarga: Gourmedia sirve de caché y cada
+// plato puede tener ventana horaria, así que lo que importa es a qué hora se armó la
+// página, no a qué hora la bajamos. Ese dato viene en el pie del propio HTML.
+console.log('=== EXTRACCIÓN ===');
 for (const sec of SECS){
-  const A=ours[sec], B=live[sec].items;
-  const usedA=new Set(); const add=[], chg=[];
-  for (const b of B){ let best=null,bs=0,bi=-1; A.forEach((a,i)=>{ if(usedA.has(i))return; const s_=Math.max(norm(a.nombre)===norm(b.nombre)?1:0, sim(a.nombre,b.nombre)); if(s_>bs){bs=s_;best=a;bi=i;} });
-    if(best&&bs>=0.5){ usedA.add(bi); if(b.precio!=null&&best.precio!=null&&b.precio!==best.precio) chg.push(`${b.nombre}: $${best.precio}→$${b.precio}`); }
-    else add.push(`${b.nombre}${b.precio!=null?' $'+b.precio:''}`); }
-  const del=A.filter((a,i)=>!usedA.has(i)).map(a=>`${a.nombre} $${a.precio}`);
-  tot.add+=add.length; tot.del+=del.length; tot.chg+=chg.length;
-  console.log(`\n--- ${sec}: viva=${B.length} nuestra=${A.length} | nuevos=${add.length} desaparecidos=${del.length} precio=${chg.length} ---`);
-  add.forEach(x=>console.log('  + '+x)); del.forEach(x=>console.log('  − '+x)); chg.forEach(x=>console.log('  ± '+x));
+  const h = fs.readFileSync(`${D}/raw-${sec}.html`,'utf8');
+  const m = h.match(/Cached by gour\.media on ([\d-]+ [\d:]+)/);
+  console.log(`  ${sec.padEnd(9)} ${String(live[sec].items.length).padStart(3)} platos   render ${m?m[1]:'(sin dato)'}`);
 }
-console.log(`\nTOTAL: +${tot.add} nuevos, −${tot.del} desaparecidos, ±${tot.chg} precios`);
 console.log('\n=== sanity: nombres corregidos ===');
 ['comida','teishoku'].forEach(s=>live[s].items.filter(x=>/hosomaki|teishoku|otsumami|donburis/i.test(x.sub)).slice(0,9).forEach(x=>console.log(`  [${x.sub.slice(0,18)}] ${x.nombre} $${x.precio}`)));
 console.log('bajadas:', JSON.stringify(Object.assign({},...SECS.map(s=>live[s].subDesc))).slice(0,300));

@@ -8,10 +8,13 @@ cd "$(dirname "$0")"
 for s in comida bar sake vinos por-copa teishoku; do
   curl -s -m 30 "https://gour.media/tengu/$s/" -o "data/raw-$s.html"
 done
-node extraer.mjs data | head -8
+node extraer.mjs data | head -9
 node final.mjs data | sed -n '2p'
+# El diff va ANTES de escribir el sitio: es el control humano, y hasta acá index.html
+# todavía es el de la corrida anterior por si hay que volver atrás.
+node diff.mjs data
 node generar.mjs data
 node oraculo.mjs data
 node index-carta.mjs data
-node diff.mjs data | tail -3
-echo "→ carta.html regenerada. Diff completo vs 28-ago en data/diff-28ago-vs-23sep.json; comparar data/prev-final.json vs data/carta-final.json para el cambio desde la última corrida."
+echo "→ carta.html, index.html y api/_carta.js regenerados. Detalle en data/diff-ultima-corrida.json."
+echo "  Si salió el aviso ⚠️ FRENO, algo volvió vacío de Gourmedia y se conservó lo anterior: revisalo antes de commitear."
