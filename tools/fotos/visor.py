@@ -16,7 +16,7 @@ alto y el ancho lo decide cada una. Por eso acá salen enteras, en dos tamaños:
 Las dos llevan la misma corrección de color que igualó el set de la galería (hacia
 cal +45 / luz 112, con tope), así que no salta el color al abrir una foto.
 """
-import os, sys
+import math, os, sys
 from PIL import Image, ImageOps, ImageStat
 
 WEB = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
@@ -26,7 +26,10 @@ FOTOS = os.path.normpath(os.path.join(WEB, 'fotos'))
 # sin él la foto más fría del lote se iba a naranja y el papel crema del set
 # dejaba de ser crema.
 CAL, LUZ = 45.0, 112.0
-TOPE_CAL, TOPE_LUZ_MIN, TOPE_LUZ_MAX = 12.0, 0.88, 1.28
+FUERZA = 0.45        # cuánto del camino al objetivo se recorre: emparejar, no aplastar
+TOPE_LUZ = 1.22      # tope del exponente de brillo
+TOPE_CAL = 10.0      # tope del desplazamiento de color, en puntos de R−B
+TOPE_CAL_G = 1.10    # tope del exponente por canal
 CALIDAD = 82
 LADO_VISOR = 1600   # v-*: el visor llega a 92vw × 84vh
 LADO_BALDOSA = 900  # t-*: la baldosa mide ~330 CSS px, o sea 660 en retina
@@ -48,14 +51,38 @@ def medir(im):
     return r - b, 0.299 * r + 0.587 * g + 0.114 * b
 
 
+def gamma(objetivo, actual, tope):
+    """Exponente que acerca `actual` a `objetivo` sin tocar el negro ni el blanco.
+
+    Antes esto era un multiplicador (v*k) más un offset para el color. Las dos
+    operaciones LEVANTAN EL PISO: un pixel en 20 se iba a 26, y la foto perdía sus
+    negros. Sobre el fondo casi negro del sitio eso se lee como foto lavada —los
+    negros del donburi pasaron de 11,3% a 6,0% del cuadro—. La gamma deja 0 en 0 y
+    255 en 255 y mueve solo los medios, que es donde vive la diferencia real.
+    """
+    a = max(1.0, min(254.0, actual)) / 255.0
+    o = max(1.0, min(254.0, objetivo)) / 255.0
+    g = math.log(o) / math.log(a)
+    return max(1.0 / tope, min(tope, g))
+
+
+def lut(g):
+    return [min(255, max(0, round(255.0 * (v / 255.0) ** g))) for v in range(256)]
+
+
 def iguala(im):
     cal, luz = medir(im)
-    d = max(-TOPE_CAL, min(TOPE_CAL, CAL - cal)) / 2.0
-    k = max(TOPE_LUZ_MIN, min(TOPE_LUZ_MAX, LUZ / luz)) if luz > 1 else 1.0
-    lut_r = [min(255, max(0, round(v * k + d))) for v in range(256)]
-    lut_g = [min(255, max(0, round(v * k))) for v in range(256)]
-    lut_b = [min(255, max(0, round(v * k - d))) for v in range(256)]
-    return im.point(lut_r + lut_g + lut_b)
+    # Se corrige solo una PARTE del camino al objetivo. Llevarlas todas al mismo
+    # número las dejaba a todas con el mismo brillo, y el set perdía el contraste
+    # entre un plato oscuro y uno luminoso, que es información de la foto, no ruido.
+    objL = luz + (LUZ - luz) * FUERZA
+    objC = cal + (CAL - cal) * FUERZA
+    gl = gamma(objL, luz, TOPE_LUZ)
+    # el color se mueve empujando rojo y azul en sentidos opuestos, también por gamma
+    dc = max(-TOPE_CAL, min(TOPE_CAL, objC - cal)) / 2.0
+    gr = gamma(max(1.0, luz + dc), luz, TOPE_CAL_G)
+    gb = gamma(max(1.0, luz - dc), luz, TOPE_CAL_G)
+    return im.point(lut(gl * gr) + lut(gl) + lut(gl * gb))
 
 
 def escala(im, lado):
