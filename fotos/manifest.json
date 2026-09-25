@@ -105,11 +105,11 @@
 ],
 "g-barra-pescados-800.jpg": [
 800,
-533
+534
 ],
 "g-barra-pescados.jpg": [
-1200,
-800
+1600,
+1067
 ],
 "g-chirashi-800.jpg": [
 800,
@@ -129,19 +129,19 @@
 ],
 "g-robata-800.jpg": [
 800,
-533
+534
 ],
 "g-robata.jpg": [
-1200,
-800
+1600,
+1067
 ],
 "g-yakitori-800.jpg": [
 800,
-533
+534
 ],
 "g-yakitori.jpg": [
-1200,
-800
+1600,
+1067
 ],
 "gyozas-800.jpg": [
 600,
@@ -169,6 +169,14 @@
 ],
 "nigiris-barra.jpg": [
 1250,
+1600
+],
+"nigiris-pase-800.jpg": [
+800,
+1067
+],
+"nigiris-pase.jpg": [
+1200,
 1600
 ],
 "okonomiyaki-800.jpg": [
@@ -233,6 +241,10 @@
 ],
 "t-nigiris-barra.jpg": [
 703,
+900
+],
+"t-nigiris-pase.jpg": [
+675,
 900
 ],
 "t-okonomiyaki.jpg": [
@@ -300,80 +312,84 @@
 1600
 ],
 "v-almejas-canasto.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-almejas-gratinadas.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-almejas-hielo.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-almejas-limon.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-barra-montaje.jpg": [
 1200,
 1600
 ],
 "v-chirashi.jpg": [
-1600,
-1542
+2400,
+2313
 ],
 "v-donburi.jpg": [
-1600,
-1456
+2400,
+2184
 ],
 "v-edamame.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-gyozas.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-nigiri-trufa.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-nigiris-barra.jpg": [
-1250,
+1875,
+2400
+],
+"v-nigiris-pase.jpg": [
+1200,
 1600
 ],
 "v-okonomiyaki.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-robata.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-salon-ventanal.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-tartar-mora.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-tiradito-petalos.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-uni-ikura-trufa.jpg": [
-1600,
-1600
+2400,
+2400
 ],
 "v-usuzukuri-jalapeno.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "v-yakitori.jpg": [
-1200,
-1600
+1800,
+2400
 ],
 "yakitori-800.jpg": [
 600,

@@ -31,19 +31,68 @@ TOPE_LUZ = 1.22      # tope del exponente de brillo
 TOPE_CAL = 10.0      # tope del desplazamiento de color, en puntos de R−B
 TOPE_CAL_G = 1.10    # tope del exponente por canal
 CALIDAD = 82
-LADO_VISOR = 1600   # v-*: el visor llega a 92vw × 84vh
+LADO_VISOR = 2400   # v-*: el visor llega a 92vw × 84vh, o sea ~2650 px en retina
 LADO_BALDOSA = 900  # t-*: la baldosa mide ~330 CSS px, o sea 660 en retina
 
-# Fotos que usan las secciones de la carta y la galería de la barra. La galería sigue
-# con sus recortes g-* apaisados —ahí funcionan, porque son escenas y no platos— y de
-# acá solo saca la foto entera para el visor.
+# Las fotos del sitio entraron reducidas a 1200x1600 sin necesidad: los originales que
+# mandó Allan son de 2480x3307 a 3120x4160. Ahí se perdía justo donde importa, en el
+# visor a pantalla completa, que ampliaba 1,65x. Este diccionario dice de qué archivo
+# original sale cada foto para poder rehacerlas en alta.
+#
+# La carpeta vive FUERA del repo (pesa 180 MB y son fotos del cliente). Si no está,
+# el script avisa y sigue con lo que haya en fotos/, que es peor pero no rompe nada.
+ALLAN = os.path.expanduser('~/tengu-fotos-allan/originales')
+ORIGINAL = {
+    'almejas-canasto': 'IMG_5709', 'almejas-gratinadas': 'IMG_5753',
+    'almejas-hielo': 'IMG_5736',   'almejas-limon': 'IMG_5757',
+    'bluefin-corte': 'IMG_5957',   'bluefin-lomos': 'IMG_5956',
+    'centolla': 'IMG_5434',        'edamame': 'IMG_5762',
+    'nigiris-barra': 'IMG_5874',   'robata': 'IMG_5259',
+    'salon-ventanal': 'IMG_5849',  'usuzukuri-jalapeno': '1489150e-92aa-43f9-b94d-f5bfb90dc29b',
+    'yakitori': 'IMG_5266',        'donburi': 'IMG_5867',
+    'chirashi': '3c1bab2a-8253-4c77-a6a3-c7dffcacb393',
+    'gyozas': 'DB976931-3ACD-4051-BABC-1664E2A16884',
+    'nigiri-trufa': 'E5B79A4E-BC97-4A42-99F7-3A449CBEA487',
+    'okonomiyaki': 'EEAC8094-8297-48CC-8D7D-2DED965771C3',
+    'tartar-mora': 'BC8D6F93-FCE5-4B75-B153-A928CA284297',
+    'tiradito-petalos': 'FA45642D-3277-4228-95F1-85D6A0F16128',
+    'uni-ikura-trufa': 'DAF66EE5-6468-4744-AEBC-EA94976586A1',
+    'nigiris-pase': '618bc124-5802-4650-84fc-79b7ac451183',
+    # barra-montaje solo existe a 1200x1600; no hay original más grande
+    'barra-montaje': '0bc9a43c-69ed-4c2e-aa94-9155defb618b',
+}
+
+# Fotos que usan las secciones de la carta y la galería de la barra.
 ORIGEN = [
     'uni-ikura-trufa', 'tartar-mora', 'gyozas', 'edamame',
     'tiradito-petalos', 'usuzukuri-jalapeno', 'almejas-canasto', 'almejas-hielo',
-    'nigiri-trufa', 'nigiris-barra',
+    'nigiri-trufa', 'nigiris-barra', 'nigiris-pase',
     'okonomiyaki', 'almejas-gratinadas', 'donburi', 'chirashi', 'almejas-limon',
     'salon-ventanal', 'barra-montaje', 'yakitori', 'robata',
 ]
+
+# Recortes apaisados de la galería de la barra. Ahí la geometría de Omakase sí
+# funciona porque son escenas, no platos. La posición va como FRACCIÓN del recorrido
+# vertical disponible, no en pixeles, para que no dependa del tamaño del original.
+GALERIA = {
+    'g-barra-pescados': ('salon-ventanal', 0.85),
+    'g-barra-montaje':  ('barra-montaje',  0.55),
+    'g-chirashi':       ('chirashi',       0.624),
+    'g-donburi':        ('donburi',        0.632),
+    'g-yakitori':       ('yakitori',       0.619),
+    'g-robata':         ('robata',         0.45),
+}
+
+
+def fuente(nombre):
+    """El original en alta si está; si no, lo que haya en fotos/."""
+    o = ORIGINAL.get(nombre)
+    if o:
+        for sub in ('adjuntos', 'fotos', 'fotos1'):
+            p = os.path.join(ALLAN, sub, o + '.jpeg')
+            if os.path.exists(p):
+                return p, True
+    return os.path.join(FOTOS, nombre + '.jpg'), False
 
 
 def medir(im):
@@ -94,25 +143,51 @@ def escala(im, lado):
 
 
 def main():
-    hechas, faltan = [], []
-    for orig in sorted(set(ORIGEN)):
-        src = os.path.join(FOTOS, orig + '.jpg')
+    hechas, faltan, sinAlta = [], [], []
+    crudos = {}
+    for nombre in sorted(set(ORIGEN) | {v[0] for v in GALERIA.values()}):
+        src, alta = fuente(nombre)
         if not os.path.exists(src):
-            faltan.append(orig)
+            faltan.append(nombre)
             continue
-        base = iguala(ImageOps.exif_transpose(Image.open(src)).convert('RGB'))
+        if not alta:
+            sinAlta.append(nombre)
+        crudos[nombre] = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
+
+    for nombre in sorted(set(ORIGEN)):
+        if nombre not in crudos:
+            continue
+        base = iguala(crudos[nombre])
         for pre, lado in (('v-', LADO_VISOR), ('t-', LADO_BALDOSA)):
             im = escala(base, lado)
-            im.save(os.path.join(FOTOS, pre + orig + '.jpg'), 'JPEG',
+            im.save(os.path.join(FOTOS, pre + nombre + '.jpg'), 'JPEG',
                     quality=CALIDAD, optimize=True, progressive=True)
             if pre == 't-':
-                hechas.append((orig, im.size))
-    for n, s in hechas:
-        print('  %-24s baldosa %dx%d (ratio %.2f)' % (n, s[0], s[1], s[0] / s[1]))
+                hechas.append((nombre, crudos[nombre].size, im.size))
+
+    for corte, (nombre, frac) in sorted(GALERIA.items()):
+        if nombre not in crudos:
+            continue
+        im = crudos[nombre]
+        W, H = im.size
+        bh = min(H, int(W / 1.5))           # la galería va en 3:2 apaisado
+        y = int((H - bh) * frac)
+        rec = escala(iguala(im.crop((0, y, W, y + bh))), 1600)
+        rec.save(os.path.join(FOTOS, corte + '.jpg'), 'JPEG',
+                 quality=CALIDAD, optimize=True, progressive=True)
+        rec.resize((800, round(800 * rec.size[1] / rec.size[0])), Image.LANCZOS).save(
+            os.path.join(FOTOS, corte + '-800.jpg'), 'JPEG',
+            quality=CALIDAD, optimize=True, progressive=True)
+
+    for n, o, s in hechas:
+        print('  %-22s original %-11s baldosa %dx%d' % (n, '%dx%d' % o, s[0], s[1]))
+    if sinAlta:
+        print('SIN original en alta (se usó fotos/): ' + ', '.join(sorted(sinAlta)), file=sys.stderr)
     if faltan:
-        print('FALTAN originales: ' + ', '.join(sorted(set(faltan))), file=sys.stderr)
+        print('FALTAN: ' + ', '.join(sorted(set(faltan))), file=sys.stderr)
         return 1
-    print('%d fotos enteras · v-* para el visor, t-* para las baldosas' % len(hechas))
+    print('%d fotos · v-* %dpx para el visor, t-* %dpx para las baldosas, %d recortes de galería'
+          % (len(hechas), LADO_VISOR, LADO_BALDOSA, len(GALERIA)))
     return 0
 
 
